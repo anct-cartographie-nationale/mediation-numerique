@@ -101,6 +101,7 @@ fabric.properties
 /.angular/cache
 /connect.lock
 /coverage
+/documentation
 /libpeerconnection.log
 /projects
 testem.log
