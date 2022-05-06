@@ -1,0 +1,7 @@
+<div
+  id="map"
+  class="body-wrap"
+  [ngClass]="{ orientation: isOrientationForm }"
+  leaflet
+  [leafletOptions]="mapOptions"
+  (leafletMapReady)="onMapReady($event)"></div>

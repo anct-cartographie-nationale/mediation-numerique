@@ -1,26 +1,3 @@
 {
-  "extends": ["../../../.eslintrc.json"],
-  "overrides": [
-    {
-      "files": ["*.ts"],
-      "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "fr",
-            "style": "camelCase"
-          }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "fr",
-            "style": "kebab-case"
-          }
-        ]
-      }
-    }
-  ]
+  "extends": ["../../../.eslintrc.json"]
 }

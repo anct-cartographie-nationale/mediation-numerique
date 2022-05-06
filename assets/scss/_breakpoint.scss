@@ -1,0 +1,17 @@
+$width-small-phone: 320px;
+$width-phone: 576px;
+$width-large-phone: 600px;
+$width-tablet: 980px;
+$width-large-tablet: 1024px;
+$width-desktop: 1280px;
+$width-large-desktop: 1201px;
+$width-news-max: 830px;
+
+$small-phone: 'only screen and (max-width : #{$width-small-phone})';
+$phone: 'only screen and (max-width : #{$width-phone})';
+$large-phone: 'only screen and (max-width : #{$width-large-phone})';
+$news-max: 'only screen and (max-width :  #{$width-news-max})';
+$tablet: 'only screen and (max-width : #{$width-tablet})';
+$large-tablet: 'only screen and (max-width : #{$width-large-tablet})';
+$desktop: 'only screen and (max-width : #{$width-desktop})';
+$large-desktop: 'only screen and (min-width : #{$width-large-desktop})';

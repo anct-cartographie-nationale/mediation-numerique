@@ -1,0 +1,714 @@
+@import './color';
+
+.ico-mglass {
+  position: relative;
+  display: inline-block;
+  background: transparent;
+  border-radius: 30px;
+  border: 2px solid $grey-1;
+  height: 12px;
+  width: 12px;
+  min-width: 12px;
+  max-width: 12px;
+
+  &:after {
+    content: '';
+    height: 2px;
+    width: 8px;
+    background: $grey-1;
+    position: absolute;
+    top: 14px;
+    left: 10px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+  }
+}
+
+.ico-pin {
+  width: 20px;
+  height: 20px;
+  max-width: 20px;
+  max-height: 20px;
+  border-radius: 50% 50% 50% 0;
+  background: transparent;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -4px 0 0 0;
+  &.after {
+    content: '';
+    width: 14px;
+    height: 14px;
+    margin: 8px 0 0 8px;
+    background: transparent;
+    border-radius: 50%;
+  }
+}
+.ico-pin-search {
+  width: 18px;
+  height: 18px;
+  border-radius: 50% 50% 50% 0;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  background-color: $grey-3;
+  &:before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    width: 7px;
+    height: 7px;
+    border-radius: 4px;
+    background-color: $white;
+  }
+}
+.ico-dot-available {
+  height: 12px;
+  width: 12px;
+  background-color: $green;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.ico-dot-unavailable {
+  height: 12px;
+  width: 12px;
+  background-color: $red;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.ico-dot-unknown {
+  height: 12px;
+  width: 12px;
+  background-color: $grey-4;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.ico-marker-pin {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  background: $primary-color;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -15px 0 0 -15px;
+  &.selected {
+    background: $primary-color;
+  }
+}
+
+.ico-marker-pin::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  margin: 10px 0 0 10px;
+  background: #fff;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.ico-marker-pin-sm {
+  width: 18px;
+  height: 18px;
+  border-radius: 50% 50% 50% 0;
+  background: $grey-3;
+  transform: rotate(-45deg);
+  margin: 0px 4px;
+  &.absolute {
+    position: absolute;
+    margin: 0;
+  }
+}
+
+.ico-marker-pin-sm::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  margin: 6px 0 0 5px;
+  background: $app-background;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.ico-profile {
+  .head {
+    width: 12px;
+    height: 12px;
+    border-radius: 25px;
+    border: 2px solid $grey-1;
+  }
+  .body {
+    width: 28px;
+    height: 10px;
+    border-radius: 20px 20px 0px 0px;
+    border-top: 2px solid $grey-1;
+    border-right: 2px solid $grey-1;
+    border-left: 2px solid $grey-1;
+  }
+}
+
+.ico-close {
+  .mdiv {
+    height: 10px;
+    width: 2px;
+    margin-left: 5px;
+    background-color: $grey-3;
+    transform: rotate(45deg);
+    z-index: 1;
+  }
+
+  .md {
+    height: 10px;
+    width: 2px;
+    background-color: $grey-3;
+    transform: rotate(90deg);
+    z-index: 2;
+  }
+}
+
+.ico-close-search {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  &:before {
+    transform: rotate(45deg);
+  }
+  &:after {
+    transform: rotate(-45deg);
+  }
+}
+.ico-close-search:before,
+.ico-close-search:after {
+  position: absolute;
+  content: '';
+  height: 16px;
+  width: 2px;
+  background-color: $grey-4;
+}
+
+.ic-arrow-left {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 22px;
+  height: 22px;
+}
+.ic-arrow-left::after,
+.ic-arrow-left::before {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  left: 3px;
+}
+.ic-arrow-left::after {
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+  transform: rotate(45deg);
+  bottom: 7px;
+}
+.ic-arrow-left::before {
+  width: 16px;
+  height: 2px;
+  bottom: 10px;
+  background: currentColor;
+}
+
+.ic-print {
+  width: 0.68em;
+  height: 1em;
+  border-style: solid;
+  border-color: currentcolor;
+  background-color: transparent;
+  border-width: 0.07em;
+  border-radius: 0.05em;
+  margin: 0 0.16em;
+}
+.ic-print:before {
+  width: 1em;
+  height: 0.4em;
+  border-width: 0.07em 0.21em 0;
+  border-style: solid;
+  border-color: currentColor currentcolor transparent;
+  border-radius: 0.05em 0.05em 0 0;
+  top: 0.25em;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: linear-gradient(transparent 20%, currentcolor 20%, currentcolor 60%, transparent 60%);
+}
+.ic-print:after {
+  width: 0.45em;
+  height: 0.065em;
+  background-color: currentColor;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0.6em;
+  box-shadow: 0 0.12em, -0.1em -0.28em 0 0.05em;
+}
+
+.ic-mail,
+.ic-mail::after {
+  display: block;
+  box-sizing: border-box;
+  height: 14px;
+  border: 2px solid;
+}
+.ic-mail {
+  color: $grey-2;
+  overflow: hidden;
+  transform: scale(var(--ggs, 1));
+  position: absolute;
+  width: 18px;
+  border-radius: 2px;
+}
+.ic-mail::after {
+  content: '';
+  position: absolute;
+  border-radius: 3px;
+  width: 14px;
+  transform: rotate(-45deg);
+  bottom: 3px;
+  left: 0;
+}
+
+.ic-phone {
+  color: $grey-2;
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  width: 22px;
+  height: 22px;
+  transform: scale(var(--ggs, 1));
+}
+.ic-phone::after,
+.ic-phone::before {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+}
+.ic-phone::after {
+  width: 18px;
+  height: 18px;
+  border-top-left-radius: 1px;
+  border-bottom-right-radius: 1px;
+  border-bottom-left-radius: 12px;
+  border-left: 4px solid;
+  border-bottom: 4px solid;
+  left: 2px;
+  bottom: 2px;
+  background: linear-gradient(to left, currentColor 10px, transparent 0) no-repeat right 11px/6px 4px,
+    linear-gradient(to left, currentColor 10px, transparent 0) no-repeat -1px 0/4px 6px;
+}
+.ic-phone::before {
+  width: 20px;
+  height: 20px;
+  border: 6px double;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-radius: 50%;
+  transform: rotate(-45deg);
+  bottom: 2px;
+  left: 2px;
+}
+
+.ic-mouse {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 16px;
+  height: 24px;
+  border: 2px solid;
+  border-radius: 10px;
+}
+.ic-mouse::after {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 3px;
+  width: 2px;
+  height: 6px;
+  background: currentColor;
+  top: 3px;
+  left: 5px;
+}
+
+.ic-wifi {
+  color: #000;
+  position: absolute;
+  margin-left: 7px;
+  margin-top: 13px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border-top: solid 1px currentColor;
+  border-right: solid 1px transparent;
+  border-bottom: solid 1px transparent;
+  border-left: solid 1px transparent;
+}
+.ic-wifi:before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border-top: solid 1px currentColor;
+  border-right: solid 1px transparent;
+  border-bottom: solid 1px transparent;
+  border-left: solid 1px transparent;
+}
+.ic-wifi:after {
+  content: '';
+  position: absolute;
+  left: -9px;
+  top: -9px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border-top: solid 1px currentColor;
+  border-right: solid 1px transparent;
+  border-bottom: solid 1px transparent;
+  border-left: solid 1px transparent;
+}
+
+.ic-screen {
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 22px;
+  height: 14px;
+  border: 2px solid;
+  border-radius: 3px;
+  margin-top: -4px;
+}
+.ic-screen::after,
+.ic-screen::before {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 3px;
+  width: 10px;
+  height: 2px;
+  background: currentColor;
+  top: 14px;
+  left: 4px;
+}
+.ic-screen::before {
+  width: 2px;
+  height: 6px;
+  top: 10px;
+  left: 8px;
+}
+
+.ic-globe-alt,
+.ic-globe-alt::after,
+.ic-globe-alt::before {
+  color: $grey-2;
+  display: block;
+  box-sizing: border-box;
+  height: 18px;
+  border: 2px solid;
+}
+.ic-globe-alt {
+  position: absolute;
+  transform: scale(var(--ggs, 1));
+  width: 18px;
+  border-radius: 22px;
+}
+.ic-globe-alt::after,
+.ic-globe-alt::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  border-radius: 100%;
+  top: -2px;
+  left: 3px;
+}
+.ic-globe-alt::after {
+  width: 24px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-bottom: 2px solid;
+  top: -11px;
+  left: -5px;
+}
+
+.ic-camera {
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  border: 2px solid;
+  border-radius: 3px;
+  width: 18px;
+  height: 12px;
+  perspective: 24px;
+}
+.ic-camera::after,
+.ic-camera::before {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+}
+.ic-camera::before {
+  border: 2px solid;
+  border-left-color: transparent;
+  transform: rotateY(-70deg);
+  width: 8px;
+  height: 8px;
+  right: -7px;
+  top: 0;
+}
+.ic-camera::after {
+  width: 10px;
+  height: 5px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  top: -5px;
+  right: 2px;
+  border-top-right-radius: 2px;
+}
+
+.ic-calendar-today {
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 18px;
+  height: 18px;
+  border: 2px solid;
+  border-top: 4px solid;
+  border-radius: 3px;
+}
+.ic-calendar-today::before {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  background: currentColor;
+  height: 4px;
+  width: 4px;
+  border-radius: 2px;
+  right: 2px;
+  bottom: 2px;
+}
+
+.ic-user {
+  display: block;
+  position: absolute;
+  transform: scale(var(--ggs, 1));
+  box-sizing: border-box;
+  width: 12px;
+  height: 18px;
+}
+.ic-user::after,
+.ic-user::before {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  border: 2px solid;
+}
+.ic-user::before {
+  width: 8px;
+  height: 8px;
+  border-radius: 30px;
+  top: 0;
+  left: 2px;
+}
+.ic-user::after {
+  width: 12px;
+  height: 9px;
+  border-bottom: 0;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  top: 9px;
+}
+
+.ico-close-details {
+  width: 44px;
+  height: 44px;
+  border-radius: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.8;
+  cursor: pointer;
+
+  &:before,
+  &:after {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background-color: $grey-1;
+    position: absolute;
+    border-radius: 1px;
+  }
+  &:hover {
+    background-color: $grey-7;
+  }
+  &:before {
+    transform: rotate(45deg);
+  }
+  &:after {
+    transform: rotate(-45deg);
+  }
+}
+.ico-menu,
+.ico-menu:before,
+.ico-menu:after {
+  cursor: pointer;
+  border-radius: 1px;
+  height: 2px;
+  width: 23px;
+  background: $black;
+  position: absolute;
+  display: block;
+  content: '';
+}
+.ico-menu {
+  &:before {
+    top: -6px;
+  }
+  &:after {
+    bottom: -6px;
+  }
+}
+
+.ico-gg-eye-alt {
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 24px;
+  height: 18px;
+  border-bottom-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.ico-gg-eye-alt::after,
+.ico-gg-eye-alt::before {
+  content: '';
+  display: block;
+  border-radius: 100px;
+  position: absolute;
+  box-sizing: border-box;
+}
+.ico-gg-eye-alt::after {
+  top: 2px;
+  box-shadow: inset 0 -8px 0 2px $grey-3, inset 0 0 0 2px $grey-3;
+  width: 24px;
+  height: 24px;
+}
+.ico-gg-eye-alt::before {
+  width: 8px;
+  height: 8px;
+  border: 2px solid $grey-3;
+  bottom: 4px;
+  left: 8px;
+  background-color: $grey-3;
+}
+
+.ico-gg-add {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  color: $green-1;
+  width: 32px;
+  height: 32px;
+}
+.ico-gg-add::after,
+.ico-gg-add::before {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 5px;
+  top: 8px;
+  left: 0px;
+}
+.ico-gg-add::after {
+  width: 2px;
+  height: 14px;
+  top: 2px;
+  left: 6px;
+}
+
+.gg-eye-alt {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 12px;
+  border-bottom-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.gg-eye-alt::after,
+.gg-eye-alt::before {
+  content: '';
+  display: block;
+  border-radius: 100px;
+  position: absolute;
+  box-sizing: border-box;
+}
+.gg-eye-alt::after {
+  top: 2px;
+  box-shadow: inset 0 -8px 0 2px, inset 0 0 0 2px;
+  width: 18px;
+  height: 18px;
+}
+.gg-eye-alt::before {
+  width: 2px;
+  height: 2px;
+  border: 2px solid black;
+  bottom: 3px;
+  left: 7px;
+  background-color: black;
+}
+
+.ico-gg-check {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 22px;
+  height: 22px;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  color: $white;
+}
+.ico-gg-check::after {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  left: 5px;
+  top: -3px;
+  width: 7px;
+  height: 12px;
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  transform-origin: bottom left;
+  transform: rotate(45deg);
+  color: $white;
+}
