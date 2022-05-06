@@ -1,0 +1,42 @@
+@import './color';
+
+$card-radius: 0.625em;
+$bouton-radius: 0.625em;
+$input-radius: 4px;
+$bouton-width: 12.25em;
+$round-bouton-radius: 1.25em;
+$round-radius: 50%;
+$round-button: 40px;
+$simple-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+$mat-tab-shadow: 0px 2px 7px rgba(0, 0, 0, 0.25);
+
+@mixin highlight {
+  font-weight: bolder;
+  background: linear-gradient(
+      104deg,
+      rgba(179, 248, 248, 0) 0.9%,
+      rgba(179, 248, 248, 1.25) 2.4%,
+      rgba(179, 248, 248, 0.5) 5.8%,
+      rgba(179, 248, 248, 0.1) 93%,
+      rgba(179, 248, 248, 0.7) 96%,
+      rgba(130, 255, 1732, 0) 98%
+    ),
+    linear-gradient(183deg, rgba(130, 255, 173, 0) 0%, rgba(179, 248, 248, 0.3) 7.9%, rgba(130, 255, 173, 0) 15%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  margin: 0;
+  border-radius: 7.5px;
+  text-shadow: -12px 12px 9.8px rgba(179, 248, 248, 0.7), 21px -18.1px 7.3px rgba(255, 255, 255, 1),
+    -18.1px -27.3px 30px rgba(255, 255, 255, 1);
+  padding: 4px;
+  background-repeat: no-repeat;
+  background-position-y: 12px;
+}
+
+@mixin background-hash($color) {
+  background: $color !important;
+  padding: 0 0 1px 1px;
+  .body-wrap {
+    background-color: $white;
+  }
+}

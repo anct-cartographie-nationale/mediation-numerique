@@ -1,0 +1,229 @@
+$text-font: 'Lato', 'Helvetica', sans-serif;
+$footer-text-font: 'Arial', 'Helvetica', sans-serif;
+$title-font: 'Lato', 'Helvetica', sans-serif;
+
+$font-size-xxxxsmall: 0.625em; // 10px
+$font-size-xxsmall: 0.75em; // 12px
+$font-size-xmsmall: 0.813em; // 13px
+$font-size-xsmall: 0.875em; // 14px
+$font-size-xismall: 0.9375em; // 15px
+$font-size-small: 1em; // 16px
+
+$font-size-smedium: 1.125em; // 18px
+$font-size-medium: 1.25em; // 20px
+$font-size-xmedium: 1.375em; // 22px
+$font-size-xxmedium: 1.5em; // 24px
+$font-size-large: 1.625em; // 26px
+$font-size-xlarge: 1.75em; // 28px
+$font-size-xxlarge: 1.875em; // 30px
+$font-size-xcxlarge: 2em; // 32px
+
+html,
+body,
+p,
+span,
+label {
+  font-family: $text-font;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.card-header-text,
+.welcome-message,
+.user-name,
+.profile-user-name,
+.project-name,
+.annuaire-label,
+.event_title,
+.objective_title {
+  font-family: $title-font;
+}
+
+@mixin arial-regular-16 {
+  font-family: $footer-text-font;
+  font-style: normal;
+  font-size: $font-size-small;
+}
+
+@mixin lato-regular-32 {
+  font-family: $title-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-xcxlarge;
+}
+@mixin lato-bold-30 {
+  font-family: $title-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-xxlarge;
+}
+
+@mixin lato-bold-28 {
+  font-family: $title-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-xlarge;
+}
+
+@mixin lato-bold-26 {
+  font-family: $title-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-large;
+}
+@mixin lato-regular-26 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-large;
+}
+@mixin lato-bold-24 {
+  font-family: $title-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-xxmedium;
+}
+@mixin lato-regular-24 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-xxmedium;
+}
+@mixin lato-regular-22 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-xmedium;
+}
+
+@mixin lato-bold-22 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-xmedium;
+}
+@mixin lato-bold-20 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-medium;
+}
+@mixin lato-regular-20 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-medium;
+}
+@mixin lato-bold-20 {
+  font-family: $title-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-medium;
+}
+@mixin lato-regular-20 {
+  font-family: $title-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-medium;
+}
+@mixin lato-regular-18 {
+  font-family: $title-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-smedium;
+}
+@mixin lato-bold-18 {
+  font-family: $title-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-smedium;
+}
+@mixin lato-bold-16 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-small;
+}
+@mixin lato-regular-16 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-small;
+}
+@mixin lato-bold-15 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-xismall;
+}
+@mixin lato-regular-15 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-xismall;
+}
+@mixin lato-bold-14 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-xsmall;
+}
+@mixin lato-regular-14 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-xsmall;
+}
+@mixin lato-regular-13 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-xmsmall;
+}
+@mixin lato-bold-13 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: bold;
+  font-size: $font-size-xmsmall;
+}
+@mixin lato-regular-12 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-xxsmall;
+}
+@mixin lato-regular-10 {
+  font-family: $text-font;
+  font-style: normal;
+  font-weight: normal;
+  font-size: $font-size-xxxxsmall;
+}
+
+@mixin text-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin btn-bold {
+  @include lato-bold-16;
+  line-height: 18px;
+}
+
+@mixin btn-bold-underline {
+  @include btn-bold;
+  text-decoration: underline;
+}
+@mixin btn-normal {
+  @include lato-regular-16;
+  line-height: 19px;
+}
+
+@mixin btn-pass {
+  @include lato-regular-14;
+  line-height: 15.5px;
+}
