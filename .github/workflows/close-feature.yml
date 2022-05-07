@@ -1,0 +1,18 @@
+---
+name: Close feature
+
+on:
+  pull_request:
+    types:
+      - 'closed'
+    branches:
+      - 'main'
+
+jobs:
+  clean-repository:
+    name: Clean repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove merged feature branch
+        run: |
+          echo A pull request was closed
