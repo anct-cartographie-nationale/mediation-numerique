@@ -4,7 +4,6 @@ name: Validate feature
 on:
   push:
     branches:
-      - 'main'
       - 'feature/*'
     tags:
       - '*.*.*'
