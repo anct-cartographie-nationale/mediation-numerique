@@ -1,0 +1,25 @@
+<div class="structureList-container">
+  <div class="structureListHeader hide-on-print">
+    <div class="nbStructuresLabel" [ngPlural]="structureList.length">
+      <ng-template ngPluralCase="0">0 structure</ng-template>
+      <ng-template ngPluralCase="1">1 structure</ng-template>
+      <ng-template ngPluralCase="other">{{ structureList.length }} structures</ng-template>
+    </div>
+  </div>
+
+  <div id="listCard" class="listCard" (mouseleave)="mouseLeave()">
+    <app-card
+      *ngFor="let structure of structureList"
+      [structure]="structure"
+      (showDetails)="showDetails($event)"
+      (hover)="handleCardHover($event)"
+      class="structure-card"></app-card>
+    <p *ngIf="structureList && structureList.length <= 0">Il n'y a aucune réponse correspondant à votre recherche</p>
+  </div>
+</div>
+
+<app-structure-details
+  class="structureList-details"
+  *ngIf="showStructureDetails"
+  [structure]="structure"
+  (closeDetails)="closeDetails()"></app-structure-details>

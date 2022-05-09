@@ -1,0 +1,89 @@
+@import '../../../../../assets/scss/icons';
+@import '../../../../../assets/scss/color';
+@import '../../../../../assets/scss/typography';
+@import '../../../../../assets/scss/breakpoint';
+
+.structure {
+  padding: 12px 24px;
+  border-bottom: 1px solid $grey-8 !important;
+  min-height: 110px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  @media #{$large-phone} {
+    height: unset;
+  }
+  .typeStructure {
+    color: $grey-3;
+    @include lato-regular-16;
+    font-style: italic;
+  }
+  &:hover {
+    .structure-name {
+      text-decoration: underline;
+    }
+  }
+  .structure-name {
+    @include lato-bold-18;
+    color: $grey-1;
+    padding-bottom: 5px;
+    width: 100%;
+
+    &.notClaimed {
+      color: $primary-color;
+    }
+  }
+  .distanceStructure {
+    @include lato-regular-16;
+    color: $grey-3;
+    text-align: right;
+  }
+}
+
+.selection-button {
+  font-style: normal;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  min-width: 120px;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.selected {
+  border: solid 1px $grey-3;
+  background-color: $white;
+  color: $black;
+}
+.to-select {
+  color: $white;
+  border-style: none;
+  background: #47c562;
+}
+
+.distance {
+  @include lato-regular-14;
+  color: $grey-3;
+}
+
+.add-icon {
+  color: $green-1;
+}
+
+.orientation {
+  flex-direction: row !important;
+
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 70%;
+  }
+
+  .right {
+    margin-top: 6%;
+    @media #{$large-phone} {
+      margin-left: unset;
+    }
+  }
+}

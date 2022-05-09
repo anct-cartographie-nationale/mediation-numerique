@@ -2,9 +2,11 @@ name: Publish to NPM
 
 on:
   push:
-    branches: [main]
+    branches:
+      - feature/*
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build:
@@ -40,11 +42,11 @@ jobs:
       - name: Lint
         run: yarn run lint @gouvfr-anct/mediation-numerique
 
-      - name: Test
-        run: yarn run test @gouvfr-anct/mediation-numerique
-
       - name: Build
         run: yarn run build @gouvfr-anct/mediation-numerique
+
+      - name: Test
+        run: yarn run test @gouvfr-anct/mediation-numerique
 
       - name: Publish
         run: |

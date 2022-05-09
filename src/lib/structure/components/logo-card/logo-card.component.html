@@ -1,0 +1,4 @@
+<div fxLayout="row" fxLayoutAlign="start center" *ngIf="name">
+  <img [src]="'assets/logos/' + name + '.svg'" [alt]="'logo ' + name" />
+  <p>{{ getName(name) }}</p>
+</div>

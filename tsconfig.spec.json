@@ -2,7 +2,10 @@
 {
   "extends": "../../../tsconfig.spec.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/spec"
+    "outDir": "../../out-tsc/spec",
+    "paths": {
+      "@gouvfr-anct/*": ["dist/@gouvfr-anct/*"]
+    }
   },
   "include": ["**/*.spec.ts", "**/*.d.ts"]
 }
