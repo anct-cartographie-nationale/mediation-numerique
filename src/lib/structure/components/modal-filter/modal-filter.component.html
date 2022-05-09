@@ -1,0 +1,161 @@
+<div *ngIf="modalType" fxLayout="column" fxLayoutAlign="center center" [ngClass]="['modal', 'modal' + getModalType()]">
+  <div class="body-wrap" fxLayout="column" fxLayoutAlign="space-between">
+    <div class="titleFilter" fxLayout="row" fxLayoutAlign="space-between">
+      <span>Filtres</span>
+      <div (click)="closeModal()" class="ico-close-details"></div>
+    </div>
+    <!-- Filter with single category -->
+    <div class="contentModal" fxLayout="row wrap" fxLayoutAlign="flex-start" *ngIf="categories.length === 1">
+      <div class="blockFiltre" *ngFor="let c of categories">
+        <ul class="blockLigne">
+          <div fxLayout="row" fxLayoutAlign="start center" class="ligneFiltre" *ngFor="let module of c.modules">
+            <li class="checkbox">
+              <div class="checkboxItem">
+                <label fxLayout="row" fxLayoutAlign="start center">
+                  <input
+                    type="checkbox"
+                    [checked]="searchService.getIndex(checkedModules, module.id, c.id) > -1"
+                    [value]="module.id"
+                    (change)="onCheckboxChange($event, c.id, module.text)" />
+                  <span class="customCheck customCheckPrimary"></span>
+                  <div class="label">{{ module.text }}</div>
+                </label>
+              </div>
+            </li>
+          </div>
+        </ul>
+      </div>
+    </div>
+    <!-- "Other filters" backdrop fullwidth modal -->
+    <div
+      class="contentModal maxModal"
+      fxLayout="row wrap"
+      fxLayoutAlign="flex-start"
+      *ngIf="categories.length > 1 && getModalType() === 'moreFilters'">
+      <div
+        class="blockLigne"
+        (clickOutside)="getModalType() === 'moreFilters' ? closeModal() : ''"
+        [ngClass]="{ backDropModal: getModalType() === 'moreFilters' }">
+        <div class="headerMoreFilters" *ngIf="getModalType() === 'moreFilters'">
+          Plus de filtres
+          <div class="iconClose" (click)="closeModal()">
+            <app-svg-icon [iconClass]="'icon-28'" [iconColor]="'grey-1'" [icon]="'closeModal'" [type]="'ico'"></app-svg-icon>
+          </div>
+        </div>
+        <div class="scroll-container">
+          <div class="blockFiltre" *ngFor="let c of categories">
+            <p>{{ c.name }}</p>
+            <ul class="blockLigne smallList" [ngClass]="{ show: this.toggledCategories.includes(c.id) }">
+              <div fxLayout="row" fxLayoutAlign="start center" class="ligneFiltre" *ngFor="let module of c.modules">
+                <li class="checkbox">
+                  <div class="checkboxItem">
+                    <label fxLayout="row" fxLayoutAlign="start center">
+                      <input
+                        type="checkbox"
+                        [checked]="searchService.getIndex(checkedModules, module.id, c.id) > -1"
+                        [value]="module.id"
+                        (change)="onCheckboxChange($event, c.id, module.displayText)" />
+                      <span class="customCheck customCheckPrimary"></span>
+                      <div class="label">{{ module.text }}</div>
+                    </label>
+                  </div>
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="footer"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          [ngClass]="{ backDropModalFooter: getModalType() === 'moreFilters' }">
+          <div class="half-width">
+            <app-button
+              [style]="buttonTypeEnum.modalSecondary"
+              [text]="'Effacer'"
+              (click)="clearFilters()"
+              tabindex="0"></app-button>
+          </div>
+          <div class="half-width">
+            <app-button
+              [style]="buttonTypeEnum.modalPrimary"
+              [text]="'Appliquer'"
+              (click)="emitModules(checkedModules)"></app-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Filter with multiple categories -->
+    <div
+      class="contentModal maxModal max-height"
+      fxLayout="row wrap"
+      fxLayoutAlign="flex-start"
+      *ngIf="categories.length > 1 && getModalType() !== 'moreFilters'">
+      <ul class="blockLigne">
+        <div class="blockFiltre" *ngFor="let c of categories">
+          <li class="checkbox">
+            <div class="checkboxItem categoryCheckBox">
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <label>
+                  <input
+                    type="checkbox"
+                    class="multiCheck"
+                    [checked]="getCategoryCheckboxStatus(c) === 'checked'"
+                    (change)="handleCategoryCheckBox($event, c)" />
+                  <span
+                    class="customCheck customCheckPrimary"
+                    [ngClass]="{ halfCheck: getCategoryCheckboxStatus(c) === 'halfChecked' }"></span>
+                </label>
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="space-between center"
+                  class="w-100 clickable"
+                  (click)="toggleShowCategory(c.id)">
+                  <div class="label">{{ c.name }}</div>
+                  <div class="arrow" [ngClass]="{ toggled: this.toggledCategories.includes(c.id) }"></div>
+                </div>
+              </div>
+              <ul class="blockLigne smallList" [ngClass]="{ show: this.toggledCategories.includes(c.id) }">
+                <div fxLayout="row" fxLayoutAlign="start center" class="ligneFiltre" *ngFor="let module of c.modules">
+                  <li class="checkbox">
+                    <div class="checkboxItem">
+                      <label fxLayout="row" fxLayoutAlign="start center">
+                        <input
+                          type="checkbox"
+                          [checked]="searchService.getIndex(checkedModules, module.id, c.id) > -1"
+                          [value]="module.id"
+                          (change)="onCheckboxChange($event, c.id, module.text)" />
+                        <span class="customCheck customCheckPrimary"></span>
+                        <div class="label">{{ module.text }}</div>
+                      </label>
+                    </div>
+                  </li>
+                </div>
+              </ul>
+            </div>
+          </li>
+        </div>
+      </ul>
+    </div>
+    <div
+      class="footer"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+      [ngClass]="{ backDropModalFooter: getModalType() === 'moreFilters' }"
+      *ngIf="getModalType() !== 'moreFilters'">
+      <div class="half-width">
+        <app-button
+          [style]="buttonTypeEnum.modalSecondary"
+          [text]="'Effacer'"
+          (click)="clearFilters()"
+          tabindex="0"></app-button>
+      </div>
+      <div class="half-width">
+        <app-button
+          [style]="buttonTypeEnum.modalPrimary"
+          [text]="'Appliquer'"
+          (click)="emitModules(checkedModules)"></app-button>
+      </div>
+    </div>
+  </div>
+</div>

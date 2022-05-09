@@ -1,0 +1,151 @@
+<div class="block">
+  <div class="content">
+    <form
+      class="inputSearch"
+      [formGroup]="searchForm"
+      fxLayout="row"
+      fxLayoutGap="4px"
+      fxLayoutAlign=" center"
+      (ngSubmit)="applyFilter(searchForm.value.searchTerm)">
+      <div fxLayout="row" fxLayoutAlign="space-between center" class="container">
+        <input type="text" formControlName="searchTerm" placeholder="Rechercher une association, une commune..." />
+        <button
+          *ngIf="this.searchForm.get('searchTerm').value?.length > 0"
+          (click)="clearInput()"
+          class="icon close"
+          type="button">
+          <div class="ico-close-search"></div>
+        </button>
+        <span *ngIf="this.searchForm.get('searchTerm').value?.length > 0" class="separation"></span>
+        <app-button [style]="buttonTypeEnum.searchIcon" [iconBtn]="'search'" [type]="'submit'"></app-button>
+      </div>
+    </form>
+    <div (clickOutside)="closeModal()" class="btn-container">
+      <div class="btnSection" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="4px">
+        <button
+          class="btn-filter isntPhoneContent"
+          type="button"
+          fxLayout="row"
+          [ngClass]="{
+            selected: modalTypeOpened === TypeModal.accompaniment,
+            containCheckedFilters: numberAccompanimentChecked
+          }"
+          fxLayoutAlign="space-between center"
+          (click)="openModal(TypeModal.accompaniment)">
+          <span>Aide numérique</span>
+          <div class="arrow"></div>
+        </button>
+        <button
+          class="btn-filter isntPhoneContent"
+          type="button"
+          fxLayout="row"
+          [ngClass]="{
+            selected: modalTypeOpened === TypeModal.training,
+            containCheckedFilters: numberTrainingChecked
+          }"
+          fxLayoutAlign="space-between center"
+          (click)="openModal(TypeModal.training)">
+          <span>Ateliers</span>
+          <div class="arrow"></div>
+        </button>
+        <button
+          class="btn-filter isntPhoneContent"
+          type="button"
+          fxLayout="row"
+          [ngClass]="{
+            selected: modalTypeOpened === TypeModal.public,
+            containCheckedFilters: numberPublicChecked
+          }"
+          fxLayoutAlign="space-between center"
+          (click)="openModal(TypeModal.public)">
+          <span>Public</span>
+          <div class="arrow"></div>
+        </button>
+        <button
+          class="btn-filter isntPhoneContent"
+          type="button"
+          fxLayout="row"
+          [ngClass]="{
+            selected: modalTypeOpened === TypeModal.equipments,
+            containCheckedFilters: numberEquipmentChecked
+          }"
+          fxLayoutAlign="space-between center"
+          (click)="openModal(TypeModal.equipments)">
+          <span>Matériel et wifi</span>
+          <div class="arrow"></div>
+        </button>
+        <div
+          class="checkboxButton"
+          [ngClass]="{
+            checked: searchService.getIndex(checkedModulesFilter, 'passNumerique', 'labelsQualifications') > -1
+          }">
+          <label fxLayout="row" fxLayoutAlign="center center">
+            <input
+              type="checkbox"
+              value="passNumerique"
+              [checked]="searchService.getIndex(checkedModulesFilter, 'passNumerique', 'labelsQualifications') > -1"
+              (change)="externalCheckboxCheck($event, 'labelsQualifications', 'Pass numérique')" />
+            <div class="label pass">Pass numérique</div>
+          </label>
+        </div>
+        <div
+          class="checkboxButton"
+          [ngClass]="{
+            checked: searchService.getIndex(checkedModulesFilter, 'conseillerNumFranceServices', 'labelsQualifications') > -1
+          }">
+          <label fxLayout="row" fxLayoutAlign="center center">
+            <input
+              type="checkbox"
+              value="conseillerNumFranceServices"
+              [checked]="
+                searchService.getIndex(checkedModulesFilter, 'conseillerNumFranceServices', 'labelsQualifications') > -1
+              "
+              (change)="externalCheckboxCheck($event, 'labelsQualifications', 'Conseillers numériques')" />
+            <div class="label pass">Conseillers numériques</div>
+          </label>
+        </div>
+        <div
+          class="checkboxButton isntPhoneContent"
+          [ngClass]="{
+            checked: searchService.getIndex(checkedModulesFilter, 'accesLibre', 'accessModality') > -1
+          }">
+          <label fxLayout="row" fxLayoutAlign="center center">
+            <input
+              type="checkbox"
+              value="accesLibre"
+              [checked]="searchService.getIndex(checkedModulesFilter, 'accesLibre', 'accessModality') > -1"
+              (change)="externalCheckboxCheck($event, 'accessModality', 'Accès libre')" />
+            <div class="label pass">Accès libre</div>
+          </label>
+        </div>
+        <app-button
+          class="isntPhoneContent last-button"
+          [style]="buttonTypeEnum.Tertiary"
+          [text]="'Plus de filtres'"
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          (action)="openModal(TypeModal.moreFilters)"></app-button>
+        <div *ngIf="modalTypeOpened">
+          <app-modal-filter
+            [modalType]="modalTypeOpened"
+            [categories]="getModalCategory()"
+            [modules]="checkedModulesFilter"
+            (searchEvent)="fetchResults($event)"
+            (closeEvent)="closeModal()"></app-modal-filter>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="checkedModulesFilter.length" fxLayout="row wrap" fxLayoutGap="4px" class="filterTags isntPhoneContent">
+    <div class="title">Filtres :</div>
+    <app-button
+      *ngFor="let filter of checkedModulesFilter"
+      [style]="buttonTypeEnum.TagCloudButton"
+      [text]="filter.displayText ? filter.displayText : filter.id"
+      (action)="removeFilter(filter)"></app-button>
+    <div class="reset-icon" (click)="resetFilters()">
+      <app-svg-icon [type]="'ico'" [icon]="'tagReset'" [iconColor]="'black'"></app-svg-icon>
+    </div>
+  </div>
+</div>

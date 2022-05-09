@@ -1,0 +1,223 @@
+@import '../../../../../assets/scss/icons';
+@import '../../../../../assets/scss/color';
+@import '../../../../../assets/scss/typography';
+@import '../../../../../assets/scss/breakpoint';
+@import '../../../../../assets/scss/shapes';
+@import '../../../../../assets/scss/hyperlink';
+@import '../../../../../assets/scss/z-index';
+
+.modalaccompaniment {
+  left: 212px;
+  @media #{$large-desktop} {
+    left: 273px;
+  }
+}
+.modaltraining {
+  left: 331px;
+  @media #{$large-desktop} {
+    left: 417px;
+  }
+}
+.modalpublic {
+  left: 431px;
+  @media #{$large-desktop} {
+    left: 513px;
+  }
+}
+.modalequipments {
+  left: 519px;
+  @media #{$large-desktop} {
+    left: 603px;
+  }
+}
+.maxModal .blockLigne {
+  box-sizing: border-box;
+  width: 360px;
+  .smallList {
+    display: block;
+    box-sizing: border-box;
+    background: $grey-8;
+    max-width: 300px;
+    padding: 0.5rem !important;
+    margin-top: 1rem !important;
+  }
+}
+.modal {
+  max-width: 360px;
+  width: auto;
+  z-index: $modal-z-index !important;
+  position: fixed;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  margin-top: 25px;
+  @media #{$large-phone} {
+    height: 100%;
+    max-height: auto;
+    max-width: auto;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border: none;
+    padding: 0;
+  }
+  background: white;
+  .body-wrap {
+    @media #{$large-phone} {
+      height: 100vh;
+      height: -webkit-fill-available;
+    }
+    .titleFilter {
+      display: none !important;
+      margin: 27px 25px 0px 25px;
+      @include lato-bold-26;
+      @media #{$large-phone} {
+        display: flex !important;
+      }
+    }
+  }
+  .contentModal {
+    overflow-y: auto;
+    max-width: 1100px;
+    border-bottom: 1px solid $grey;
+    @media #{$large-phone} {
+      max-height: none;
+      height: 100%;
+    }
+    .blockFiltre {
+      width: auto;
+      margin: 25px 20px;
+      min-width: 200px;
+
+      @media #{$large-phone} {
+        margin: 0 18px;
+        padding: 25px 0;
+        min-width: 0;
+      }
+      .categoryCheckBox {
+        .halfCheck {
+          position: relative;
+          &:before {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 10px;
+            left: 4px;
+            top: 8px;
+            transform: rotate(0deg);
+            border-bottom: solid 2px $grey-2;
+            border-radius: 0;
+          }
+        }
+        ul {
+          display: none;
+        }
+        .show {
+          display: block !important;
+        }
+      }
+    }
+    .blockLigne {
+      padding-left: 0;
+      margin: 0px;
+      li {
+        margin-bottom: 1rem;
+      }
+    }
+    label {
+      @include lato-regular-16;
+      color: $grey-1;
+    }
+
+    .arrow {
+      cursor: pointer;
+      margin-left: auto;
+      background-color: transparent;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+      transform: translateY(-25%) rotate(45deg);
+      height: 7px;
+      width: 7px;
+      transition: all 300ms ease;
+      margin-top: -5px;
+    }
+    .toggled {
+      transform: translateY(25%) rotate(-135deg);
+    }
+    &.max-height {
+      max-height: 50vh;
+      overflow-y: overlay;
+    }
+  }
+  .footer {
+    box-sizing: border-box;
+    height: 50px;
+    padding: 0.5rem;
+    .reset {
+      width: 45%;
+      text-align: center;
+      color: $grey-4;
+    }
+    .half-width {
+      width: 50%;
+      padding: 0 4px;
+    }
+  }
+}
+.modalmoreFilters {
+  width: 100%;
+  min-width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.8) !important;
+  margin: 0;
+  border-radius: 0;
+  .scroll-container {
+    max-height: 390px;
+    overflow-y: scroll;
+  }
+  .maxModal {
+    max-width: 360px;
+    margin: auto;
+    background: white;
+    margin-top: 10%;
+    border-radius: 8px;
+    // overflow: hidden;
+  }
+  .backDropModal {
+    background: white;
+    width: 360px;
+    min-height: 40vh;
+  }
+  .backDropModalFooter {
+    background: white;
+    width: 360px;
+    margin: auto;
+    border-radius: 0 0 8px 8px;
+  }
+  .headerMoreFilters {
+    position: relative;
+    text-align: center;
+    color: $grey-1;
+    background: white;
+    padding: 1rem;
+    @include lato-bold-18;
+    align-items: center;
+    justify-content: center;
+    border-bottom: solid 1px $grey-6;
+    border-radius: 8px 8px 0 0;
+    .iconClose {
+      cursor: pointer;
+      position: absolute;
+      right: 14px;
+      top: 7px;
+    }
+  }
+}
+a {
+  @include hyperlink;
+}

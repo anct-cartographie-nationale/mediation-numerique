@@ -1,0 +1,20 @@
+@import './typography.scss';
+@mixin hyperlink {
+  border: 1px solid transparent;
+  padding: 8px 8px 6px 8px;
+  color: $primary-color;
+  outline: none;
+  @include btn-bold-underline;
+  &:hover {
+    color: $primary-color-dark;
+  }
+  &:focus {
+    color: $primary-color;
+    border-color: $primary-color;
+    border-radius: 4px;
+  }
+  &:active {
+    border: none;
+    color: $blue-light;
+  }
+}
