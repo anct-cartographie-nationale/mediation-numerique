@@ -52,10 +52,7 @@ export class StructureDetailsComponent implements OnInit {
   public showDigitalSecurity: boolean;
   public printMode = false;
   public isLoading: boolean = false;
-  public deleteModalOpenned = false;
-  public claimModalOpenned = false;
   public structureErrorModalOpenned = false;
-  public joinModalOpenned = false;
 
   constructor(
     @Inject(SEARCH_TOKEN) readonly searchService: SearchRepository,
@@ -75,7 +72,6 @@ export class StructureDetailsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.isLoading = true;
 
-    // GetTclStopPoints
     this.searchService.getCategoriesTraining().subscribe((referentiels) => {
       referentiels.forEach((referentiel) => {
         if (referentiel.isBaseSkills()) {
@@ -139,22 +135,6 @@ export class StructureDetailsComponent implements OnInit {
 
   public print(): void {
     this.printService.printDocument('structure', this.structure);
-  }
-
-  public toggleDeleteModal(): void {
-    this.deleteModalOpenned = !this.deleteModalOpenned;
-  }
-
-  public toggleClaimModal(): void {
-    this.claimModalOpenned = !this.claimModalOpenned;
-  }
-
-  public toggleJoinModal(): void {
-    this.joinModalOpenned = !this.joinModalOpenned;
-  }
-
-  public handleModify(): void {
-    this.router.navigate(['create-structure', this.structure._id]);
   }
 
   public getAccessLabel(accessModality: AccessModality): string {

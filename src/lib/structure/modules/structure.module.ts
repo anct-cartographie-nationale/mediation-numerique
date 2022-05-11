@@ -25,7 +25,7 @@ import { STRUCTURE_TOKEN, StructureRepository } from '../repositories/structure.
     LogoCardComponent,
     StructureListComponent
   ],
-  exports: [StructureListSearchComponent, StructureListComponent],
+  exports: [StructureListSearchComponent, StructureListComponent, StructureDetailsComponent, CardComponent],
   imports: [
     CommonModule,
     FlexModule,

@@ -58,7 +58,6 @@ export class StructureListSearchComponent implements OnInit {
         : ''
     });
   }
-
   ngOnInit(): void {
     // Will store the different categories
     this.getData();
@@ -237,7 +236,6 @@ export class StructureListSearchComponent implements OnInit {
     const filters = this.convertModulesTofilters(this.checkedModulesFilter, inputTerm);
     this.searchEvent.emit(filters);
   }
-
   public removeFilter(module: Module): void {
     const index = this.checkedModulesFilter.findIndex((m: Module) => m.id === module.id);
     this.checkedModulesFilter.splice(index, 1);
