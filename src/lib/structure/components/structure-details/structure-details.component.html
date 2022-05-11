@@ -6,42 +6,23 @@
       <div (click)="close()" class="ico-close-details"></div>
     </div>
   </div>
-  <!-- Content -->
   <div class="structure-details-content">
-    <!-- Action buttons bar -->
     <div class="structure-buttons hide-on-print" fxLayout="row" fxLayoutAlign="space-evenly">
-      <!-- Voir le conseiller numérique - Hidden until functionnality is developed -->
-      <!--div class="clickableDiv" role="button" tabindex="0">
-        <app-svg-icon
-          class="icon"
-          [type]="'ico'"
-          [icon]="'advisor'"
-          [iconClass]="'icon-32'"
-          fxLayoutAlign="space-evenly"
-        ></app-svg-icon>
-        <div class="iconTitle">Voir le conseiller numérique</div>
-      </div-->
-      <!-- Voir le site -->
       <div *ngIf="structure.website" class="clickableDiv" role="button" (click)="goToWebsite()" tabindex="0">
         <app-svg-icon class="icon" [type]="'ico'" [icon]="'web'" [iconClass]="'icon-32'"></app-svg-icon>
         <div class="iconTitle">Voir le site</div>
       </div>
-      <!-- Voir la plaquette - Hidden until functionnality is developed -->
-      <!--div class="clickableDiv" role="button" tabindex="0">
-        <app-svg-icon class="icon" [type]="'ico'" [icon]="'docs'" [iconClass]="'icon-32'"></app-svg-icon>
-        <div class="iconTitle">Voir la plaquette</div>
-      </div-->
-      <!-- Imprimer -->
       <div role="button" class="printButton clickableDiv" (click)="print()" tabindex="0">
         <app-svg-icon class="icon" [type]="'ico'" [icon]="'printStructure'" [iconClass]="'icon-32'"></app-svg-icon>
         <div class="iconTitle">Imprimer</div>
       </div>
-      <!-- Signaler une erreur -->
       <div class="clickableDiv" role="button" (click)="displayModalError()" tabindex="0">
         <app-svg-icon class="icon" [type]="'ico'" [icon]="'watch'" [iconClass]="'icon-32'"></app-svg-icon>
         <div class="iconTitle">Signaler une erreur</div>
       </div>
+      <ng-content select="[slot=structure-details-actions]"></ng-content>
     </div>
+
     <div class="structure-details-block">
       <div fxLayout="column" fxLayoutGap="10px">
         <!-- Informations-->
@@ -163,7 +144,6 @@
       </div>
     </div>
 
-    <!-- Labellisation -->
     <div
       *ngIf="structure.labelsQualifications.length"
       fxLayout="column"
@@ -178,7 +158,6 @@
       </div>
     </div>
 
-    <!-- Aides numérique -->
     <div
       *ngIf="structure.proceduresAccompaniment.length || structure.otherDescription"
       fxLayout="column"
@@ -198,7 +177,6 @@
       </div>
     </div>
 
-    <!-- Formation -->
     <div
       *ngIf="isBaseSkills() || isAccessRights() || isParentingHelp() || isSocialAndProfessional() || isDigitalSecurity()"
       fxLayout="column"
@@ -210,7 +188,6 @@
         <span *ngIf="!multipleWorkshop()" class="bold-info">L'accès à cette formation est gratuit</span>
       </div>
       <div class="formationDetails">
-        <!--Toggle BaseSkills-->
         <div *ngIf="isBaseSkills()" class="collapse" [ngClass]="{ notCollapsed: !showBaseSkills }">
           <div fxLayout="column">
             <div class="collapseHeader" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign=" center" (click)="toggleBaseSkills()">
@@ -229,7 +206,6 @@
             </div>
           </div>
         </div>
-        <!--Toggle accessRights-->
         <div *ngIf="isAccessRights()" class="collapse" [ngClass]="{ notCollapsed: !showAccessRights }">
           <div fxLayout="column">
             <div
@@ -253,7 +229,6 @@
             </div>
           </div>
         </div>
-        <!--Toggle parentingHelp-->
         <div *ngIf="isParentingHelp()" class="collapse" [ngClass]="{ notCollapsed: !showParentingHelp }">
           <div fxLayout="column">
             <div
@@ -277,7 +252,6 @@
             </div>
           </div>
         </div>
-        <!--Toggle socialAndProfessional-->
         <div *ngIf="isSocialAndProfessional()" class="collapse" [ngClass]="{ notCollapsed: !showSocialAndProfessional }">
           <div fxLayout="column">
             <div
@@ -301,7 +275,6 @@
             </div>
           </div>
         </div>
-        <!--Toggle digitalSecurity-->
         <div *ngIf="isDigitalSecurity()" class="collapse" [ngClass]="{ notCollapsed: !showDigitalSecurity }">
           <div fxLayout="column">
             <div
@@ -328,7 +301,6 @@
       </div>
     </div>
 
-    <!-- Matériel et wifi -->
     <div *ngIf="structure.hasEquipments()" fxLayout="column" class="structure-details-block" fxLayoutAlign="baseline baseline">
       <h2>Matériel et wifi</h2>
       <div fxLayout="column">
@@ -354,7 +326,7 @@
         </p>
       </div>
     </div>
-    <!-- Mise à jour -->
+    <ng-content select="[slot=structure-details-access]"></ng-content>
     <div fxLayout="column" class="structure-details-block" fxLayoutAlign="baseline baseline" fxLayoutGap="20px">
       <div fxLayout="row" fxLayoutAlign="none flex-start" fxLayoutGap="13px">
         <p class="updated">Mise à jour le {{ structure.updatedAt | date: 'mediumDate' }}</p>
@@ -362,6 +334,7 @@
     </div>
   </div>
 
+  <ng-content select="[slot=structure-details-modals]"></ng-content>
   <app-text-input-modal
     [openned]="structureErrorModalOpenned"
     [placeholder]="'Décrivez l\'erreur ici. Ex: Horaires faux...'"

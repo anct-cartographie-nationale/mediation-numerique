@@ -11,10 +11,10 @@ export class CardComponent {
   @Input() public structure: Structure;
   @Input() public isSelected: boolean;
   @Input() public isOrientation: boolean;
+  @Input() public isClaimed = true;
   @Output() public showDetails: EventEmitter<Structure> = new EventEmitter<Structure>();
   @Output() public addToList: EventEmitter<Structure> = new EventEmitter<Structure>();
   @Output() public hover: EventEmitter<Structure> = new EventEmitter<Structure>();
-  public isClaimed = true;
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 

@@ -1,4 +1,7 @@
+import { Injectable } from '@angular/core';
 import { DivIcon, Map, Marker } from 'leaflet';
+import { Layers } from '../models/enum/layers.enum';
+import { MarkerType } from '../models/enum/markerType.enum';
 import {
   markerIcon,
   markerIconActive,
@@ -8,9 +11,8 @@ import {
   markerIconMdmActive,
   userLocationIcon
 } from './marker';
-import { Layers } from '../models/enum/layers.enum';
-import { MarkerType } from '../models/enum/markerType.enum';
 
+@Injectable()
 export class MapService {
   private static markersList = {};
   private isMarkerActive = false;

@@ -16,7 +16,6 @@ export class StructureListComponent implements OnChanges {
   @Input() public selectedStructure: Structure = new Structure();
   @Output() public displayMapMarkerId: EventEmitter<string> = new EventEmitter<string>();
   @Output() public selectedMarkerId: EventEmitter<string> = new EventEmitter<string>();
-  @Output() public updatedStructure: EventEmitter<Structure> = new EventEmitter<Structure>();
 
   public buttonTypeEnum = ButtonType;
   public showStructureDetails = false;
@@ -72,9 +71,5 @@ export class StructureListComponent implements OnChanges {
 
   public mouseLeave(): void {
     this.displayMapMarkerId.emit(undefined);
-  }
-
-  public emitUpdatedStructure(s: Structure): void {
-    this.updatedStructure.emit(s);
   }
 }
