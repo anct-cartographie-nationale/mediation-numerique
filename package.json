@@ -1,9 +1,16 @@
 {
   "name": "@gouvfr-anct/mediation-numerique",
-  "version": "0.0.6",
+  "version": "0.0.11",
   "peerDependencies": {
-    "@angular/common": "^13.3.0",
-    "@angular/core": "^13.3.0"
+    "@angular/animations": "^13.1.0",
+    "@angular/common": "^13.1.0",
+    "@angular/core": "^13.1.0",
+    "@angular/forms": "^13.1.0",
+    "@asymmetrik/ngx-leaflet": "^8.1.0",
+    "leaflet": "^1.7.1",
+    "leaflet.locatecontrol": "^0.72.0",
+    "lodash": "^4.17.21",
+    "luxon": "^1.25.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
