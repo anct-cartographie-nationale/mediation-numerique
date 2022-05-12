@@ -6,6 +6,7 @@ import { GeoJsonProperties } from '../models/geoJsonProperties.model';
 import { MapService } from './map.service';
 import { GEOMETRY_POLYGON_TOKEN, GeometryPolygonConfiguration } from '../../configurations/geometry-polygon.configuration';
 import { ZOOM_LEVEL_TOKEN, ZoomLevelConfiguration } from '../../configurations/zoom-level.configuration';
+import { INITIAL_POSITION_TOKEN, InitialPositionConfiguration } from '../../configurations/initial-position.configuration';
 import { MARKER_TYPE_TOKEN, MarkerTypeConfiguration } from '../../configurations/marker-type.configuration';
 import { GEO_JSON_TOKEN, GeoJsonRepository } from '../repositories/geo-json.repository';
 
@@ -46,6 +47,7 @@ export class MapComponent implements OnChanges {
     @Inject(GEOMETRY_POLYGON_TOKEN) private readonly metropole: GeometryPolygonConfiguration,
     @Inject(MARKER_TYPE_TOKEN) private readonly markerType: MarkerTypeConfiguration,
     @Inject(ZOOM_LEVEL_TOKEN) private readonly zoomLevel: ZoomLevelConfiguration,
+    @Inject(INITIAL_POSITION_TOKEN) private readonly initialPosition: InitialPositionConfiguration,
     @Inject(GEO_JSON_TOKEN) private readonly geoJsonService: GeoJsonRepository,
     private readonly mapService: MapService
   ) {
@@ -269,7 +271,7 @@ export class MapComponent implements OnChanges {
     // Center is set on townhall
     // Zoom is blocked on 11 to prevent people to zoom out from metropole
     this.mapOptions = {
-      center: latLng(46.28146057911664, 4.468874066180609),
+      center: latLng(this.initialPosition.latitude, this.initialPosition.longitude),
       maxZoom: this.zoomLevel.max,
       zoom: this.zoomLevel.regular,
       minZoom: this.zoomLevel.min,

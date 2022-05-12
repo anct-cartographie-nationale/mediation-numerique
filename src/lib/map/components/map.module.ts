@@ -8,7 +8,9 @@ import {
   MARKER_TYPE_TOKEN,
   MarkerTypeConfiguration,
   GEOMETRY_POLYGON_TOKEN,
-  GeometryPolygonConfiguration
+  GeometryPolygonConfiguration,
+  INITIAL_POSITION_TOKEN,
+  InitialPositionConfiguration
 } from '../../configurations';
 import { GEO_JSON_TOKEN, GeoJsonRepository } from '../repositories';
 
@@ -21,6 +23,7 @@ export class MapModule {
   public static forRoot(
     geometryPolygonConfiguration: GeometryPolygonConfiguration,
     zoomLevelConfiguration: ZoomLevelConfiguration,
+    initialPositionConfiguration: InitialPositionConfiguration,
     markerTypeConfiguration: MarkerTypeConfiguration,
     geoJsonRepository: Type<GeoJsonRepository>
   ): ModuleWithProviders<MapModule> {
@@ -30,7 +33,8 @@ export class MapModule {
         { provide: GEO_JSON_TOKEN, useClass: geoJsonRepository },
         { provide: GEOMETRY_POLYGON_TOKEN, useValue: geometryPolygonConfiguration },
         { provide: MARKER_TYPE_TOKEN, useValue: markerTypeConfiguration },
-        { provide: ZOOM_LEVEL_TOKEN, useValue: zoomLevelConfiguration }
+        { provide: ZOOM_LEVEL_TOKEN, useValue: zoomLevelConfiguration },
+        { provide: INITIAL_POSITION_TOKEN, useValue: initialPositionConfiguration }
       ]
     };
   }
@@ -39,11 +43,12 @@ export class MapModule {
     @Optional() @Inject(GEOMETRY_POLYGON_TOKEN) private readonly geometryPolygonConfiguration: GeometryPolygonConfiguration,
     @Optional() @Inject(MARKER_TYPE_TOKEN) private readonly markerType: MarkerTypeConfiguration,
     @Optional() @Inject(ZOOM_LEVEL_TOKEN) private readonly zoomLevel: ZoomLevelConfiguration,
+    @Optional() @Inject(INITIAL_POSITION_TOKEN) private readonly initialPosition: InitialPositionConfiguration,
     @Optional() @Inject(GEO_JSON_TOKEN) private readonly geoJsonRepository: GeoJsonRepository
   ) {
-    if ([geometryPolygonConfiguration, markerType, zoomLevel, geoJsonRepository].includes(null)) {
+    if ([geometryPolygonConfiguration, markerType, zoomLevel, initialPosition, geoJsonRepository].includes(null)) {
       throw new Error(
-        'Cannot import `MapModule` without calling `forRoot` with valid parameters: you must provide defined `geometryPolygonConfiguration`, `markerType`, `zoomLevel` and `geoJsonRepository`.'
+        'Cannot import `MapModule` without calling `forRoot` with valid parameters: you must provide defined `geometryPolygonConfiguration`, `markerType`, `zoomLevel`, `initialPosition` and `geoJsonRepository`.'
       );
     }
   }
