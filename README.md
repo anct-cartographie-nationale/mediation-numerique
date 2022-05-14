@@ -1,27 +1,239 @@
-# Mediation Numerique
+# Bibliothèque pour la cartographie de l’offre de médiation numérique
 
-Bibliothèque des composants de l’offre de médiation numérique.
+## À propos
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+Il s'agit d'une collection d'éléments Angular à destination des projets qui ont pour vocation d'intégrer des fonctionnalités liées au recensement de l'offre de médiation numérique sur le territoire Français et à l'orientation des usagers vers les services de médiation numérique les plus adaptés à leurs besoins.
 
-## Code scaffolding
+## Table des matières
 
-Run `ng generate component component-name --project mediation-numerique` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project mediation-numerique`.
+- 🪧 [À propos](#à-propos)
+- 📦 [Prérequis](#prérequis)
+- 🚀 [Installation](#installation)
+- 🛠️ [Utilisation](#utilisation)
+- 🤝 [Contribution](#contribution)
+- 🏗️ [Construit avec](#construit-avec)
+- 📚 [Documentation](#documentation)
+- 📝 [Licence](#licence)
 
-> Note: Don't forget to add `--project mediation-numerique` or else it will be added to the default project in your `angular.json` file.
+## Prérequis
 
-## Build
+- [Git](https://git-scm.com/) : Système de contrôle de versions distribué d'un ensemble de fichiers
+- [Node](https://nodejs.org/) : Environnement d'exécution pour Javascript
+- [Yarn](https://yarnpkg.com/) : Gestionnaire de paquets pour les produits développés dans des environnements Node
 
-Run `ng build mediation-numerique` to build the project. The build artifacts will be stored in the `dist/` directory.
+> Node et Yarn peuvent être installés via [nvm](https://github.com/nvm-sh/nvm) qui permet d'obtenir et d'utiliser rapidement différentes versions de Node via la ligne de commande.
 
-## Publishing
+## Installation
 
-After building your library with `ng build mediation-numerique`, go to the dist folder `cd dist/mediation-numerique` and run `npm publish`.
+### Pour l'utiliser dans un projet Angular
 
-## Running unit tests
+- Avec yarn : `yarn add @gouvfr-anct/mediation-numerique`
+- Avec npm : `npm install @gouvfr-anct/mediation-numerique`
 
-Run `ng test mediation-numerique` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Pour contribuer au développement
 
-## Further help
+Ce projet a été construit dans un espace de travail Angular, pour fonctionner correctement, il est nécessaire de le cloner dans un environnement similaire :
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+#### En utilisant l'espace de travail original
+
+- Suivre la procédure d'installation du projet [Client Base](https://github.com/anct-cartographie-nationale/client-base)
+- Une fois que l'espace de travail est prêt, il faut créer le dossier `@gouvfr-anct` dans `projects`
+- Puis cloner le dépôt en local dans le dossier `projects/@gouvfr-anct` : `git clone git@github.com:anct-cartographie-nationale/mediation-numerique.git`
+
+#### En utilisant un projet Angular déjà existant
+
+- Dans le dossier du projet Angular cible, lancer la commande de génération de bibliothèques : `ng generate library @gouvfr-anct/mediation-numerique`
+- Cette commande va adapter les fichiers `package.json`, `angular.json` et `tsconfig.json` pour adapter le projet au développement de la bibliothèque qui vient d'être générée dans le nouveau dossier `projects`
+- Créer le fichier `tsconfig.base.json` à la racine du projet et y copier le contenu de `tsconfig.json` en supprimant la propriété `compilerOptions.paths`, pour éviter une duplication il est possible de faire en sorte que `tsconfig.json` étende `tsconfig.base.json` en ajoutant seulement la propriété `compilerOptions.paths`
+- Optionnellement, il est possible d'adapter le code généré dans `angular.json` et `tsconfig.json`, ainsi que l'arborescence dans le dossier `projects` afin d'ajouter le `@` manquant pour correspondre au chemin `projects/@gouvfr-anct/mediation-numerique`
+- Supprimer le dossier `mediation-numerique` contenant le code de la bibliothèque générée
+- Puis cloner le dépôt en local à la place : `git clone git@github.com:anct-cartographie-nationale/mediation-numerique.git`
+- Attention à bien installer les paquets npm dont la bibliothèque a besoin dans le projet Angular de base :
+  - @angular/flex-layout
+  - leaflet
+  - geojson
+  - @asymmetrik/ngx-leaflet
+
+## Utilisation
+
+Ces commandes servent dans un contexte de développement de la bibliothèque et doivent être exécutées depuis la racine de l'espace de travail, c'est-à-dire depuis le dossier parent du dossier `projects`.
+
+### Construction
+
+Exécuter `yarn build @gouvfr-anct/mediation-numerique` pour construire le projet. Les fichiers de sortie sont écrits dans le dossier `dist/`.
+
+### Test
+
+Exécuter `yarn test @gouvfr-anct/mediation-numerique` pour tester le projet.
+
+### Lint
+
+Exécuter `yarn lint @gouvfr-anct/mediation-numerique` pour une analyse statique des fichiers `.ts` du projet.
+
+### Prettier
+
+Exécuter `yarn prettier` pour mettre à niveau la syntaxe de l'ensemble des fichiers du projet.
+
+## Contribution
+
+### Nommage des branches
+
+- Une branche qui apporte une nouvelle fonctionnalité doit ête préfixé par `feature/` : `feature/ma-fonctionnalite`
+- Une branche qui apporte une correction doit ête préfixé par `fix/` : `fix/ma-correction`
+
+### Déployer
+
+Lorsqu'une branche est fusionnée avec `main`, cela déclenche automatiquement la publication du build sur dans une nouvelle version du package npm, le numéro de version correspond à celui présent dans le fichier `package.json`.
+
+## Construit avec
+
+### langages & Frameworks
+
+- [TypeScript](https://www.typescriptlang.org/) est un langage open source construit à partir de JavaScript
+- [Angular](https://angular.io/) est une boîte à outils open source pour construire des clients web
+
+### Outils
+
+#### CLI
+
+- [Jest](https://jestjs.io/) est une boîte à outils pour écrire des tests automatisés en JavaScript
+- [Eslint](https://eslint.org/) est un analyseur statique de JavaScript avec les plugins suivants :
+- [Prettier](https://prettier.io/) est un magnificateur de code source en JavaScript
+
+#### CI
+
+- [Github Actions](https://docs.github.com/en/actions) est l'outil d'intégration et de déploiement continu intégré à GitHub
+  - L'historique des déploiements est disponible [sous l'onglet Actions](https://github.com/anct-cartographie-nationale/client-application/actions/)
+- Secrets du dépôt :
+  - `NODE_AUTH_TOKEN` : Clé d'accès NPM pour publier sur l'organisation [@gouvfr-anct](https://www.npmjs.com/org/gouvfr-anct)
+
+#### Déploiement
+
+- [npm](https://www.npmjs.com/) est le registre de référence pour les paquets Node.
+  - Organisation : [@gouvfr-anct](https://www.npmjs.com/org/gouvfr-anct)
+  - Paquet : [@gouvfr-anct/mediation-numerique](https://www.npmjs.com/package/@gouvfr-anct/mediation-numerique)
+
+## Documentation
+
+### Table des matières
+
+- [Mise en place](#mise-en-place)
+  - [Configurations](#configurations)
+  - [Modules](#modules)
+- [Éléments disponibles](#éléments-disponibles)
+  - [Shared](#shared)
+  - [Map](#map)
+  - [Structure](#structure)
+
+### Mise en place
+
+#### Configurations
+
+Les modules `Map` et `Structure` ont besoin d'être configurés en utilisant la méthode `forRoot` qui prend en paramètre des implémentations côté projet afin de les injecter dans les éléments de la bibliothèque qui en ont besoin.
+
+- Map
+  - [GeometryPolygonConfiguration](./src/lib/configurations/geometry-polygon.configuration.ts) : Configuration d'une forme de type `FeatureCollection<Polygon>` à afficher sur la carte
+  - [ZoomLevel](./src/lib/configurations/zoom-level.configuration.ts) : Configuration des niveaux de zooms `min`, `regular`, `userPosition` et `max`
+  - [InitialPosition](./src/lib/configurations/initial-position.configuration.ts) : Configuration de la position initiale de la carte par la `latitude` et la `longitude`
+  - [MarkerType](./src/lib/configurations/marker-type.configuration.ts) : Configuration des types de marqueurs `structure`, `mdm`, `conseillerFrance`, `user`
+  - [GeojsonService](./src/lib/map/repositories/geo-json.repository.ts) : Repository disposant des méthodes `getMDMGeoJson` et `getTownshipCoord`
+- Structure
+  - [SearchService](./src/lib/structure/repositories/search.repository.ts) : Repository disposant des méthodes `getCategoriesAccompaniment`, `getCategoriesOthers`, `getCategoriesTraining` et `getIndex`
+  - [StructureService](./src/lib/structure/repositories/structure.repository.ts) : Repository disposant des méthodes `getStructure` et `sendMailOnStructureError`
+
+Les configurations peuvent être définies sous forme d'objets ou d'énumérations dans un dossier `config` du projet, les repositories peuvent être définis comme des services Angular classiques sans `providedIn: 'root'`, car c'est le module de la bibliothèque qui se charge de l'injection dans les providers.
+
+#### Modules
+
+- Shared
+  - [ButtonModule](./shared/src/lib/components/button/button.module.ts)
+  - [SvgIconModule](./shared/src/lib/components/svg-icon/svg-icon.component.ts)
+  - [TextInputModalModule](./shared/src/lib/components/text-input-modal/text-input-modal.module.ts)
+  - [ModalModule](./shared/src/lib/directives/modal/modal.module.ts)
+  - [TooltipModule](./shared/src/lib/directives/tooltip/tooltip.module.ts)
+  - [DayModule](./shared/src/lib/pipes/day/day.module.ts)
+  - [PhoneModule](./shared/src/lib/pipes/phone/phone.pipe.ts)
+- Map
+  - [MapModule](./src/lib/map/components/map.module.ts)
+- Structure
+  - [StructureModule](./src/lib/structure/modules/structure.module.ts)
+
+### Éléments disponibles
+
+#### Shared
+
+##### Composants
+
+- [ButtonComponent](./shared/src/lib/components/button/button.component.ts)
+  - Sélecteur : `app-button`
+- [SvgIconComponent](./shared/src/lib/components/svg-icon/svg-icon.component.ts)
+  - Sélecteur : `app-svg-icon`
+- [TextInputModalComponent](./shared/src/lib/components/text-input-modal/text-input-modal.component.ts)
+  - Sélecteur : `app-text-input-modal`
+
+##### Directives
+
+- [ModalOutsideDirective](./shared/src/lib/directives/modal/modalOutside.directive.ts)
+  - Sélecteur : `[clickOutside]`
+- [TooltipDirective](./shared/src/lib/directives/tooltip/tooltip.directive.ts)
+  - Sélecteur : `[app-tooltipDirective]`
+
+##### Pipes
+
+- [DayPipe](./shared/src/lib/pipes/day/day.pipe.ts)
+  - Sélecteur : `| day`
+- [PhonePipe](./shared/src/lib/pipes/phone/phone.pipe.ts)
+  - Sélecteur : `| phone`
+
+#### Map
+
+##### Composants
+
+- [MapComponent](./src/lib/map/components/map.component.ts)
+  - Sélecteur : `app-map`
+
+##### Models
+
+- [Equipment](./src/lib/map/models/enum/equipment.enum.ts)
+- [typeStructureEnum](./src/lib/map/models/enum/typeStructure.enum.ts)
+- [Weekday](./src/lib/map/models/enum/weekday.enum.ts)
+- [Address](./src/lib/map/models/address.model.ts)
+- [Day](./src/lib/map/models/day.model.ts)
+- [GeoJson](./src/lib/map/models/geojson.model.ts)
+- [OpeningDay](./src/lib/map/models/openingDay.model.ts)
+- [PersonalOffer](./src/lib/map/models/personalOffer.model.ts)
+- [Structure](./src/lib/map/models/structure.model.ts)
+- [Time](./src/lib/map/models/time.model.ts)
+- [Week](./src/lib/map/models/week.model.ts)
+
+##### Repositories
+
+- [GeoJsonRepository](./src/lib/map/repositories/geo-json.repository.ts)
+
+#### Structure
+
+##### Composants
+
+- [CardComponent](./src/lib/structure/components/card/card.component.ts)
+  - Sélecteur : `app-card`
+- [StructureListSearchComponent](./src/lib/structure/components/search/structure-list-search.component.ts)
+  - Sélecteur : `app-structure-list-search`
+- [StructureListComponent](./src/lib/structure/components/structure-list/structure-list.component.ts)
+  - Sélecteur : `app-structure-list`
+- [StructureDetailsComponent](./src/lib/structure/components/structure-details/structure-details.component.ts)
+  - Sélecteur : `app-structure-details`
+
+##### Models
+
+- [Category](./src/lib/structure/models/category.model.ts)
+- [Filter](./src/lib/structure/models/filter.model.ts)
+- [Module](./src/lib/structure/models/module.model.ts)
+
+##### Repositories
+
+- [SearchRepository](./src/lib/structure/repositories/search.repository.ts)
+- [StructureRepository](./src/lib/structure/repositories/structure.repository.ts)
+
+## Licence
+
+Voir le fichier [LICENSE.md](./LICENSE.md) du dépôt.
