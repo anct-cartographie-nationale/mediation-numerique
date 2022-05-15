@@ -15,12 +15,11 @@ jobs:
         run: gh release download $GITHUB_REF_NAME --pattern=release.zip
 
       - name: Extract release files
-        run:
+        run: unzip release.zip
 
       - name: Publish on npm
         run: |
-          cp projects/@gouvfr-anct/mediation-numerique/LICENSE.md dist/@gouvfr-anct/mediation-numerique
-          cd dist/@gouvfr-anct/mediation-numerique
+          cd release
           yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
