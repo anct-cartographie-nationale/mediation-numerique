@@ -173,7 +173,6 @@ jobs:
         with:
           always-auth: true
           node-version: '16.x'
-          cache: 'yarn'
           registry-url: https://registry.npmjs.org
           scope: '@gouvfr-anct'
 
