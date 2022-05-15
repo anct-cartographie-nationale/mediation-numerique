@@ -153,7 +153,10 @@ jobs:
       - name: Add license file
         run: mv LICENSE.md dist/@gouvfr-anct/mediation-numerique/
 
-      - name: Release
+      - name: Zip release
+        run: zip -r release-$GITHUB_REF_NAME.zip dist/@gouvfr-anct/mediation-numerique/
+
+      - name: Publish release
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/@gouvfr-anct/mediation-numerique/**
+          files: release-$GITHUB_REF_NAME.zip
