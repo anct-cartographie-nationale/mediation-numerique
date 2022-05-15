@@ -154,9 +154,10 @@ jobs:
         run: mv LICENSE.md dist/@gouvfr-anct/mediation-numerique/
 
       - name: Zip release
-        run: zip -r release-$GITHUB_REF_NAME.zip dist/@gouvfr-anct/mediation-numerique/
+        run: zip -r release.zip dist/@gouvfr-anct/mediation-numerique/
 
       - name: Publish release
         uses: softprops/action-gh-release@v1
         with:
-          files: release-$GITHUB_REF_NAME.zip
+          files: release.zip
+...

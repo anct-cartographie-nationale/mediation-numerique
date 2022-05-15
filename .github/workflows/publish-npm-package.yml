@@ -1,0 +1,26 @@
+---
+name: Publish npm package
+
+on:
+  release:
+    types: [published]
+
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download release files
+        run: gh release download $GITHUB_REF_NAME --pattern=release.zip
+
+      - name: Extract release files
+        run:
+
+      - name: Publish on npm
+        run: |
+          cp projects/@gouvfr-anct/mediation-numerique/LICENSE.md dist/@gouvfr-anct/mediation-numerique
+          cd dist/@gouvfr-anct/mediation-numerique
+          yarn publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+...
