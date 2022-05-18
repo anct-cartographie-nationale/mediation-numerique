@@ -62,13 +62,16 @@ Ce projet a été construit dans un espace de travail Angular, pour fonctionner 
 [Husky](https://typicode.github.io/husky) est un outil de gestion des hooks git pour effectuer des tâches automatiques
 
 Mise en place de Husky :
+
 ```bash
 yarn husky install
 ```
 
-Rendre exécutable le fichier qui vérifie la syntaxe des commits :
+Rendre exécutable les fichiers qui contiennent les hooks :
+
 ```bash
 chmod a+x .husky/commit-msg
+chmod a+x .husky/pre-commit
 ```
 
 ## Utilisation
@@ -111,6 +114,7 @@ Les commits de ce repository doivent respecter la syntaxe décrite par la spéci
 #### Signature
 
 La branche `main`, ainsi que l'ensemble des branches de travail avec un préfixe valide requièrent que les commits soient signés :
+
 - La documentation de GitHub indique comment [configurer la signature des commits](https://docs.github.com/en/enterprise-server@3.5/authentication/managing-commit-signature-verification/about-commit-signature-verification)
 - Les utilisateurs de [keybase](https://keybase.io/) peuvent [signer leurs commits avec leur clé GPG sur Keybase](https://stephenreescarter.net/signing-git-commits-with-a-keybase-gpg-key/)
 
@@ -122,7 +126,7 @@ La branche `main`, ainsi que l'ensemble des branches de travail avec un préfixe
   - Qu'il est possible de créer un build sans erreur
   - Que la syntaxe correspond bien à ce qui est [défini par Prettier](https://github.com/anct-cartographie-nationale/client-base/blob/main/.prettierrc.json)
   - Que le code écrit en TypeScript respecte les conventions décrites par les [règles ESLint](https://github.com/anct-cartographie-nationale/client-base/blob/main/.eslintrc.json)
-  - Que les messages des commits suivent le standard établi par [Conventional Commits](https://www.conventionalcommits.org/fr) 
+  - Que les messages des commits suivent le standard établi par [Conventional Commits](https://www.conventionalcommits.org/fr)
 - Une fois les développements terminés, il faut créer une [pull request](https://github.com/anct-cartographie-nationale/mediation-numerique/pulls) avec la banche de travail comme origin et la branche `main` comme destination.
 - La pull request ne peut être fusionné que si :
   - Les étapes du workflow `Validate feature` sont valides
