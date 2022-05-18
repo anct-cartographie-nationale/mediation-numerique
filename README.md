@@ -13,6 +13,7 @@ Il s'agit d'une collection d'éléments Angular à destination des projets qui o
 - 🤝 [Contribution](#contribution)
 - 🏗️ [Construit avec](#construit-avec)
 - 📚 [Documentation](#documentation)
+- 🏷️ [Gestion des versions](#gestion-des-versions)
 - 📝 [Licence](#licence)
 
 ## Prérequis
@@ -54,6 +55,22 @@ Ce projet a été construit dans un espace de travail Angular, pour fonctionner 
   - geojson
   - @asymmetrik/ngx-leaflet
 
+#### Dans tous les cas
+
+##### Installer Husky
+
+[Husky](https://typicode.github.io/husky) est un outil de gestion des hooks git pour effectuer des tâches automatiques
+
+Mise en place de Husky :
+```bash
+yarn husky install
+```
+
+Rendre exécutable le fichier qui vérifie la syntaxe des commits :
+```bash
+chmod a+x .husky/commit-msg
+```
+
 ## Utilisation
 
 Ces commandes servent dans un contexte de développement de la bibliothèque et doivent être exécutées depuis la racine de l'espace de travail, c'est-à-dire depuis le dossier parent du dossier `projects`.
@@ -66,9 +83,13 @@ Exécuter `yarn build @gouvfr-anct/mediation-numerique` pour construire le proje
 
 Exécuter `yarn test @gouvfr-anct/mediation-numerique` pour tester le projet.
 
-### Lint
+### ESLint
 
 Exécuter `yarn lint @gouvfr-anct/mediation-numerique` pour une analyse statique des fichiers `.ts` du projet.
+
+### Commit lint
+
+Exécuter `yarn commitlint --from HEAD~1` pour valider la syntaxe du dernier commit.
 
 ### Prettier
 
@@ -78,12 +99,40 @@ Exécuter `yarn prettier` pour mettre à niveau la syntaxe de l'ensemble des fic
 
 ### Nommage des branches
 
-- Une branche qui apporte une nouvelle fonctionnalité doit ête préfixé par `feature/` : `feature/ma-fonctionnalite`
-- Une branche qui apporte une correction doit ête préfixé par `fix/` : `fix/ma-correction`
+- Avant de créer une nouvelle branche de travail, récupérer les dernières modifications disponibles sur la branche `main`
+- La nouvelle branche de travail doit ête préfixée par `build/`, `chore/`, `ci/`, `docs/`, `feat/`, `fix/`, `perf/`, `refactor/`, `revert/`, `style/` ou `test/` en fonction du type de modification prévu, pour plus de détails à ce sujet, consulter [Conventional Commits cheat sheet](https://kapeli.com/cheat_sheets/Conventional_Commits.docset/Contents/Resources/Documents/index)
+
+### Commits
+
+#### Convention
+
+Les commits de ce repository doivent respecter la syntaxe décrite par la spécification des [Commits Conventionnels](https://www.conventionalcommits.org/fr)
+
+#### Signature
+
+La branche `main`, ainsi que l'ensemble des branches de travail avec un préfixe valide requièrent que les commits soient signés :
+- La documentation de GitHub indique comment [configurer la signature des commits](https://docs.github.com/en/enterprise-server@3.5/authentication/managing-commit-signature-verification/about-commit-signature-verification)
+- Les utilisateurs de [keybase](https://keybase.io/) peuvent [signer leurs commits avec leur clé GPG sur Keybase](https://stephenreescarter.net/signing-git-commits-with-a-keybase-gpg-key/)
+
+### Publier sur la branche principale
+
+- La branche principale est `main`, il n'est pas possible de publier en faisant un `push` depuis un dépôt local
+- Il faut forcément créer une nouvelle branche de travail avec l'un préfixe autorisé
+- À chaque publication sur une branche de travail, le workflow `Validate feature` sur [github actions](https://github.com/anct-cartographie-nationale/mediation-numerique/actions) vérifie
+  - Qu'il est possible de créer un build sans erreur
+  - Que la syntaxe correspond bien à ce qui est [défini par Prettier](https://github.com/anct-cartographie-nationale/client-base/blob/main/.prettierrc.json)
+  - Que le code écrit en TypeScript respecte les conventions décrites par les [règles ESLint](https://github.com/anct-cartographie-nationale/client-base/blob/main/.eslintrc.json)
+  - Que les messages des commits suivent le standard établi par [Conventional Commits](https://www.conventionalcommits.org/fr) 
+- Une fois les développements terminés, il faut créer une [pull request](https://github.com/anct-cartographie-nationale/mediation-numerique/pulls) avec la banche de travail comme origin et la branche `main` comme destination.
+- La pull request ne peut être fusionné que si :
+  - Les étapes du workflow `Validate feature` sont valides
+  - Les fichiers modifiés ont été revus par au moins une personne
+  - Les commits ajoutés sont signés
+- La branche de travail est supprimée automatiquement une fois qu'elle a été fusionnée
 
 ### Déployer
 
-Lorsqu'une branche est fusionnée avec `main`, cela déclenche automatiquement la publication du build sur dans une nouvelle version du package npm, le numéro de version correspond à celui présent dans le fichier `package.json`.
+Pour publier une nouvelle version de la bibliothèque, que le numéro de version cible soit mis à jour dans le fichier `package.json` au préalable. La publication se déclenche une fois qu'un tag au format `x.y.z` a été poussé sur le dépôt.
 
 ## Construit avec
 
@@ -233,6 +282,12 @@ Les configurations peuvent être définies sous forme d'objets ou d'énumératio
 
 - [SearchRepository](./src/lib/structure/repositories/search.repository.ts)
 - [StructureRepository](./src/lib/structure/repositories/structure.repository.ts)
+
+## Gestion des versions
+
+Afin de maintenir un cycle de publication claire et de favoriser la rétrocompatibilité, la dénomination des versions suit la spécification décrite par la [Gestion sémantique de version](https://semver.org/lang/fr/)
+
+Les versions disponibles ainsi que les journaux décrivant les changements apportés sont disponibles depuis [la page des Releases](https://github.com/anct-cartographie-nationale/mediation-numerique/releases).
 
 ## Licence
 
