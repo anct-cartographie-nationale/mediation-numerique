@@ -1,4 +1,4 @@
 {
-  "*.(js|ts)": "eslint",
+  "*.(js|ts)": "eslint --parser-options 'project: [./tsconfig.lib.json]'",
   "*.(md|json|xml|html|css|scss|js|ts|sh)": "prettier --write"
 }
