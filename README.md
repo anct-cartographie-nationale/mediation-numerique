@@ -67,10 +67,11 @@ Mise en place de Husky :
 yarn husky install
 ```
 
-Rendre exécutable le fichier qui vérifie la syntaxe des commits :
+Rendre exécutable les fichiers qui contiennent les hooks :
 
 ```bash
 chmod a+x .husky/commit-msg
+chmod a+x .husky/pre-commit
 ```
 
 ## Utilisation
