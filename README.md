@@ -55,6 +55,22 @@ Ce projet a été construit dans un espace de travail Angular, pour fonctionner 
   - geojson
   - @asymmetrik/ngx-leaflet
 
+#### Dans tous les cas
+
+##### Installer Husky
+
+[Husky](https://typicode.github.io/husky) est un outil de gestion des hooks git pour effectuer des tâches automatiques
+
+Mise en place de Husky :
+```bash
+yarn husky install
+```
+
+Rendre exécutable le fichier qui vérifie la syntaxe des commits :
+```bash
+chmod a+x .husky/commit-msg
+```
+
 ## Utilisation
 
 Ces commandes servent dans un contexte de développement de la bibliothèque et doivent être exécutées depuis la racine de l'espace de travail, c'est-à-dire depuis le dossier parent du dossier `projects`.
@@ -67,9 +83,13 @@ Exécuter `yarn build @gouvfr-anct/mediation-numerique` pour construire le proje
 
 Exécuter `yarn test @gouvfr-anct/mediation-numerique` pour tester le projet.
 
-### Lint
+### ESLint
 
 Exécuter `yarn lint @gouvfr-anct/mediation-numerique` pour une analyse statique des fichiers `.ts` du projet.
+
+### Commit lint
+
+Exécuter `yarn commitlint --from HEAD~1` pour valider la syntaxe du dernier commit.
 
 ### Prettier
 
