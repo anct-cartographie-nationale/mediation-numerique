@@ -78,12 +78,40 @@ Exécuter `yarn prettier` pour mettre à niveau la syntaxe de l'ensemble des fic
 
 ### Nommage des branches
 
-- Une branche qui apporte une nouvelle fonctionnalité doit ête préfixé par `feature/` : `feature/ma-fonctionnalite`
-- Une branche qui apporte une correction doit ête préfixé par `fix/` : `fix/ma-correction`
+- Avant de créer une nouvelle branche de travail, récupérer les dernières modifications disponibles sur la branche `main`
+- La nouvelle branche de travail doit ête préfixée par `build/`, `chore/`, `ci/`, `docs/`, `feat/`, `fix/`, `perf/`, `refactor/`, `revert/`, `style/` ou `test/` en fonction du type de modification prévu, pour plus de détails à ce sujet, consulter [Conventional Commits cheat sheet](https://kapeli.com/cheat_sheets/Conventional_Commits.docset/Contents/Resources/Documents/index)
+
+### Commits
+
+#### Convention
+
+Les commits de ce repository doivent respecter la syntaxe décrite par la spécification des [Commits Conventionnels](https://www.conventionalcommits.org/fr)
+
+#### Signature
+
+La branche `main`, ainsi que l'ensemble des branches de travail avec un préfixe valide requièrent que les commits soient signés :
+- La documentation de GitHub indique comment [configurer la signature des commits](https://docs.github.com/en/enterprise-server@3.5/authentication/managing-commit-signature-verification/about-commit-signature-verification)
+- Les utilisateurs de [keybase](https://keybase.io/) peuvent [signer leurs commits avec leur clé GPG sur Keybase](https://stephenreescarter.net/signing-git-commits-with-a-keybase-gpg-key/)
+
+### Publier sur la branche principale
+
+- La branche principale est `main`, il n'est pas possible de publier en faisant un `push` depuis un dépôt local
+- Il faut forcément créer une nouvelle branche de travail avec l'un préfixe autorisé
+- À chaque publication sur une branche de travail, le workflow `Validate feature` sur [github actions](https://github.com/anct-cartographie-nationale/mediation-numerique/actions) vérifie
+  - Qu'il est possible de créer un build sans erreur
+  - Que la syntaxe correspond bien à ce qui est [défini par Prettier](https://github.com/anct-cartographie-nationale/client-base/blob/main/.prettierrc.json)
+  - Que le code écrit en TypeScript respecte les conventions décrites par les [règles ESLint](https://github.com/anct-cartographie-nationale/client-base/blob/main/.eslintrc.json)
+  - Que les messages des commits suivent le standard établi par [Conventional Commits](https://www.conventionalcommits.org/fr) 
+- Une fois les développements terminés, il faut créer une [pull request](https://github.com/anct-cartographie-nationale/mediation-numerique/pulls) avec la banche de travail comme origin et la branche `main` comme destination.
+- La pull request ne peut être fusionné que si :
+  - Les étapes du workflow `Validate feature` sont valides
+  - Les fichiers modifiés ont été revus par au moins une personne
+  - Les commits ajoutés sont signés
+- La branche de travail est supprimée automatiquement une fois qu'elle a été fusionnée
 
 ### Déployer
 
-Lorsqu'une branche est fusionnée avec `main`, cela déclenche automatiquement la publication du build sur dans une nouvelle version du package npm, le numéro de version correspond à celui présent dans le fichier `package.json`.
+Pour publier une nouvelle version de la bibliothèque, que le numéro de version cible soit mis à jour dans le fichier `package.json` au préalable. La publication se déclenche une fois qu'un tag au format `x.y.z` a été poussé sur le dépôt.
 
 ## Construit avec
 
