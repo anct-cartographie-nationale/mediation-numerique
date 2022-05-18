@@ -1,7 +1,7 @@
 {
   "name": "@gouvfr-anct/mediation-numerique",
   "version": "0.0.13",
-  "description": "\uD83D\uDCDA Bibliothèque pour la cartographie de l’offre de médiation numérique.",
+  "description": "📚 Bibliothèque pour la cartographie de l’offre de médiation numérique.",
   "keywords": [
     "angular",
     "bibliothèque",
@@ -15,14 +15,14 @@
   "license": "SEE LICENSE IN LICENSE.md",
   "contributors": [
     {
-      "name" : "Marc Gavanier",
-      "email" : "marc.gavanier@gmail.com",
-      "url" : "https://www.linkedin.com/in/marc-gavanier/"
+      "name": "Marc Gavanier",
+      "email": "marc.gavanier@gmail.com",
+      "url": "https://www.linkedin.com/in/marc-gavanier/"
     }
   ],
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/anct-cartographie-nationale/mediation-numerique.git"
+    "type": "git",
+    "url": "https://github.com/anct-cartographie-nationale/mediation-numerique.git"
   },
   "peerDependencies": {
     "@angular/animations": "^13.1.0",
@@ -37,5 +37,8 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "husky": "^8.0.1"
   }
 }
