@@ -1,6 +1,7 @@
-@import '../../../../../assets/scss/typography';
-@import '../../../../../assets/scss/color';
-@import '../../../../../assets/scss/shapes';
+@import '../../../../assets/scss/typography';
+@import '../../../../assets/scss/color';
+@import '../../../../assets/scss/breakpoint';
+@import '../../../../assets/scss/shapes';
 
 @mixin btn-bold {
   @include lato-bold-13;
@@ -118,13 +119,30 @@ button {
       border: 1px solid $grey-1;
       color: $grey-1;
       font-size: 14px;
-      // @include btn-regular;
       &.withIcon {
         color: $grey-1;
       }
     }
     .small-text {
       height: 22px !important;
+    }
+    &.wide {
+      div:first-child {
+        min-width: 50px;
+        width: 184px;
+      }
+    }
+    &.ultrawide {
+      div:first-child {
+        min-width: 50px;
+        width: 400px;
+        @media #{$tablet} {
+          width: 200px;
+        }
+        span {
+          padding-inline: 4px;
+        }
+      }
     }
   }
   &.tertiary {
@@ -200,6 +218,10 @@ button {
       }
       &.right {
         padding-right: 8px !important;
+      }
+      &.center {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
       }
     }
   }
