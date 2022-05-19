@@ -104,6 +104,7 @@ Exécuter `yarn prettier` pour mettre à niveau la syntaxe de l'ensemble des fic
 
 - Avant de créer une nouvelle branche de travail, récupérer les dernières modifications disponibles sur la branche `main`
 - La nouvelle branche de travail doit ête préfixée par `build/`, `chore/`, `ci/`, `docs/`, `feat/`, `fix/`, `perf/`, `refactor/`, `revert/`, `style/` ou `test/` en fonction du type de modification prévu, pour plus de détails à ce sujet, consulter [Conventional Commits cheat sheet](https://kapeli.com/cheat_sheets/Conventional_Commits.docset/Contents/Resources/Documents/index)
+- Une branche portant une version à publier doit être de la forme `release/X.Y` avec `X.Y` égal au numéro de majeur et de mineur de la release, cela signifie donc que tous les patches sont à appliquer sur la même branche pour chaque version mineure. Cette organisation permet de gérer plusieurs versions de la bibliothèque en parallèle sans mettre en péril la rétrocompatibilité.
 
 ### Commits
 
@@ -136,7 +137,20 @@ La branche `main`, ainsi que l'ensemble des branches de travail avec un préfixe
 
 ### Déployer
 
-Pour publier une nouvelle version de la bibliothèque, que le numéro de version cible soit mis à jour dans le fichier `package.json` au préalable. La publication se déclenche une fois qu'un tag au format `x.y.z` a été poussé sur le dépôt.
+Pour publier une nouvelle version, il faut que le numéro de version cible soit mis à jour dans le fichier `package.json`, que le fichier `CHANGELOG.md` soit mis à jour et que le commit de la version à publier porte un tag de la forme `vX.Y.Z` correspondant au numéro de version présent dans `package.json`.
+
+Il est possible d'automatiser ce processus en utilisant la commande `standard-version` :
+
+- Récupérer la version à publier depuis la branche `main`
+- Vérifier la valeur du prochain tag avec la commande `standard-version --dry-run`
+- Récupérer ou créer la branche `release/X.Y` correspondant à la majeure et la mineure indiquée par la commande précédente
+- Lancer la commande `standard-version` qui
+  - met à jour la version dans le fichier `package.json`
+  - met à jour le fichier `CHANGELOG.md`
+  - créé un nouveau commit
+  - ajoute le tag correspondant à la version dans le fichier `package.json`
+- Pousser la branche `release/X.Y` avec le tag conduit à la publication d'une nouvelle version
+- Si le numéro de version est le plus grand au sens de la [priorité définie par la spécification de la gestion sémantique de version (11)](https://semver.org/lang/fr/), alors il faut créer une [pull request](https://github.com/anct-cartographie-nationale/mediation-numerique/pulls) vers la branche `main`, il ne faut pas le faire si ce n'est pas le cas.
 
 ## Construit avec
 
