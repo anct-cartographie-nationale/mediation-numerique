@@ -1,7 +1,7 @@
-@import '../../../../assets/scss/typography';
-@import '../../../../assets/scss/color';
-@import '../../../../assets/scss/breakpoint';
-@import '../../../../assets/scss/shapes';
+@import '../../../../../assets/scss/typography';
+@import '../../../../../assets/scss/color';
+@import '../../../../../assets/scss/breakpoint';
+@import '../../../../../assets/scss/shapes';
 
 @mixin btn-bold {
   @include lato-bold-13;
