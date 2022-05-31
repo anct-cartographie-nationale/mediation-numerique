@@ -73,7 +73,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Lint
-        run: yarn run lint @gouvfr-anct/mediation-numerique
+        run: yarn lint @gouvfr-anct/mediation-numerique
 
   commitlint:
     name: CommitLint
@@ -130,7 +130,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Build
-        run: yarn run build @gouvfr-anct/mediation-numerique
+        run: yarn build @gouvfr-anct/mediation-numerique
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
@@ -167,7 +167,11 @@ jobs:
           path: dist
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: |
+          yarn --frozen-lockfile
+          yarn global add @angular/cli
 
       - name: Test
-        run: yarn run test @gouvfr-anct/mediation-numerique
+        run: |
+          cd projects/@gouvfr-anct/mediation-numerique
+          ng test @gouvfr-anct/mediation-numerique
