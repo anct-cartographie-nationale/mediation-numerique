@@ -62,7 +62,7 @@ export class StructureDetailsComponent implements OnInit {
     private router: Router
   ) {
     route.url.subscribe((url) => {
-      if (url[0].path === 'structure') {
+      if (url[0]?.path === 'structure') {
         this.structure = this.printService.structure;
         this.printMode = true;
       }

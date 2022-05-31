@@ -69,7 +69,7 @@ export class MapComponent implements OnChanges {
         }, 0);
       }
     }
-    if (changes.structures) {
+    if (changes.structures && this.map) {
       this.handleStructurePosition(changes.structures.previousValue);
     }
     // Handle map marker tooltip
