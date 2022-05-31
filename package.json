@@ -1,6 +1,6 @@
 {
   "name": "@gouvfr-anct/mediation-numerique",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "📚 Bibliothèque pour la cartographie de l’offre de médiation numérique.",
   "keywords": [
     "angular",
