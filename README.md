@@ -61,7 +61,7 @@ Ce projet a été construit dans un espace de travail Angular, pour fonctionner 
 
 [Husky](https://typicode.github.io/husky) est un outil de gestion des hooks git pour effectuer des tâches automatiques
 
-Mise en place de Husky :
+Mise en place de Husky dans le dossier du projet `@gouvfr-anct/mediation-numerique` :
 
 ```bash
 yarn husky install
@@ -80,7 +80,7 @@ Ces commandes servent dans un contexte de développement de la bibliothèque et 
 
 ### Construction
 
-Exécuter `yarn build @gouvfr-anct/mediation-numerique` pour construire le projet. Les fichiers de sortie sont écrits dans le dossier `dist/`.
+Exécuter `yarn build @gouvfr-anct/mediation-numerique` pour construire le projet. Les fichiers de sortie sont écrits dans le dossier `dist/@gouvfr-anct/mediation-numerique/`.
 
 ### Test
 
@@ -149,7 +149,7 @@ Il est possible d'automatiser ce processus en utilisant la commande `standard-ve
   - met à jour le fichier `CHANGELOG.md`
   - créé un nouveau commit
   - ajoute le tag correspondant à la version dans le fichier `package.json`
-- Pousser la branche `release/X.Y` avec le tag conduit à la publication d'une nouvelle version
+- Pousser la branche avec le tag `git push origin release/X.Y --tags` conduit à la publication d'une nouvelle version
 - Si le numéro de version est le plus grand au sens de la [priorité définie par la spécification de la gestion sémantique de version (11)](https://semver.org/lang/fr/), alors il faut créer une [pull request](https://github.com/anct-cartographie-nationale/mediation-numerique/pulls) vers la branche `main`, il ne faut pas le faire si ce n'est pas le cas.
 
 ## Construit avec
@@ -170,7 +170,7 @@ Il est possible d'automatiser ce processus en utilisant la commande `standard-ve
 #### CI
 
 - [Github Actions](https://docs.github.com/en/actions) est l'outil d'intégration et de déploiement continu intégré à GitHub
-  - L'historique des déploiements est disponible [sous l'onglet Actions](https://github.com/anct-cartographie-nationale/client-application/actions/)
+  - L'historique des déploiements est disponible [sous l'onglet Actions](https://github.com/anct-cartographie-nationale/mediation-numerique/actions/)
 - Secrets du dépôt :
   - `NODE_AUTH_TOKEN` : Clé d'accès NPM pour publier sur l'organisation [@gouvfr-anct](https://www.npmjs.com/org/gouvfr-anct)
 
@@ -303,7 +303,7 @@ Les configurations peuvent être définies sous forme d'objets ou d'énumératio
 
 ## Gestion des versions
 
-Afin de maintenir un cycle de publication claire et de favoriser la rétrocompatibilité, la dénomination des versions suit la spécification décrite par la [Gestion sémantique de version](https://semver.org/lang/fr/)
+Afin de maintenir un cycle de publication clair et de favoriser la rétrocompatibilité, la dénomination des versions suit la spécification décrite par la [Gestion sémantique de version](https://semver.org/lang/fr/)
 
 Les versions disponibles ainsi que les journaux décrivant les changements apportés sont disponibles depuis [la page des Releases](https://github.com/anct-cartographie-nationale/mediation-numerique/releases).
 
