@@ -12,7 +12,7 @@
     "types": [],
     "strict": false,
     "noImplicitReturns": false,
-    "noPropertyAccessFromIndexSignature": false,
+    "noPropertyAccessFromIndexSignature": false
   },
   "exclude": ["**/*.spec.ts"],
   "angularCompilerOptions": {
