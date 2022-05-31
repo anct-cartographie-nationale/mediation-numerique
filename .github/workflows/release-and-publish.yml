@@ -157,10 +157,14 @@ jobs:
           path: dist
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: |
+          yarn --frozen-lockfile
+          yarn global add @angular/cli
 
       - name: Test
-        run: yarn run test @gouvfr-anct/mediation-numerique
+        run: |
+          cd projects/@gouvfr-anct/mediation-numerique
+          ng test @gouvfr-anct/mediation-numerique
 
   release:
     name: Release
