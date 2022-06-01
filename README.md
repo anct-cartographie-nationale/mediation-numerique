@@ -86,6 +86,8 @@ Exécuter `yarn build @gouvfr-anct/mediation-numerique` pour construire le proje
 
 Exécuter `yarn test @gouvfr-anct/mediation-numerique` pour tester le projet.
 
+> Si suite à un build le dossier `dist` contient `@gouvfr-anct/mediation-numerique`, certains tests sont en erreur, pour résoudre cela, il faut soit supprimer le dossier `@gouvfr-anct/mediation-numerique` dans `dist`, soit exécuter la commande `npx ng test @gouvfr-anct/mediation-numerique` directement dans le dossier `projects/@gouvfr-anct/mediation-numerique`.
+
 ### ESLint
 
 Exécuter `yarn lint @gouvfr-anct/mediation-numerique` pour une analyse statique des fichiers `.ts` du projet.
