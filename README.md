@@ -64,7 +64,7 @@ Ce projet a été construit dans un espace de travail Angular, pour fonctionner 
 Mise en place de Husky dans le dossier du projet `@gouvfr-anct/mediation-numerique` :
 
 ```bash
-yarn husky install
+npx husky install
 ```
 
 Rendre exécutable les fichiers qui contiennent les hooks :
