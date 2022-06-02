@@ -170,17 +170,6 @@ describe('CardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should transform a distance into km', () => {
-    component.structure.distance = 4320;
-    const distance = component.formatDistance();
-    expect(distance).toEqual('4.3 km');
-  });
-  it('should transform a distance into m', () => {
-    component.structure.distance = 400;
-    const distance = component.formatDistance();
-    expect(distance).toEqual('400 m');
-  });
-
   it('should emit structure to show details', () => {
     jest.spyOn(component.showDetails, 'emit');
     component.cardClicked();

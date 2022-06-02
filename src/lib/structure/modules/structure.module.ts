@@ -2,10 +2,15 @@ import { Inject, ModuleWithProviders, NgModule, Optional, Type } from '@angular/
 import { CommonModule } from '@angular/common';
 import { FlexModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
-
-import { ButtonModule, SvgIconModule } from '@gouvfr-anct/mediation-numerique/shared';
-import { ModalModule, DayModule, PhoneModule, TextInputModalModule } from '@gouvfr-anct/mediation-numerique/shared';
-
+import {
+  ModalModule,
+  DayModule,
+  PhoneModule,
+  TextInputModalModule,
+  DistanceModule,
+  ButtonModule,
+  SvgIconModule
+} from '@gouvfr-anct/mediation-numerique/shared';
 import { ModalFilterComponent } from '../components/modal-filter/modal-filter.component';
 import { StructureListSearchComponent } from '../components/search/structure-list-search.component';
 import { CardComponent } from '../components/card/card.component';
@@ -35,6 +40,7 @@ import { STRUCTURE_TOKEN, StructureRepository } from '../repositories/structure.
     ModalModule,
     DayModule,
     PhoneModule,
+    DistanceModule,
     TextInputModalModule
   ]
 })

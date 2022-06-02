@@ -15,12 +15,12 @@
           {{ this.structure.address.commune }}
         </div>
         <div class="distance" *ngIf="structure.distance">
-          {{ this.formatDistance() }}
+          {{ structure.distance | distance }}
         </div>
       </div>
     </div>
     <div class="distance" *ngIf="isOrientation && structure.distance">
-      {{ this.formatDistance() }}
+      {{ structure.distance | distance }}
     </div>
   </div>
   <div class="actions right" *ngIf="isOrientation">
