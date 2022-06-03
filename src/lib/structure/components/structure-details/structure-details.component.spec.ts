@@ -1,8 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { TextInputModalComponent } from '../../../../../shared/src/lib/components/text-input-modal/text-input-modal.component';
+import { SvgIconStubComponent } from '../../../../../testing/src/lib/components/svg-icon.component.stub';
 import { Structure } from '../../../map/models/structure.model';
 import { Category } from '../../models/category.model';
 import { Module } from '../../models/module.model';
@@ -17,8 +20,8 @@ describe('StructureDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StructureDetailsComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule],
+      declarations: [StructureDetailsComponent, SvgIconStubComponent, TextInputModalComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule, BrowserAnimationsModule],
       providers: [
         {
           provide: SEARCH_TOKEN,
