@@ -132,6 +132,11 @@ jobs:
       - name: Build
         run: yarn build @gouvfr-anct/mediation-numerique
 
+      - name: Add license and style files
+        run: |
+          mv projects/@gouvfr-anct/mediation-numerique/LICENSE.md dist/@gouvfr-anct/mediation-numerique/
+          mv projects/@gouvfr-anct/mediation-numerique/assets/scss dist/@gouvfr-anct/mediation-numerique/
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
