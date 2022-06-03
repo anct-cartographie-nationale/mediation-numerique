@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonType } from '@gouvfr-anct/mediation-numerique/shared';
-import { Structure } from '../../../map/models/structure.model';
 import { GeoJson } from '../../../map/models/geojson.model';
-import { STRUCTURE_TOKEN, StructureRepository } from '../../repositories/structure.repository';
+import { Structure } from '../../../map/models/structure.model';
+import { StructureRepository, STRUCTURE_TOKEN } from '../../repositories/structure.repository';
 
 @Component({
   selector: 'app-structure-list',
   templateUrl: './structure-list.component.html',
-  styleUrls: ['./structure-list.component.scss']
+  styleUrls: ['./structure-list.component.scss'],
 })
 export class StructureListComponent implements OnChanges {
   @Input() public structureList: Structure[];
@@ -45,8 +45,8 @@ export class StructureListComponent implements OnChanges {
       this.router.navigate([], {
         relativeTo: this.route,
         queryParams: {
-          id: this.selectedStructure._id
-        }
+          id: this.selectedStructure._id,
+        },
       });
     }
     if (changes.structureList) {
@@ -55,14 +55,12 @@ export class StructureListComponent implements OnChanges {
   }
 
   public showDetails(event: Structure): void {
-    this.showStructureDetails = true;
     this.structure = event;
     this.selectedMarkerId.emit(this.structure._id);
   }
 
   public closeDetails(): void {
     this.selectedMarkerId.emit();
-    this.showStructureDetails = false;
   }
 
   public handleCardHover(structure: Structure): void {

@@ -1,346 +1,427 @@
-<div class="structure-details-container" *ngIf="structure && !isLoading">
-  <!-- Header info -->
-  <div class="structure-details-title" fxLayout="row" fxLayoutAlign="space-evenly center">
-    <h1 class="bold">{{ structure.structureName }}</h1>
-    <div class="ico-close">
-      <div (click)="close()" class="ico-close-details"></div>
+<div class="structure-details" [ngClass]="{ fullScreen: fullScreen === true }" [@slideInOut] *ngIf="structure">
+  <div class="structure-details-container">
+    <!-- Header info -->
+    <div class="structure-details-title" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="space-evenly center">
+      <app-svg-icon [type]="'ico'" [icon]="'structureAvatar'" [iconClass]="'icon-52'"></app-svg-icon>
+      <h1 class="bold">{{ structure.structureName }}</h1>
+      <div class="ico-close">
+        <div (click)="close()" class="ico-close-details"></div>
+      </div>
     </div>
-  </div>
-  <div class="structure-details-content">
-    <div class="structure-buttons hide-on-print" fxLayout="row" fxLayoutAlign="space-evenly">
-      <div *ngIf="structure.website" class="clickableDiv" role="button" (click)="goToWebsite()" tabindex="0">
-        <app-svg-icon class="icon" [type]="'ico'" [icon]="'web'" [iconClass]="'icon-32'"></app-svg-icon>
-        <div class="iconTitle">Voir le site</div>
-      </div>
-      <div role="button" class="printButton clickableDiv" (click)="print()" tabindex="0">
-        <app-svg-icon class="icon" [type]="'ico'" [icon]="'printStructure'" [iconClass]="'icon-32'"></app-svg-icon>
-        <div class="iconTitle">Imprimer</div>
-      </div>
-      <div class="clickableDiv" role="button" (click)="displayModalError()" tabindex="0">
-        <app-svg-icon class="icon" [type]="'ico'" [icon]="'watch'" [iconClass]="'icon-32'"></app-svg-icon>
-        <div class="iconTitle">Signaler une erreur</div>
-      </div>
-      <ng-content select="[slot=structure-details-actions]"></ng-content>
+    <div class="structure-details-content" fxLayout="row" fxLayoutAlign="center center" *ngIf="isLoading">
+      <img class="loader-gif" src="/assets/gif/loader_circle.gif" alt />
     </div>
+    <div class="structure-details-content" *ngIf="!isLoading">
+      <div class="structure-buttons hide-on-print" fxLayout="row" fxLayoutAlign="space-evenly">
+        <div *ngIf="structure.website" class="clickableDiv" role="button" (click)="goToWebsite()" tabindex="0">
+          <app-svg-icon class="icon" [type]="'ico'" [icon]="'web'" [iconClass]="'icon-32'"></app-svg-icon>
+          <div class="iconTitle">Voir le site</div>
+        </div>
+        <div role="button" class="printButton clickableDiv" (click)="print()" tabindex="0">
+          <app-svg-icon class="icon" [type]="'ico'" [icon]="'printStructure'" [iconClass]="'icon-32'"></app-svg-icon>
+          <div class="iconTitle">Imprimer</div>
+        </div>
+        <div class="clickableDiv" role="button" (click)="displayModalError()" tabindex="0">
+          <app-svg-icon class="icon" [type]="'ico'" [icon]="'watch'" [iconClass]="'icon-32'"></app-svg-icon>
+          <div class="iconTitle">Signaler une erreur</div>
+        </div>
+        <ng-content select="[slot=structure-details-actions]"></ng-content>
+      </div>
 
-    <div class="structure-details-block">
-      <div fxLayout="column" fxLayoutGap="10px">
-        <!-- Informations-->
-        <div fxLayout="column">
-          <h2>Informations</h2>
-          <div class="info-block">
-            <div *ngIf="structure.getLabelTypeStructure()">
-              {{ structure.getLabelTypeStructure() }}
+      <ng-content select="[slot=structure-admin-actions]"></ng-content>
+
+      <div class="structure-details-block">
+        <div fxLayout="column" fxLayoutGap="10px">
+          <!-- Informations-->
+          <div fxLayout="column">
+            <h2>Informations</h2>
+            <div class="info-block">
+              <div>
+                {{ structure.getLabelTypeStructure() }}
+              </div>
+              <div *ngIf="structure.address">
+                {{ structure.address.numero }} {{ structure.address.street }},
+                {{ structure.address.commune }}
+              </div>
+              <div *ngIf="structure.contactPhone">
+                {{ structure.contactPhone | phone }}
+              </div>
+              <div *ngIf="structure.contactMail && structure.contactMail !== 'unknown@unknown.com'">
+                <a href="mailto:{{ structure.contactMail }}">{{ structure.contactMail }}</a>
+              </div>
             </div>
-            <div *ngIf="structure.structureName">
-              {{ structure.structureName }}
+            <!-- Social networks-->
+            <div *ngIf="structure.hasSocialNetwork()" fxLayout="row" fxLayoutAlign="none baseline" fxLayoutGap="4px">
+              <a
+                *ngIf="structure.facebook"
+                target="_blank"
+                class="custom-link"
+                rel="noopener noreferrer"
+                [href]="'http://' + structure.facebook"
+              >
+                <app-svg-icon
+                  [type]="'ico'"
+                  [icon]="'facebook'"
+                  [title]="'Facebook'"
+                  [iconClass]="'icon-30'"
+                ></app-svg-icon>
+              </a>
+              <a
+                *ngIf="structure.twitter"
+                target="_blank"
+                class="custom-link"
+                rel="noopener noreferrer"
+                [href]="'http://' + structure.twitter"
+              >
+                <app-svg-icon
+                  [type]="'ico'"
+                  [icon]="'twitter'"
+                  [title]="'Twitter'"
+                  [iconClass]="'icon-30'"
+                ></app-svg-icon>
+              </a>
+              <a
+                *ngIf="structure.instagram"
+                target="_blank"
+                class="custom-link"
+                rel="noopener noreferrer"
+                [href]="'http://' + structure.instagram"
+              >
+                <app-svg-icon
+                  [type]="'ico'"
+                  [icon]="'instagram'"
+                  [title]="'Instagram'"
+                  [iconClass]="'icon-30'"
+                ></app-svg-icon>
+              </a>
+              <a
+                *ngIf="structure.linkedin"
+                target="_blank"
+                class="custom-link"
+                rel="noopener noreferrer"
+                [href]="'http://' + structure.linkedin"
+              >
+                <app-svg-icon
+                  [type]="'ico'"
+                  [icon]="'linkedin'"
+                  [title]="'Linkedin'"
+                  [iconClass]="'icon-30'"
+                ></app-svg-icon>
+              </a>
             </div>
-            <div *ngIf="structure.address">
-              {{ structure.address.numero }} {{ structure.address.street }}, {{ structure.address.commune }}
-            </div>
-            <div *ngIf="structure.contactPhone">
-              {{ structure.contactPhone | phone }}
-            </div>
-            <div *ngIf="structure.contactMail && structure.contactMail !== 'unknown@unknown.com'">
-              <a href="mailto:{{ structure.contactMail }}">{{ structure.contactMail }}</a>
-            </div>
-          </div>
-          <!-- Social networks-->
-          <div *ngIf="structure.hasSocialNetwork()" fxLayout="row" fxLayoutAlign="none baseline" fxLayoutGap="4px">
-            <a
-              *ngIf="structure.facebook"
-              target="_blank"
-              class="custom-link"
-              rel="noopener noreferrer"
-              [href]="'http://' + structure.facebook">
-              <app-svg-icon [type]="'ico'" [icon]="'facebook'" [title]="'Facebook'" [iconClass]="'icon-30'"></app-svg-icon>
-            </a>
-            <a
-              *ngIf="structure.twitter"
-              target="_blank"
-              class="custom-link"
-              rel="noopener noreferrer"
-              [href]="'http://' + structure.twitter">
-              <app-svg-icon [type]="'ico'" [icon]="'twitter'" [title]="'Twitter'" [iconClass]="'icon-30'"></app-svg-icon>
-            </a>
-            <a
-              *ngIf="structure.instagram"
-              target="_blank"
-              class="custom-link"
-              rel="noopener noreferrer"
-              [href]="'http://' + structure.instagram">
-              <app-svg-icon [type]="'ico'" [icon]="'instagram'" [title]="'Instagram'" [iconClass]="'icon-30'"></app-svg-icon>
-            </a>
-            <a
-              *ngIf="structure.linkedin"
-              target="_blank"
-              class="custom-link"
-              rel="noopener noreferrer"
-              [href]="'http://' + structure.linkedin">
-              <app-svg-icon [type]="'ico'" [icon]="'linkedin'" [title]="'Linkedin'" [iconClass]="'icon-30'"></app-svg-icon>
-            </a>
           </div>
         </div>
+        <div *ngIf="structure.description" class="description">
+          {{ structure.description }}
+        </div>
+        <div *ngIf="structure.lockdownActivity && lockdownInfoDisplay" class="info">
+          {{ structure.lockdownActivity }}
+        </div>
       </div>
-      <div *ngIf="structure.description" class="description">{{ structure.description }}</div>
-      <div *ngIf="structure.lockdownActivity" class="info">
-        {{ structure.lockdownActivity }}
-      </div>
-    </div>
 
-    <div
-      *ngIf="structure.accessModality.length > 0 || structure.hours.hasData() || structure.remoteAccompaniment"
-      class="structure-details-block"
-      fxLayout="column">
-      <div class="hours-services-block">
-        <!-- Opening Hours -->
-        <div *ngIf="structure.hours.hasData()" fxLayout="column">
-          <h2>Horaires</h2>
-          <div fxLayout="column" class="opening-hours">
-            <div *ngFor="let day of structure.hours | keyvalue: keepOriginalOrder">
-              <div *ngIf="day.value.open" class="opening-hour" fxLayout="row" fxLayoutAlign="flex-start flex-start">
-                <h4 class="day">{{ day.key | day }}</h4>
-                <div class="opening-time" fxLayout="column" fxLayoutAlign="none flex-start">
-                  <div *ngFor="let timeRange of day.value.time" class="daily-opening-time">
-                    <p *ngIf="timeRange.opening">{{ timeRange.formatOpeningDate() }} - {{ timeRange.formatClosingDate() }}</p>
+      <div
+        *ngIf="structure.accessModality.length > 0 || structure.hours.hasData() || structure.remoteAccompaniment"
+        class="structure-details-block"
+        fxLayout="column"
+      >
+        <div class="hours-services-block">
+          <!-- Opening Hours -->
+          <div *ngIf="structure.hours.hasData()" fxLayout="column">
+            <h2>Horaires</h2>
+            <div fxLayout="column" class="opening-hours">
+              <div *ngFor="let day of structure.hours | keyvalue: keepOriginalOrder">
+                <div *ngIf="day.value.open" class="opening-hour" fxLayout="row" fxLayoutAlign="flex-start flex-start">
+                  <h4 class="day">{{ day.key | day }}</h4>
+                  <div class="opening-time" fxLayout="column" fxLayoutAlign="none flex-start">
+                    <div *ngFor="let timeRange of day.value.time" class="daily-opening-time">
+                      <p *ngIf="timeRange.opening">
+                        {{ timeRange.formatOpeningDate() }} -
+                        {{ timeRange.formatClosingDate() }}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- services -->
-        <div *ngIf="structure.accessModality.length > 0" fxLayout="column">
-          <h2>Services</h2>
-          <div fxLayout="column" fxLayoutGap="10px" class="services-block">
-            <div fxLayout="column" fxLayoutGap="8px">
+          <!-- services -->
+          <div *ngIf="structure.accessModality.length > 0" fxLayout="column">
+            <h2>Services</h2>
+            <div fxLayout="column" fxLayoutGap="10px" class="services-block">
+              <div fxLayout="column" fxLayoutGap="8px">
+                <div
+                  fxLayout="row"
+                  fxLayoutAlign="none flex-end"
+                  fxLayoutGap="8px"
+                  *ngFor="let acces of structure.accessModality"
+                >
+                  <p>{{ getAccessLabel(acces) }}</p>
+                </div>
+                <p *ngIf="structure.pmrAccess">Accessible aux personnes à mobilité réduite</p>
+              </div>
               <div
+                *ngFor="let public of structure.publics"
                 fxLayout="row"
                 fxLayoutAlign="none flex-end"
                 fxLayoutGap="8px"
-                *ngFor="let acces of structure.accessModality">
-                <p>{{ getAccessLabel(acces) }}</p>
+              >
+                <p>{{ getPublicLabel(public) }}</p>
               </div>
-              <p *ngIf="structure.pmrAccess">Accessible aux personnes à mobilité réduite</p>
-            </div>
-            <div *ngFor="let public of structure.publics" fxLayout="row" fxLayoutAlign="none flex-end" fxLayoutGap="8px">
-              <p>{{ getPublicLabel(public) }}</p>
-            </div>
-            <div
-              *ngFor="let accompaniment of structure.publicsAccompaniment"
-              fxLayout="row"
-              fxLayoutAlign="none flex-end"
-              fxLayoutGap="8px">
-              <p>{{ accompaniment }}</p>
+              <div
+                *ngFor="let accompaniment of structure.publicsAccompaniment"
+                fxLayout="row"
+                fxLayoutAlign="none flex-end"
+                fxLayoutGap="8px"
+              >
+                <p>{{ accompaniment }}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div *ngIf="structure.exceptionalClosures" class="bold-info">
-        <p class="description">{{ structure.exceptionalClosures }}</p>
-      </div>
-      <div *ngIf="structure.remoteAccompaniment" class="bold-info">
-        <h3>Cette structure propose un accompagnement à distance.</h3>
-      </div>
-    </div>
-
-    <div
-      *ngIf="structure.labelsQualifications.length"
-      fxLayout="column"
-      class="structure-details-block"
-      fxLayoutAlign="baseline baseline"
-      fxLayoutGap="12px">
-      <h2>Labellisations</h2>
-      <div class="wrapper">
-        <div *ngFor="let labels of structure.labelsQualifications">
-          <app-logo-card [name]="labels"></app-logo-card>
+        <div *ngIf="structure.exceptionalClosures" class="bold-info">
+          <p class="description">{{ structure.exceptionalClosures }}</p>
+        </div>
+        <div *ngIf="structure.remoteAccompaniment" class="bold-info">
+          <h3>Cette structure propose un accompagnement à distance.</h3>
         </div>
       </div>
-    </div>
 
-    <div
-      *ngIf="structure.proceduresAccompaniment.length || structure.otherDescription"
-      fxLayout="column"
-      class="structure-details-block"
-      fxLayoutAlign="baseline baseline"
-      fxLayoutGap="12px">
-      <h2>Aides numérique</h2>
-      <div fxLayout="column">
+      <div
+        *ngIf="structure.labelsQualifications.length"
+        fxLayout="column"
+        class="structure-details-block"
+        fxLayoutAlign="baseline baseline"
+        fxLayoutGap="8px"
+      >
+        <h2>Labellisations</h2>
         <div class="wrapper">
-          <div *ngFor="let accompagnement of structure.proceduresAccompaniment">
-            <app-logo-card *ngIf="accompagnement !== 'autres'" [name]="accompagnement"></app-logo-card>
+          <div *ngFor="let labels of structure.labelsQualifications">
+            <app-logo-card [name]="labels"></app-logo-card>
           </div>
         </div>
-        <p *ngIf="structure.otherDescription" fxLayout="column">
-          {{ structure.otherDescription }}
-        </p>
+      </div>
+
+      <ng-content select="[slot=structure-members]"></ng-content>
+
+      <div
+        *ngIf="structure.proceduresAccompaniment.length || structure.otherDescription"
+        fxLayout="column"
+        class="structure-details-block"
+        fxLayoutAlign="baseline baseline"
+        fxLayoutGap="12px"
+      >
+        <h2>Aides numérique</h2>
+        <div fxLayout="column">
+          <div class="wrapper">
+            <div *ngFor="let accompagnement of structure.proceduresAccompaniment.sort()">
+              <app-logo-card *ngIf="accompagnement !== 'autres'" [name]="accompagnement"></app-logo-card>
+            </div>
+          </div>
+          <p *ngIf="structure.otherDescription" fxLayout="column">
+            {{ structure.otherDescription }}
+          </p>
+        </div>
+      </div>
+
+      <div
+        *ngIf="
+          isBaseSkills() || isAccessRights() || isParentingHelp() || isSocialAndProfessional() || isDigitalSecurity()
+        "
+        fxLayout="column"
+        class="structure-details-block noSeparator"
+        fxLayoutAlign="baseline baseline"
+      >
+        <h2>Formations</h2>
+        <div *ngIf="structure.freeWorkShop">
+          <span *ngIf="multipleWorkshop()" class="bold-info">L'accès à ces formations est gratuit</span>
+          <span *ngIf="!multipleWorkshop()" class="bold-info">L'accès à cette formation est gratuit</span>
+        </div>
+        <div class="formationDetails">
+          <div *ngIf="isBaseSkills()" class="collapse" [ngClass]="{ notCollapsed: !showBaseSkills }">
+            <div fxLayout="column">
+              <div
+                class="collapseHeader"
+                fxLayout="row"
+                fxLayoutGap="20px"
+                fxLayoutAlign=" center"
+                (click)="toggleBaseSkills()"
+              >
+                <div class="titleCollapse">Compétences de base</div>
+                <div class="logo">
+                  <svg class="show" aria-hidden="true">
+                    <use [attr.xlink:href]="'assets/form/sprite.svg#unfold'"></use>
+                  </svg>
+                  <svg class="hide" aria-hidden="true">
+                    <use [attr.xlink:href]="'assets/form/sprite.svg#fold'"></use>
+                  </svg>
+                </div>
+              </div>
+              <div class="detailsContainer" [@show]="showBaseSkills">
+                <div class="details" *ngFor="let skill of baseSkills">
+                  {{ skill.text }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isAccessRights()" class="collapse" [ngClass]="{ notCollapsed: !showAccessRights }">
+            <div fxLayout="column">
+              <div
+                class="collapseHeader"
+                fxLayout="row"
+                fxLayoutGap="20px"
+                fxLayoutAlign=" center"
+                (click)="toggleAccessRights()"
+              >
+                <div class="titleCollapse">Accès aux droits</div>
+                <div class="logo">
+                  <svg class="show" aria-hidden="true">
+                    <use [attr.xlink:href]="'assets/form/sprite.svg#unfold'"></use>
+                  </svg>
+                  <svg class="hide" aria-hidden="true">
+                    <use [attr.xlink:href]="'assets/form/sprite.svg#fold'"></use>
+                  </svg>
+                </div>
+              </div>
+              <div class="detailsContainer" [@show]="showAccessRights">
+                <div class="details" *ngFor="let rights of accessRights">
+                  {{ rights.text }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isParentingHelp()" class="collapse" [ngClass]="{ notCollapsed: !showParentingHelp }">
+            <div fxLayout="column">
+              <div
+                class="collapseHeader"
+                fxLayout="row"
+                fxLayoutGap="20px"
+                fxLayoutAlign=" center"
+                (click)="toggleParentingHelp()"
+              >
+                <div class="titleCollapse">Aide à la parentalité</div>
+                <div class="logo">
+                  <svg class="show" aria-hidden="true">
+                    <use [attr.xlink:href]="'assets/form/sprite.svg#unfold'"></use>
+                  </svg>
+                  <svg class="hide" aria-hidden="true">
+                    <use [attr.xlink:href]="'assets/form/sprite.svg#fold'"></use>
+                  </svg>
+                </div>
+              </div>
+              <div class="detailsContainer" [@show]="showParentingHelp">
+                <div class="details" *ngFor="let help of parentingHelp">
+                  {{ help.text }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="isSocialAndProfessional()"
+            class="collapse"
+            [ngClass]="{ notCollapsed: !showSocialAndProfessional }"
+          >
+            <div fxLayout="column">
+              <div
+                class="collapseHeader"
+                fxLayout="row"
+                fxLayoutGap="20px"
+                fxLayoutAlign=" center"
+                (click)="toggleSocialAndProfessional()"
+              >
+                <div class="titleCollapse">Insertion sociale et professionnelle</div>
+                <div class="logo">
+                  <svg class="show" aria-hidden="true">
+                    <use [attr.xlink:href]="'assets/form/sprite.svg#unfold'"></use>
+                  </svg>
+                  <svg class="hide" aria-hidden="true">
+                    <use [attr.xlink:href]="'assets/form/sprite.svg#fold'"></use>
+                  </svg>
+                </div>
+              </div>
+              <div class="detailsContainer" [@show]="showSocialAndProfessional">
+                <div class="details" *ngFor="let skill of socialAndProfessional">
+                  {{ skill.text }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isDigitalSecurity()" class="collapse" [ngClass]="{ notCollapsed: !showDigitalSecurity }">
+            <div fxLayout="column">
+              <div
+                class="collapseHeader"
+                fxLayout="row"
+                fxLayoutGap="20px"
+                fxLayoutAlign=" center"
+                (click)="toggleDigitalSecurity()"
+              >
+                <div class="titleCollapse">Culture et sécurité numérique</div>
+                <div class="logo">
+                  <svg class="show" aria-hidden="true">
+                    <use [attr.xlink:href]="'assets/form/sprite.svg#unfold'"></use>
+                  </svg>
+                  <svg class="hide" aria-hidden="true">
+                    <use [attr.xlink:href]="'assets/form/sprite.svg#fold'"></use>
+                  </svg>
+                </div>
+              </div>
+              <div class="detailsContainer" [@show]="showDigitalSecurity">
+                <div class="details" *ngFor="let skill of digitalCultureSecurity">
+                  {{ skill.text }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="structure.hasEquipments()"
+        fxLayout="column"
+        class="structure-details-block"
+        fxLayoutAlign="baseline baseline"
+      >
+        <h2>Matériel et wifi</h2>
+        <div fxLayout="column">
+          <div *ngIf="filterOnlyEquipments(structure.equipmentsAndServices).includes('wifiEnAccesLibre')">
+            {{ getEquipmentsLabel('wifiEnAccesLibre') }}
+          </div>
+          <p *ngFor="let equipement of filterOnlyEquipments(structure.equipmentsAndServices)" class="no-margin-bottom">
+            <span *ngIf="equipement === 'ordinateurs' && structure.nbComputers">
+              {{ getEquipmentsLabel(equipement) }} : {{ structure.nbComputers }}
+            </span>
+            <span *ngIf="equipement === 'tablettes' && structure.nbTablets">
+              {{ getEquipmentsLabel(equipement) }} : {{ structure.nbTablets }}
+            </span>
+            <span *ngIf="equipement === 'bornesNumeriques' && structure.nbNumericTerminal">
+              {{ getEquipmentsLabel(equipement) }} :
+              {{ structure.nbNumericTerminal }}
+            </span>
+            <span *ngIf="equipement === 'imprimantes' && structure.nbPrinters">
+              {{ getEquipmentsLabel(equipement) }} : {{ structure.nbPrinters }}
+            </span>
+            <span *ngIf="equipement === 'scanners' && structure.nbScanners">
+              {{ getEquipmentsLabel(equipement) }} : {{ structure.nbScanners }}
+            </span>
+          </p>
+        </div>
+      </div>
+      <ng-content select="[slot=structure-details-access]"></ng-content>
+      <div fxLayout="column" class="structure-details-block" fxLayoutAlign="baseline baseline" fxLayoutGap="20px">
+        <div fxLayout="row" fxLayoutAlign="none flex-start" fxLayoutGap="13px">
+          <p class="updated">Mise à jour le {{ structure.updatedAt | date: 'mediumDate' }}</p>
+        </div>
       </div>
     </div>
 
-    <div
-      *ngIf="isBaseSkills() || isAccessRights() || isParentingHelp() || isSocialAndProfessional() || isDigitalSecurity()"
-      fxLayout="column"
-      class="structure-details-block noSeparator"
-      fxLayoutAlign="baseline baseline">
-      <h2>Formations</h2>
-      <div *ngIf="structure.freeWorkShop">
-        <span *ngIf="multipleWorkshop()" class="bold-info">L'accès à ces formations est gratuit</span>
-        <span *ngIf="!multipleWorkshop()" class="bold-info">L'accès à cette formation est gratuit</span>
-      </div>
-      <div class="formationDetails">
-        <div *ngIf="isBaseSkills()" class="collapse" [ngClass]="{ notCollapsed: !showBaseSkills }">
-          <div fxLayout="column">
-            <div class="collapseHeader" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign=" center" (click)="toggleBaseSkills()">
-              <div class="titleCollapse">Compétences de base</div>
-              <div class="logo">
-                <svg class="show" aria-hidden="true">
-                  <use [attr.xlink:href]="'assets/form/sprite.svg#unfold'"></use>
-                </svg>
-                <svg class="hide" aria-hidden="true">
-                  <use [attr.xlink:href]="'assets/form/sprite.svg#fold'"></use>
-                </svg>
-              </div>
-            </div>
-            <div *ngIf="showBaseSkills" class="detailsContainer" [@slideInOut]>
-              <div class="details" *ngFor="let skill of baseSkills">{{ skill.text }}</div>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="isAccessRights()" class="collapse" [ngClass]="{ notCollapsed: !showAccessRights }">
-          <div fxLayout="column">
-            <div
-              class="collapseHeader"
-              fxLayout="row"
-              fxLayoutGap="20px"
-              fxLayoutAlign=" center"
-              (click)="toggleAccessRights()">
-              <div class="titleCollapse">Accès aux droits</div>
-              <div class="logo">
-                <svg class="show" aria-hidden="true">
-                  <use [attr.xlink:href]="'assets/form/sprite.svg#unfold'"></use>
-                </svg>
-                <svg class="hide" aria-hidden="true">
-                  <use [attr.xlink:href]="'assets/form/sprite.svg#fold'"></use>
-                </svg>
-              </div>
-            </div>
-            <div *ngIf="showAccessRights" class="detailsContainer" [@slideInOut]>
-              <div class="details" *ngFor="let rights of accessRights">{{ rights.text }}</div>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="isParentingHelp()" class="collapse" [ngClass]="{ notCollapsed: !showParentingHelp }">
-          <div fxLayout="column">
-            <div
-              class="collapseHeader"
-              fxLayout="row"
-              fxLayoutGap="20px"
-              fxLayoutAlign=" center"
-              (click)="toggleParentingHelp()">
-              <div class="titleCollapse">Aide à la parentalité</div>
-              <div class="logo">
-                <svg class="show" aria-hidden="true">
-                  <use [attr.xlink:href]="'assets/form/sprite.svg#unfold'"></use>
-                </svg>
-                <svg class="hide" aria-hidden="true">
-                  <use [attr.xlink:href]="'assets/form/sprite.svg#fold'"></use>
-                </svg>
-              </div>
-            </div>
-            <div *ngIf="showParentingHelp" class="detailsContainer" [@slideInOut]>
-              <div class="details" *ngFor="let help of parentingHelp">{{ help.text }}</div>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="isSocialAndProfessional()" class="collapse" [ngClass]="{ notCollapsed: !showSocialAndProfessional }">
-          <div fxLayout="column">
-            <div
-              class="collapseHeader"
-              fxLayout="row"
-              fxLayoutGap="20px"
-              fxLayoutAlign=" center"
-              (click)="toggleSocialAndProfessional()">
-              <div class="titleCollapse">Insertion sociale et professionnelle</div>
-              <div class="logo">
-                <svg class="show" aria-hidden="true">
-                  <use [attr.xlink:href]="'assets/form/sprite.svg#unfold'"></use>
-                </svg>
-                <svg class="hide" aria-hidden="true">
-                  <use [attr.xlink:href]="'assets/form/sprite.svg#fold'"></use>
-                </svg>
-              </div>
-            </div>
-            <div *ngIf="showSocialAndProfessional" class="detailsContainer" [@slideInOut]>
-              <div class="details" *ngFor="let skill of socialAndProfessional">{{ skill.text }}</div>
-            </div>
-          </div>
-        </div>
-        <div *ngIf="isDigitalSecurity()" class="collapse" [ngClass]="{ notCollapsed: !showDigitalSecurity }">
-          <div fxLayout="column">
-            <div
-              class="collapseHeader"
-              fxLayout="row"
-              fxLayoutGap="20px"
-              fxLayoutAlign=" center"
-              (click)="toggleDigitalSecurity()">
-              <div class="titleCollapse">Culture et sécurité numérique</div>
-              <div class="logo">
-                <svg class="show" aria-hidden="true">
-                  <use [attr.xlink:href]="'assets/form/sprite.svg#unfold'"></use>
-                </svg>
-                <svg class="hide" aria-hidden="true">
-                  <use [attr.xlink:href]="'assets/form/sprite.svg#fold'"></use>
-                </svg>
-              </div>
-            </div>
-            <div *ngIf="showDigitalSecurity" class="detailsContainer" [@slideInOut]>
-              <div class="details" *ngFor="let skill of digitalCultureSecurity">{{ skill.text }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="structure.hasEquipments()" fxLayout="column" class="structure-details-block" fxLayoutAlign="baseline baseline">
-      <h2>Matériel et wifi</h2>
-      <div fxLayout="column">
-        <div *ngIf="filterOnlyEquipments(structure.equipmentsAndServices).includes('wifiEnAccesLibre')">
-          {{ getEquipmentsLabel('wifiEnAccesLibre') }}
-        </div>
-        <p *ngFor="let equipement of filterOnlyEquipments(structure.equipmentsAndServices)" class="no-margin-bottom">
-          <span *ngIf="equipement === 'ordinateurs' && structure.nbComputers">
-            {{ getEquipmentsLabel(equipement) }} : {{ structure.nbComputers }}
-          </span>
-          <span *ngIf="equipement === 'tablettes' && structure.nbTablets">
-            {{ getEquipmentsLabel(equipement) }} : {{ structure.nbTablets }}
-          </span>
-          <span *ngIf="equipement === 'bornesNumeriques' && structure.nbNumericTerminal">
-            {{ getEquipmentsLabel(equipement) }} : {{ structure.nbNumericTerminal }}
-          </span>
-          <span *ngIf="equipement === 'imprimantes' && structure.nbPrinters">
-            {{ getEquipmentsLabel(equipement) }} : {{ structure.nbPrinters }}
-          </span>
-          <span *ngIf="equipement === 'scanners' && structure.nbScanners">
-            {{ getEquipmentsLabel(equipement) }} : {{ structure.nbScanners }}
-          </span>
-        </p>
-      </div>
-    </div>
-    <ng-content select="[slot=structure-details-access]"></ng-content>
-    <div fxLayout="column" class="structure-details-block" fxLayoutAlign="baseline baseline" fxLayoutGap="20px">
-      <div fxLayout="row" fxLayoutAlign="none flex-start" fxLayoutGap="13px">
-        <p class="updated">Mise à jour le {{ structure.updatedAt | date: 'mediumDate' }}</p>
-      </div>
-    </div>
+    <ng-content select="[slot=structure-details-modals]"></ng-content>
+    <app-text-input-modal
+      [openned]="structureErrorModalOpenned"
+      [placeholder]="'Décrivez l\'erreur ici. Ex: Horaires faux...'"
+      [content]="
+        'Voulez-vous notifier res\'in d\'une erreur sur la fiche de cet acteur &nbsp;? Votre commentaire sera envoyé à l\'acteur en question ainsi qu\'aux administrateurs.'
+      "
+      (closed)="sendErrorEmail($event)"
+      (newContent)="sendErrorEmail($event)"
+    ></app-text-input-modal>
   </div>
-
-  <ng-content select="[slot=structure-details-modals]"></ng-content>
-  <app-text-input-modal
-    [openned]="structureErrorModalOpenned"
-    [placeholder]="'Décrivez l\'erreur ici. Ex: Horaires faux...'"
-    [content]="
-      'Voulez-vous notifier res\'in d\'une erreur sur la fiche de cet acteur &nbsp;? Votre commentaire sera envoyé à l\'acteur en question ainsi qu\'aux administrateurs.'
-    "
-    (closed)="sendErrorEmail($event)"
-    (newContent)="sendErrorEmail($event)"></app-text-input-modal>
 </div>

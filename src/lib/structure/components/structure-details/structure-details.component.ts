@@ -1,15 +1,15 @@
+import { animate, AUTO_STYLE, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { style, animate, transition, trigger, group } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
+import { Equipment } from '../../../map/models/enum/equipment.enum';
 import { Structure } from '../../../map/models/structure.model';
-import { Module } from '../../models/module.model';
 import { Category } from '../../models/category.model';
 import { AccessModality } from '../../models/enum/access-modality.enum';
-import { Equipment } from '../../../map/models/enum/equipment.enum';
 import { PublicCategorie } from '../../models/enum/public.enum';
-import { SEARCH_TOKEN, SearchRepository } from '../../repositories/search.repository';
-import { STRUCTURE_TOKEN, StructureRepository } from '../../repositories/structure.repository';
+import { Module } from '../../models/module.model';
+import { SearchRepository, SEARCH_TOKEN } from '../../repositories/search.repository';
+import { StructureRepository, STRUCTURE_TOKEN } from '../../repositories/structure.repository';
 import { PrintService } from '../../services/print.service';
 
 @Component({
@@ -18,17 +18,24 @@ import { PrintService } from '../../services/print.service';
   styleUrls: ['./structure-details.component.scss'],
   animations: [
     trigger('slideInOut', [
+      transition(':enter', [style({ left: '-600px' }), animate('200ms ease-in', style({ left: '0' }))]),
+      transition(':leave', [animate('200ms ease-in', style({ left: '-600px' }))]),
+    ]),
+    trigger('fadeInOut', [
       transition(':enter', [
-        style({ height: '0', opacity: 0 }),
-        group([animate(200, style({ height: '*' })), animate('200ms ease-in-out', style({ opacity: '1' }))])
+        style({ backgroundColor: 'rgb(00, 00, 00, 0)' }),
+        animate('200ms ease-in', style({ backgroundColor: 'rgb(00, 00, 00, 0.6)' })),
       ]),
-      transition(':leave', [
-        style({ height: '*', opacity: 1 }),
-        group([animate(1, style({ height: 0 })), animate(1, style({ opacity: '0' }))])
-      ])
-    ])
+      transition(':leave', [animate('200ms ease-in', style({ backgroundColor: 'rgb(00, 00, 00, 0)' }))]),
+    ]),
+    trigger('show', [
+      state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE, margin: '8px 0' })),
+      state('false', style({ height: '0px', visibility: 'hidden', margin: '0' })),
+      transition('true => false', animate('300ms ease-out')),
+      transition('false => true', animate('300ms ease-out')),
+    ]),
   ],
-  providers: [PrintService]
+  providers: [PrintService],
 })
 export class StructureDetailsComponent implements OnInit {
   @Input() public structure: Structure;
@@ -45,14 +52,16 @@ export class StructureDetailsComponent implements OnInit {
   public parentingHelp: Module[];
   public socialAndProfessional: Module[];
   public digitalCultureSecurity: Module[];
-  public showBaseSkills: boolean;
-  public showAccessRights: boolean;
-  public showParentingHelp: boolean;
-  public showSocialAndProfessional: boolean;
-  public showDigitalSecurity: boolean;
+  public showBaseSkills = false;
+  public showAccessRights = false;
+  public showParentingHelp = false;
+  public showSocialAndProfessional = false;
+  public showDigitalSecurity = false;
   public printMode = false;
-  public isLoading: boolean = false;
+  public isLoading = true;
+  public lockdownInfoDisplay = false;
   public structureErrorModalOpenned = false;
+  public fullScreen = false;
 
   constructor(
     @Inject(SEARCH_TOKEN) readonly searchService: SearchRepository,
@@ -62,16 +71,35 @@ export class StructureDetailsComponent implements OnInit {
     private router: Router
   ) {
     route.url.subscribe((url) => {
-      if (url[0].path === 'structure') {
-        this.structure = this.printService.structure;
+      if (url[0]?.path === 'structure') {
+        this.structure = new Structure(this.printService.structure);
         this.printMode = true;
+        // Display formations for printing
+        this.toggleAccessRights();
+        this.toggleBaseSkills();
+        this.toggleDigitalSecurity();
+        this.toggleParentingHelp();
+        this.toggleSocialAndProfessional();
+        this.initForm();
       }
     });
   }
 
-  async ngOnInit(): Promise<void> {
-    this.isLoading = true;
-
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((queryParams) => {
+      if (queryParams.id) {
+        this.initForm();
+      } else if (!this.printMode) {
+        this.structure = null;
+      }
+    });
+    this.route.data.subscribe((data) => {
+      if (data.fullScreen) {
+        this.fullScreen = true;
+      }
+    });
+  }
+  private async initForm(): Promise<void> {
     this.searchService.getCategoriesTraining().subscribe((referentiels) => {
       referentiels.forEach((referentiel) => {
         if (referentiel.isBaseSkills()) {
@@ -119,16 +147,23 @@ export class StructureDetailsComponent implements OnInit {
 
   public close(): void {
     this.route.url.subscribe((urls) => {
-      if (urls[0].path != 'orientation') {
+      if (urls.length > 0 && urls[0].path !== 'orientation') {
         this.router.navigate(['/acteurs'], {
           relativeTo: this.route,
           queryParams: {
-            id: null
+            id: null,
           },
-          queryParamsHandling: 'merge'
+          queryParamsHandling: 'merge',
         });
       } else {
-        this.closeDetails.emit();
+        this.isLoading = true;
+        this.router.navigate(['./'], {
+          relativeTo: this.route,
+          queryParams: {
+            id: null,
+          },
+          queryParamsHandling: 'merge',
+        });
       }
     });
   }
@@ -172,7 +207,9 @@ export class StructureDetailsComponent implements OnInit {
   }
 
   public setServiceCategories(): void {
-    this.baseSkills = this.structure.baseSkills.map((skill) => _.find(this.baseSkillssReferentiel.modules, { id: skill }));
+    this.baseSkills = this.structure.baseSkills.map((skill) =>
+      _.find(this.baseSkillssReferentiel.modules, { id: skill })
+    );
     this.accessRights = this.structure.accessRight.map((rights) =>
       _.find(this.accessRightsReferentiel.modules, { id: rights })
     );

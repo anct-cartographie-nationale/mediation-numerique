@@ -64,10 +64,11 @@ export class Structure {
   public personalOffers: PersonalOffer[] = [];
 
   public alreadySelected? = false;
+  public isClaimed?: boolean = null;
 
   constructor(obj?: any) {
     Object.assign(this, obj, {
-      hours: obj && obj.hours ? new Week(obj.hours) : new Week()
+      hours: obj && obj.hours ? new Week(obj.hours) : new Week(),
     });
   }
 

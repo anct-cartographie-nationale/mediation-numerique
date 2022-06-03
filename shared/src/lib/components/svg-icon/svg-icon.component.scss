@@ -37,6 +37,10 @@
     width: 40px;
     height: 40px;
   }
+  &.icon-52 {
+    width: 52px;
+    height: 52px;
+  }
   &.icon-75 {
     width: 4.688em;
   }
@@ -81,6 +85,11 @@
   &.green {
     fill: $green-1;
     stroke: $green-1;
+  }
+  &.backArrow {
+    height: 40px;
+    width: 40px;
+    margin-right: 1rem;
   }
 }
 

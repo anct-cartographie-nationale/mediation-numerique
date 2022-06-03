@@ -61,10 +61,10 @@ Ce projet a été construit dans un espace de travail Angular, pour fonctionner 
 
 [Husky](https://typicode.github.io/husky) est un outil de gestion des hooks git pour effectuer des tâches automatiques
 
-Mise en place de Husky :
+Mise en place de Husky dans le dossier du projet `@gouvfr-anct/mediation-numerique` :
 
 ```bash
-yarn husky install
+npx husky install
 ```
 
 Rendre exécutable les fichiers qui contiennent les hooks :
@@ -80,11 +80,13 @@ Ces commandes servent dans un contexte de développement de la bibliothèque et 
 
 ### Construction
 
-Exécuter `yarn build @gouvfr-anct/mediation-numerique` pour construire le projet. Les fichiers de sortie sont écrits dans le dossier `dist/`.
+Exécuter `yarn build @gouvfr-anct/mediation-numerique` pour construire le projet. Les fichiers de sortie sont écrits dans le dossier `dist/@gouvfr-anct/mediation-numerique/`.
 
 ### Test
 
 Exécuter `yarn test @gouvfr-anct/mediation-numerique` pour tester le projet.
+
+> Si suite à un build le dossier `dist` contient `@gouvfr-anct/mediation-numerique`, certains tests sont en erreur, pour résoudre cela, il faut soit supprimer le dossier `@gouvfr-anct/mediation-numerique` dans `dist`, soit exécuter la commande `npx ng test @gouvfr-anct/mediation-numerique` directement dans le dossier `projects/@gouvfr-anct/mediation-numerique`.
 
 ### ESLint
 
@@ -104,6 +106,7 @@ Exécuter `yarn prettier` pour mettre à niveau la syntaxe de l'ensemble des fic
 
 - Avant de créer une nouvelle branche de travail, récupérer les dernières modifications disponibles sur la branche `main`
 - La nouvelle branche de travail doit ête préfixée par `build/`, `chore/`, `ci/`, `docs/`, `feat/`, `fix/`, `perf/`, `refactor/`, `revert/`, `style/` ou `test/` en fonction du type de modification prévu, pour plus de détails à ce sujet, consulter [Conventional Commits cheat sheet](https://kapeli.com/cheat_sheets/Conventional_Commits.docset/Contents/Resources/Documents/index)
+- Une branche portant une version à publier doit être de la forme `release/X.Y` avec `X.Y` égal au numéro de majeur et de mineur de la release, cela signifie donc que tous les patches sont à appliquer sur la même branche pour chaque version mineure. Cette organisation permet de gérer plusieurs versions de la bibliothèque en parallèle sans mettre en péril la rétrocompatibilité.
 
 ### Commits
 
@@ -136,7 +139,20 @@ La branche `main`, ainsi que l'ensemble des branches de travail avec un préfixe
 
 ### Déployer
 
-Pour publier une nouvelle version de la bibliothèque, que le numéro de version cible soit mis à jour dans le fichier `package.json` au préalable. La publication se déclenche une fois qu'un tag au format `x.y.z` a été poussé sur le dépôt.
+Pour publier une nouvelle version, il faut que le numéro de version cible soit mis à jour dans le fichier `package.json`, que le fichier `CHANGELOG.md` soit mis à jour et que le commit de la version à publier porte un tag de la forme `vX.Y.Z` correspondant au numéro de version présent dans `package.json`.
+
+Il est possible d'automatiser ce processus en utilisant la commande `standard-version` :
+
+- Récupérer la version à publier depuis la branche `main`
+- Vérifier la valeur du prochain tag avec la commande `standard-version --dry-run`
+- Récupérer ou créer la branche `release/X.Y` correspondant à la majeure et la mineure indiquée par la commande précédente
+- Lancer la commande `standard-version` qui
+  - met à jour la version dans le fichier `package.json`
+  - met à jour le fichier `CHANGELOG.md`
+  - créé un nouveau commit
+  - ajoute le tag correspondant à la version dans le fichier `package.json`
+- Pousser la branche avec le tag `git push origin release/X.Y --tags` conduit à la publication d'une nouvelle version
+- Si le numéro de version est le plus grand au sens de la [priorité définie par la spécification de la gestion sémantique de version (11)](https://semver.org/lang/fr/), alors il faut créer une [pull request](https://github.com/anct-cartographie-nationale/mediation-numerique/pulls) vers la branche `main`, il ne faut pas le faire si ce n'est pas le cas.
 
 ## Construit avec
 
@@ -156,7 +172,7 @@ Pour publier une nouvelle version de la bibliothèque, que le numéro de version
 #### CI
 
 - [Github Actions](https://docs.github.com/en/actions) est l'outil d'intégration et de déploiement continu intégré à GitHub
-  - L'historique des déploiements est disponible [sous l'onglet Actions](https://github.com/anct-cartographie-nationale/client-application/actions/)
+  - L'historique des déploiements est disponible [sous l'onglet Actions](https://github.com/anct-cartographie-nationale/mediation-numerique/actions/)
 - Secrets du dépôt :
   - `NODE_AUTH_TOKEN` : Clé d'accès NPM pour publier sur l'organisation [@gouvfr-anct](https://www.npmjs.com/org/gouvfr-anct)
 
@@ -289,7 +305,7 @@ Les configurations peuvent être définies sous forme d'objets ou d'énumératio
 
 ## Gestion des versions
 
-Afin de maintenir un cycle de publication claire et de favoriser la rétrocompatibilité, la dénomination des versions suit la spécification décrite par la [Gestion sémantique de version](https://semver.org/lang/fr/)
+Afin de maintenir un cycle de publication clair et de favoriser la rétrocompatibilité, la dénomination des versions suit la spécification décrite par la [Gestion sémantique de version](https://semver.org/lang/fr/)
 
 Les versions disponibles ainsi que les journaux décrivant les changements apportés sont disponibles depuis [la page des Releases](https://github.com/anct-cartographie-nationale/mediation-numerique/releases).
 

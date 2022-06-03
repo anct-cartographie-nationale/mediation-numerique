@@ -3,10 +3,22 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../../out-tsc/lib",
+    "paths": {
+      "@gouvfr-anct/*": ["dist/@gouvfr-anct/*"]
+    },
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "types": [],
+    "strict": false,
+    "noImplicitReturns": false,
+    "noPropertyAccessFromIndexSignature": false
   },
-  "exclude": ["**/*.spec.ts"]
+  "exclude": ["**/*.spec.ts"],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": false
+  }
 }

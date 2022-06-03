@@ -63,7 +63,7 @@ button {
     .text {
       background: $primary-color;
       border: 1px solid $grey-1;
-
+      line-height: 15px;
       color: $white;
       &.withIcon {
         color: $white;
@@ -121,6 +121,24 @@ button {
       font-size: 14px;
       &.withIcon {
         color: $grey-1;
+      }
+    }
+    &.wide {
+      div:first-child {
+        min-width: 50px;
+        width: 184px;
+      }
+    }
+    &.ultrawide {
+      div:first-child {
+        min-width: 50px;
+        width: 400px;
+        @media #{$tablet} {
+          width: 200px;
+        }
+        span {
+          padding-inline: 4px;
+        }
       }
     }
     .small-text {
@@ -251,11 +269,10 @@ button {
   }
 }
 .fullButton {
-  @include lato-regular-14;
   width: 125px !important;
 }
 .fullWidth {
-  width: 100%;
+  width: 100% !important;
 }
 .bigButton {
   width: 280px !important;

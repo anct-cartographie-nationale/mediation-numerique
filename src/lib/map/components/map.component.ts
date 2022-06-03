@@ -1,20 +1,51 @@
-import { Component, EventEmitter, HostListener, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import L, { latLng, MapOptions, geoJSON, tileLayer, Map, latLngBounds, layerGroup } from 'leaflet';
-import * as _ from 'lodash';
-import { Structure } from '../models/structure.model';
-import { GeoJsonProperties } from '../models/geoJsonProperties.model';
-import { MapService } from './map.service';
-import { GEOMETRY_POLYGON_TOKEN, GeometryPolygonConfiguration } from '../../configurations/geometry-polygon.configuration';
-import { ZOOM_LEVEL_TOKEN, ZoomLevelConfiguration } from '../../configurations/zoom-level.configuration';
-import { INITIAL_POSITION_TOKEN, InitialPositionConfiguration } from '../../configurations/initial-position.configuration';
-import { MARKER_TYPE_TOKEN, MarkerTypeConfiguration } from '../../configurations/marker-type.configuration';
-import { GEO_JSON_TOKEN, GeoJsonRepository } from '../repositories/geo-json.repository';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
+import L, {
+  geoJSON,
+  latLng,
+  layerGroup,
+  Map,
+  MapOptions,
+  tileLayer,
+} from "leaflet";
+import * as _ from "lodash";
+import {
+  GeometryPolygonConfiguration,
+  GEOMETRY_POLYGON_TOKEN,
+} from "../../configurations/geometry-polygon.configuration";
+import {
+  InitialPositionConfiguration,
+  INITIAL_POSITION_TOKEN,
+} from "../../configurations/initial-position.configuration";
+import {
+  MarkerTypeConfiguration,
+  MARKER_TYPE_TOKEN,
+} from "../../configurations/marker-type.configuration";
+import {
+  ZoomLevelConfiguration,
+  ZOOM_LEVEL_TOKEN,
+} from "../../configurations/zoom-level.configuration";
+import { GeoJsonProperties } from "../models/geoJsonProperties.model";
+import { Structure } from "../models/structure.model";
+import {
+  GeoJsonRepository,
+  GEO_JSON_TOKEN,
+} from "../repositories/geo-json.repository";
+import { MapService } from "./map.service";
 
 @Component({
-  selector: 'app-map',
+  selector: "app-map",
   providers: [MapService],
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  templateUrl: "./map.component.html",
+  styleUrls: ["./map.component.scss"],
 })
 export class MapComponent implements OnChanges {
   @Input() public isOrientationForm = false;
@@ -24,30 +55,37 @@ export class MapComponent implements OnChanges {
   @Input() public selectedMarkerId: string;
   @Input() public isMapPhone: boolean;
   @Input() public searchedValue: string | [number, number];
-  @Output() public selectedStructure: EventEmitter<Structure> = new EventEmitter<Structure>();
-  @Output() public orientationButtonClick: EventEmitter<Structure> = new EventEmitter<Structure>();
+  @Output() public selectedStructure: EventEmitter<Structure> =
+    new EventEmitter<Structure>();
+  @Output() public orientationButtonClick: EventEmitter<Structure> =
+    new EventEmitter<Structure>();
   private currentStructure: Structure;
 
   public map: Map;
   public mapOptions: MapOptions;
+  public zoomOptions = { animate: true, duration: 0.5 };
 
   // Add listener on the popup button to show details of structure
-  @HostListener('document:click', ['$event'])
+  @HostListener("document:click", ["$event"])
   public clickout(event): void {
-    if (event.target.classList.contains('btnShowDetails')) {
+    if (event.target.classList.contains("btnShowDetails")) {
       this.selectedStructure.emit(this.currentStructure);
     }
-    if (event.target.classList.contains('add')) {
+    if (event.target.classList.contains("add")) {
       this.orientationButtonClick.emit(this.currentStructure);
       this.getStructuresPositions(this.structures);
     }
   }
 
   constructor(
-    @Inject(GEOMETRY_POLYGON_TOKEN) private readonly metropole: GeometryPolygonConfiguration,
-    @Inject(MARKER_TYPE_TOKEN) private readonly markerType: MarkerTypeConfiguration,
-    @Inject(ZOOM_LEVEL_TOKEN) private readonly zoomLevel: ZoomLevelConfiguration,
-    @Inject(INITIAL_POSITION_TOKEN) private readonly initialPosition: InitialPositionConfiguration,
+    @Inject(GEOMETRY_POLYGON_TOKEN)
+    private readonly metropole: GeometryPolygonConfiguration,
+    @Inject(MARKER_TYPE_TOKEN)
+    private readonly markerType: MarkerTypeConfiguration,
+    @Inject(ZOOM_LEVEL_TOKEN)
+    private readonly zoomLevel: ZoomLevelConfiguration,
+    @Inject(INITIAL_POSITION_TOKEN)
+    private readonly initialPosition: InitialPositionConfiguration,
     @Inject(GEO_JSON_TOKEN) private readonly geoJsonService: GeoJsonRepository,
     private readonly mapService: MapService
   ) {
@@ -69,21 +107,29 @@ export class MapComponent implements OnChanges {
         }, 0);
       }
     }
-    if (changes.structures) {
+    if (changes.structures && this.map) {
       this.handleStructurePosition(changes.structures.previousValue);
     }
     // Handle map marker tooltip
-    if (changes.toogleToolTipId && changes.toogleToolTipId.currentValue !== changes.toogleToolTipId.previousValue) {
+    if (
+      changes.toogleToolTipId &&
+      changes.toogleToolTipId.currentValue !==
+        changes.toogleToolTipId.previousValue
+    ) {
       if (changes.toogleToolTipId.previousValue !== undefined) {
         if (this.isToPrint(changes.toogleToolTipId.previousValue)) {
           this.mapService.setAddedToListMarker(
             changes.toogleToolTipId.previousValue,
-            this.getMarkerTypeByStructureId(changes.toogleToolTipId.previousValue)
+            this.getMarkerTypeByStructureId(
+              changes.toogleToolTipId.previousValue
+            )
           );
         } else {
           this.mapService.setUnactiveMarker(
             changes.toogleToolTipId.previousValue,
-            this.getMarkerTypeByStructureId(changes.toogleToolTipId.previousValue)
+            this.getMarkerTypeByStructureId(
+              changes.toogleToolTipId.previousValue
+            )
           );
         }
       }
@@ -100,28 +146,41 @@ export class MapComponent implements OnChanges {
       if (changes.selectedMarkerId.currentValue === undefined) {
         this.mapService.setDefaultMarker(
           changes.selectedMarkerId.previousValue,
-          this.getMarkerTypeByStructureId(changes.selectedMarkerId.previousValue)
+          this.getMarkerTypeByStructureId(
+            changes.selectedMarkerId.previousValue
+          )
         );
         this.map.setView(this.mapOptions.center, this.mapOptions.zoom);
       }
     }
     // Handle map marker if one is set with url or selected
     if (this.mapService.getMarker(this.selectedMarkerId)) {
-      this.mapService.setSelectedMarker(this.selectedMarkerId, this.getMarkerTypeByStructureId(this.selectedMarkerId));
+      this.mapService.setSelectedMarker(
+        this.selectedMarkerId,
+        this.getMarkerTypeByStructureId(this.selectedMarkerId)
+      );
       this.centerLeafletMapOnMarker(this.selectedMarkerId);
     }
 
     this.closePreviousMarker(changes);
 
     if (changes.structuresToPrint) {
-      if (changes.structuresToPrint.currentValue < changes.structuresToPrint.previousValue) {
+      if (
+        changes.structuresToPrint.currentValue <
+        changes.structuresToPrint.previousValue
+      ) {
         this.mapService?.setUnactiveMarker(
           this.toogleToolTipId,
-          this.getMarkerTypeByStructureId(changes.structuresToPrint.previousValue)
+          this.getMarkerTypeByStructureId(
+            changes.structuresToPrint.previousValue
+          )
         );
       }
       this.structuresToPrint.forEach((structure: Structure) => {
-        this.mapService.setAddedToListMarker(structure._id, this.getMarkerTypeByStructureId(structure._id));
+        this.mapService.setAddedToListMarker(
+          structure._id,
+          this.getMarkerTypeByStructureId(structure._id)
+        );
       });
     }
   }
@@ -130,12 +189,18 @@ export class MapComponent implements OnChanges {
     this.geoJsonService.getTownshipCoord(queryString).subscribe(
       (townData) => {
         if (townData.length > 0) {
-          const bounds = new L.LatLngBounds(townData.map((dataArray) => dataArray.reverse()));
+          const bounds = new L.LatLngBounds(
+            townData.map((dataArray) => dataArray.reverse())
+          );
           this.map.fitBounds(bounds);
         }
       },
       (err) => {
-        this.map.setView(this.mapOptions.center, this.mapOptions.zoom);
+        this.map.flyTo(
+          this.mapOptions.center,
+          this.mapOptions.zoom,
+          this.zoomOptions
+        );
       }
     );
   }
@@ -145,8 +210,14 @@ export class MapComponent implements OnChanges {
    * @param coords {[number, number]} Map center position
    */
   public centerOnCoordinates(coords: [number, number]): void {
-    this.mapService.createMarker(coords[1], coords[0], this.markerType.user, 'userLocation').addTo(this.map);
-    this.map.setView(new L.LatLng(coords[1], coords[0]), this.zoomLevel.userPosition);
+    this.mapService
+      .createMarker(coords[1], coords[0], this.markerType.user, "userLocation")
+      .addTo(this.map);
+    this.map.flyTo(
+      new L.LatLng(coords[1], coords[0]),
+      this.zoomLevel.userPosition,
+      this.zoomOptions
+    );
   }
 
   /**
@@ -159,18 +230,25 @@ export class MapComponent implements OnChanges {
       previousStructuresValue.length > 0 &&
       previousStructuresValue.length < this.structures.length
     ) {
-      this.getStructuresPositions(_.differenceWith(this.structures, previousStructuresValue, _.isEqual));
+      this.getStructuresPositions(
+        _.differenceWith(this.structures, previousStructuresValue, _.isEqual)
+      );
     } else if (this.structures) {
       this.map = this.mapService.cleanMap(this.map);
       this.getStructuresPositions(this.structures);
       this.structuresToPrint.forEach((structure: Structure) => {
-        this.mapService.setAddedToListMarker(structure._id, this.getMarkerTypeByStructureId(structure._id));
+        this.mapService.setAddedToListMarker(
+          structure._id,
+          this.getMarkerTypeByStructureId(structure._id)
+        );
       });
     }
   }
 
   private isToPrint(id: string): boolean {
-    return this.structuresToPrint.findIndex((elem) => elem._id == id) > -1 ? true : false;
+    return this.structuresToPrint.findIndex((elem) => elem._id == id) > -1
+      ? true
+      : false;
   }
 
   /**
@@ -179,7 +257,9 @@ export class MapComponent implements OnChanges {
    * @returns {number}
    */
   private getMarkerType(structure: Structure): number {
-    return structure?.labelsQualifications?.includes('conseillerNumFranceServices')
+    return structure?.labelsQualifications?.includes(
+      "conseillerNumFranceServices"
+    )
       ? this.markerType.conseillerFrance
       : this.markerType.structure;
   }
@@ -190,7 +270,9 @@ export class MapComponent implements OnChanges {
    * @returns {number}
    */
   private getMarkerTypeByStructureId(id: string): number {
-    return this.getMarkerType(this.structures.find((structure) => structure._id === id));
+    return this.getMarkerType(
+      this.structures.find((structure) => structure._id === id)
+    );
   }
 
   private getStructuresPositions(structureList: Structure[]): void {
@@ -205,7 +287,7 @@ export class MapComponent implements OnChanges {
         )
         .addTo(this.map)
         // store structure before user click on button
-        .on('popupopen', () => {
+        .on("popupopen", () => {
           this.currentStructure = structure;
         });
     }
@@ -216,21 +298,21 @@ export class MapComponent implements OnChanges {
    * @param structure Structure
    */
   private buildToolTip(structure: Structure): string {
-    let cssAvailabilityClass = structure.isOpen ? 'available' : null;
+    let cssAvailabilityClass = structure.isOpen ? "available" : null;
     if (cssAvailabilityClass === null) {
       if (structure.openedOn.day) {
-        cssAvailabilityClass = 'unavailable';
+        cssAvailabilityClass = "unavailable";
       } else {
-        cssAvailabilityClass = 'unknown';
+        cssAvailabilityClass = "unknown";
       }
     }
     return (
-      '<h1>' +
+      "<h1>" +
       structure.structureName +
-      '</h1>' +
-      '<p>' +
+      "</h1>" +
+      "<p>" +
       structure.getLabelTypeStructure() +
-      '</p>' +
+      "</p>" +
       (this.isOrientationForm
         ? '<div class="pop-up orientation"><button type="button" class="orientationButton btnShowDetails"><span class="ico-gg-eye-alt eye"></span>Voir</button></div>'
         : '<div class="pop-up"><button type="button" class="btnShowDetails">Voir</button></div>')
@@ -264,18 +346,25 @@ export class MapComponent implements OnChanges {
     this.initMDMLayer();
     // Init WMS service with param from data.grandlyon.com
     layerGroup();
-    const carteLayer = tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>',
-      maxZoom: this.zoomLevel.max
-    });
+    const carteLayer = tileLayer(
+      "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          '&copy; <a href="https://carto.com/attributions">CARTO</a>',
+        maxZoom: this.zoomLevel.max,
+      }
+    );
     // Center is set on townhall
     // Zoom is blocked on 11 to prevent people to zoom out from metropole
     this.mapOptions = {
-      center: latLng(this.initialPosition.latitude, this.initialPosition.longitude),
+      center: latLng(
+        this.initialPosition.latitude,
+        this.initialPosition.longitude
+      ),
       maxZoom: this.zoomLevel.max,
       zoom: this.zoomLevel.regular,
       minZoom: this.zoomLevel.min,
-      layers: [carteLayer]
+      layers: [carteLayer],
     };
   }
 
@@ -299,10 +388,12 @@ export class MapComponent implements OnChanges {
   private centerLeafletMapOnMarker(markerId: string): void {
     if (this.mapService.getMarker(markerId)) {
       const marker = this.mapService.getMarker(markerId);
-      const latLngs = [marker.getLatLng()];
-      const markerBounds = latLngBounds(latLngs);
-      // paddingTopLeft is used for centering marker because of structure details pane
-      this.map.fitBounds(markerBounds, { paddingTopLeft: [300, 0] });
+      const latLngs = marker.getLatLng();
+      this.map.flyTo(
+        new L.LatLng(latLngs.lat, latLngs.lng),
+        this.zoomLevel.max,
+        this.zoomOptions
+      );
     }
   }
 
@@ -311,9 +402,9 @@ export class MapComponent implements OnChanges {
       geoJSON(
         {
           type: this.metropole.features[0].geometry.type,
-          coordinates: this.metropole.features[0].geometry.coordinates
+          coordinates: this.metropole.features[0].geometry.coordinates,
         } as any,
-        { style: () => ({ color: '#a00000', fillOpacity: 0, weight: 1 }) }
+        { style: () => ({ color: "#a00000", fillOpacity: 0, weight: 1 }) }
       )
     );
   }
@@ -325,8 +416,10 @@ export class MapComponent implements OnChanges {
    */
   private closePreviousMarker(changes: SimpleChanges): void {
     if (
-      (changes.selectedMarkerId?.currentValue === undefined && changes.selectedMarkerId?.previousValue) ||
-      changes.selectedMarkerId?.currentValue !== changes.selectedMarkerId?.previousValue
+      (changes.selectedMarkerId?.currentValue === undefined &&
+        changes.selectedMarkerId?.previousValue) ||
+      changes.selectedMarkerId?.currentValue !==
+        changes.selectedMarkerId?.previousValue
     ) {
       this.mapService.setUnactiveMarker(
         changes.selectedMarkerId.previousValue,

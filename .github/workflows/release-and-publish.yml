@@ -1,20 +1,10 @@
 ---
-name: Validate feature
+name: Release and publish
 
 on:
   push:
-    branches:
-      - 'build/*'
-      - 'chore/*'
-      - 'ci/*'
-      - 'docs/*'
-      - 'feat/*'
-      - 'fix/*'
-      - 'perf/*'
-      - 'refactor/*'
-      - 'revert/*'
-      - 'style/*'
-      - 'test/*'
+    tags:
+      - 'v*.*.*'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -132,6 +122,9 @@ jobs:
       - name: Build
         run: yarn build @gouvfr-anct/mediation-numerique
 
+      - name: Add license file
+        run: mv LICENSE.md dist/@gouvfr-anct/mediation-numerique/
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
@@ -175,3 +168,56 @@ jobs:
         run: |
           cd projects/@gouvfr-anct/mediation-numerique
           ng test @gouvfr-anct/mediation-numerique
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: [prettier, eslint, commitlint, test, build]
+
+    steps:
+      - name: Checkout mediation-numerique library repository
+        uses: actions/checkout@v3
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: dist
+
+      - name: Add license file
+        run: mv LICENSE.md dist/@gouvfr-anct/mediation-numerique/
+
+      - name: Zip release
+        run: zip -r release.zip dist/@gouvfr-anct/mediation-numerique/
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release.zip
+
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    needs: [release]
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          always-auth: true
+          node-version: '16.x'
+          registry-url: https://registry.npmjs.org
+          scope: '@gouvfr-anct'
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: release
+
+      - name: Publish on npm
+        run: |
+          cd release/@gouvfr-anct/mediation-numerique/
+          yarn publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}

@@ -112,7 +112,7 @@ export class MapService {
    * @param id marker id
    */
   public setActiveMarker(id: string, type: MarkerType = MarkerType.structure): void {
-    this.getMarker(id).setIcon(this.getHoverMarkerIcon(type));
+    this.getMarker(id)?.setIcon(this.getHoverMarkerIcon(type));
   }
 
   public setAddedToListMarker(id: string, type: MarkerType = MarkerType.structure): void {
