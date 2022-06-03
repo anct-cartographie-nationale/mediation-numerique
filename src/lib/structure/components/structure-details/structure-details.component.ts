@@ -86,6 +86,7 @@ export class StructureDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.route.queryParams.subscribe((queryParams) => {
       if (queryParams.id) {
         this.initForm();

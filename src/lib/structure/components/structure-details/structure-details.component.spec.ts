@@ -1,18 +1,19 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { of } from 'rxjs';
+import { Structure } from '../../../map/models/structure.model';
 import { Category } from '../../models/category.model';
 import { Module } from '../../models/module.model';
-import { StructureDetailsComponent } from './structure-details.component';
-import { Structure } from '../../../map/models/structure.model';
 import { SEARCH_TOKEN, STRUCTURE_TOKEN } from '../../repositories';
-import { of } from 'rxjs';
 import { PrintService } from '../../services/print.service';
+import { StructureDetailsComponent } from './structure-details.component';
 
 describe('StructureDetailsComponent', () => {
   let component: StructureDetailsComponent;
   let fixture: ComponentFixture<StructureDetailsComponent>;
+  let route: ActivatedRouteSnapshot;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -24,17 +25,18 @@ describe('StructureDetailsComponent', () => {
           useValue: {
             getCategoriesAccompaniment: () => of([]),
             getCategoriesTraining: () => of([]),
-            getCategoriesOthers: () => of([])
-          }
+            getCategoriesOthers: () => of([]),
+          },
         },
         {
           provide: STRUCTURE_TOKEN,
-          useValue: {}
-        }
-      ]
+          useValue: {},
+        },
+      ],
     })
       .overrideProvider(PrintService, { useValue: {} })
       .compileComponents();
+    route = new ActivatedRouteSnapshot();
   });
 
   beforeEach(() => {
@@ -42,6 +44,7 @@ describe('StructureDetailsComponent', () => {
     component = fixture.componentInstance;
     let structure: Structure = new Structure();
     structure.baseSkills = ['123', '234', '817'];
+    component.printMode = true;
     component.structure = structure;
     fixture.detectChanges();
   });
@@ -51,6 +54,10 @@ describe('StructureDetailsComponent', () => {
   });
 
   it('should update array with right modules', () => {
+    route.queryParams = {
+      id: 'sup3er1d',
+    };
+
     let baseSkillssReferentiel = new Category();
     let accessRightsReferentiel = new Category();
     const mo1 = new Module('132', 'Uniquement sur RDV');

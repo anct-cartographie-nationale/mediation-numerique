@@ -55,12 +55,14 @@ export class StructureListComponent implements OnChanges {
   }
 
   public showDetails(event: Structure): void {
+    this.showStructureDetails = true;
     this.structure = event;
     this.selectedMarkerId.emit(this.structure._id);
   }
 
   public closeDetails(): void {
     this.selectedMarkerId.emit();
+    this.showStructureDetails = false;
   }
 
   public handleCardHover(structure: Structure): void {
