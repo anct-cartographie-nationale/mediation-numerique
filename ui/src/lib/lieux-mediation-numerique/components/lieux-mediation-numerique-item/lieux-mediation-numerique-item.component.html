@@ -1,8 +1,8 @@
 <div
   class="structure"
   fxLayout="column"
-  (click)="cardClicked()"
-  (mouseenter)="cardHover()"
+  (click)="showDetails.emit(structure)"
+  (mouseenter)="hover.emit(structure)"
   [ngClass]="{ orientation: isOrientation }">
   <div class="left">
     <div fxLayout="row" fxLayoutAlign="space-between baseline" fxLayoutGap="16px">
@@ -12,7 +12,7 @@
       </div>
       <div *ngIf="!isOrientation" fxLayout="column" fxLayoutAlign="none end">
         <div class="distanceStructure">
-          {{ this.structure.address.commune }}
+          {{ structure.address.commune }}
         </div>
         <div class="distance" *ngIf="structure.distance">
           {{ structure.distance | distance }}
@@ -28,7 +28,7 @@
       fxLayout="row"
       *ngIf="!isSelected"
       class="selection-button selected"
-      (click)="cardAddToList(); $event.stopPropagation()">
+      (click)="addToList.emit(structure); $event.stopPropagation()">
       <app-svg-icon class="add-icon" [type]="'ico'" [icon]="'add'" [iconColor]="'green'"></app-svg-icon>
       Ajouter
     </div>
@@ -36,7 +36,7 @@
       fxLayout="row"
       *ngIf="isSelected"
       class="selection-button to-select"
-      (click)="cardAddToList(); $event.stopPropagation()">
+      (click)="addToList.emit(structure); $event.stopPropagation()">
       <app-svg-icon class="add-icon" [type]="'ico'" [icon]="'validate'" [iconColor]="'white'"></app-svg-icon>
       Ajouté
     </div>

@@ -1,0 +1,48 @@
+@import '../../../../../../assets/scss/color';
+@import '../../../../../../assets/scss/icons';
+@import '../../../../../../assets/scss/typography';
+@import '../../../../../../assets/scss/buttons';
+
+.structureList-container {
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.listCard > p {
+  margin-left: 1rem;
+}
+
+.structureListHeader {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 8px 16px;
+  .nbStructuresLabel {
+    @include lato-regular-14;
+    color: $grey-3;
+    flex: 1;
+  }
+}
+
+::ng-deep .structure-card:last-child .structure {
+  border-bottom: unset !important;
+}
+
+.structureList-details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: inherit;
+}
+
+@media print {
+  .listCard {
+    display: none;
+  }
+
+  .hide-on-print {
+    display: none !important;
+  }
+}

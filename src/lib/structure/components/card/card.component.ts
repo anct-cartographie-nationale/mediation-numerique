@@ -18,17 +18,6 @@ export class CardComponent {
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
-  /**
-   * Display distance in m or km according to value
-   */
-  public formatDistance(): string {
-    if (this.structure.distance > 1000) {
-      return (this.structure.distance / 1000).toFixed(1).toString() + ' km';
-    } else {
-      return this.structure.distance + ' m';
-    }
-  }
-
   public cardClicked(): void {
     this.showDetails.emit(this.structure);
     if (!this.isOrientation) {
