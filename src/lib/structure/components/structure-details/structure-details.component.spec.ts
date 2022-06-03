@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
@@ -21,7 +21,7 @@ describe('StructureDetailsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [StructureDetailsComponent, SvgIconStubComponent, TextInputModalComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule, BrowserAnimationsModule],
+      imports: [HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule],
       providers: [
         {
           provide: SEARCH_TOKEN,
