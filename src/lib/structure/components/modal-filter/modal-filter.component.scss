@@ -87,6 +87,7 @@
     .blockFiltre {
       width: auto;
       margin: 25px 20px;
+      margin-bottom: calc(25px - 1rem);
       min-width: 200px;
 
       @media #{$large-phone} {
@@ -151,7 +152,6 @@
   }
   .footer {
     box-sizing: border-box;
-    height: 50px;
     padding: 0.5rem;
     .reset {
       width: 45%;

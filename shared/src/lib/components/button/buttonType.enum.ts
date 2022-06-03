@@ -2,6 +2,9 @@ export enum ButtonType {
   Regular,
   Primary,
   Secondary,
+  SecondaryWide,
+  SecondaryUltraWide,
+  SecondaryOnlyIcon,
   Tertiary,
   ButtonPhone,
   Filter,
@@ -10,5 +13,5 @@ export enum ButtonType {
   searchIcon,
   modalPrimary,
   modalSecondary,
-  TagCloudButton
+  TagCloudButton,
 }

@@ -1,20 +1,26 @@
 import { Component, EventEmitter, HostListener, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import L, { latLng, MapOptions, geoJSON, tileLayer, Map, latLngBounds, layerGroup } from 'leaflet';
+import L, { geoJSON, latLng, layerGroup, Map, MapOptions, tileLayer } from 'leaflet';
 import * as _ from 'lodash';
-import { Structure } from '../models/structure.model';
+import {
+  GeometryPolygonConfiguration,
+  GEOMETRY_POLYGON_TOKEN,
+} from '../../configurations/geometry-polygon.configuration';
+import {
+  InitialPositionConfiguration,
+  INITIAL_POSITION_TOKEN,
+} from '../../configurations/initial-position.configuration';
+import { MarkerTypeConfiguration, MARKER_TYPE_TOKEN } from '../../configurations/marker-type.configuration';
+import { ZoomLevelConfiguration, ZOOM_LEVEL_TOKEN } from '../../configurations/zoom-level.configuration';
 import { GeoJsonProperties } from '../models/geoJsonProperties.model';
+import { Structure } from '../models/structure.model';
+import { GeoJsonRepository, GEO_JSON_TOKEN } from '../repositories/geo-json.repository';
 import { MapService } from './map.service';
-import { GEOMETRY_POLYGON_TOKEN, GeometryPolygonConfiguration } from '../../configurations/geometry-polygon.configuration';
-import { ZOOM_LEVEL_TOKEN, ZoomLevelConfiguration } from '../../configurations/zoom-level.configuration';
-import { INITIAL_POSITION_TOKEN, InitialPositionConfiguration } from '../../configurations/initial-position.configuration';
-import { MARKER_TYPE_TOKEN, MarkerTypeConfiguration } from '../../configurations/marker-type.configuration';
-import { GEO_JSON_TOKEN, GeoJsonRepository } from '../repositories/geo-json.repository';
 
 @Component({
   selector: 'app-map',
   providers: [MapService],
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnChanges {
   @Input() public isOrientationForm = false;
@@ -30,6 +36,7 @@ export class MapComponent implements OnChanges {
 
   public map: Map;
   public mapOptions: MapOptions;
+  public zoomOptions = { animate: true, duration: 0.5 };
 
   // Add listener on the popup button to show details of structure
   @HostListener('document:click', ['$event'])
@@ -44,10 +51,14 @@ export class MapComponent implements OnChanges {
   }
 
   constructor(
-    @Inject(GEOMETRY_POLYGON_TOKEN) private readonly metropole: GeometryPolygonConfiguration,
-    @Inject(MARKER_TYPE_TOKEN) private readonly markerType: MarkerTypeConfiguration,
-    @Inject(ZOOM_LEVEL_TOKEN) private readonly zoomLevel: ZoomLevelConfiguration,
-    @Inject(INITIAL_POSITION_TOKEN) private readonly initialPosition: InitialPositionConfiguration,
+    @Inject(GEOMETRY_POLYGON_TOKEN)
+    private readonly metropole: GeometryPolygonConfiguration,
+    @Inject(MARKER_TYPE_TOKEN)
+    private readonly markerType: MarkerTypeConfiguration,
+    @Inject(ZOOM_LEVEL_TOKEN)
+    private readonly zoomLevel: ZoomLevelConfiguration,
+    @Inject(INITIAL_POSITION_TOKEN)
+    private readonly initialPosition: InitialPositionConfiguration,
     @Inject(GEO_JSON_TOKEN) private readonly geoJsonService: GeoJsonRepository,
     private readonly mapService: MapService
   ) {
@@ -135,7 +146,7 @@ export class MapComponent implements OnChanges {
         }
       },
       (err) => {
-        this.map.setView(this.mapOptions.center, this.mapOptions.zoom);
+        this.map.flyTo(this.mapOptions.center, this.mapOptions.zoom, this.zoomOptions);
       }
     );
   }
@@ -146,7 +157,7 @@ export class MapComponent implements OnChanges {
    */
   public centerOnCoordinates(coords: [number, number]): void {
     this.mapService.createMarker(coords[1], coords[0], this.markerType.user, 'userLocation').addTo(this.map);
-    this.map.setView(new L.LatLng(coords[1], coords[0]), this.zoomLevel.userPosition);
+    this.map.flyTo(new L.LatLng(coords[1], coords[0]), this.zoomLevel.userPosition, this.zoomOptions);
   }
 
   /**
@@ -266,7 +277,7 @@ export class MapComponent implements OnChanges {
     layerGroup();
     const carteLayer = tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>',
-      maxZoom: this.zoomLevel.max
+      maxZoom: this.zoomLevel.max,
     });
     // Center is set on townhall
     // Zoom is blocked on 11 to prevent people to zoom out from metropole
@@ -275,7 +286,7 @@ export class MapComponent implements OnChanges {
       maxZoom: this.zoomLevel.max,
       zoom: this.zoomLevel.regular,
       minZoom: this.zoomLevel.min,
-      layers: [carteLayer]
+      layers: [carteLayer],
     };
   }
 
@@ -299,10 +310,8 @@ export class MapComponent implements OnChanges {
   private centerLeafletMapOnMarker(markerId: string): void {
     if (this.mapService.getMarker(markerId)) {
       const marker = this.mapService.getMarker(markerId);
-      const latLngs = [marker.getLatLng()];
-      const markerBounds = latLngBounds(latLngs);
-      // paddingTopLeft is used for centering marker because of structure details pane
-      this.map.fitBounds(markerBounds, { paddingTopLeft: [300, 0] });
+      const latLngs = marker.getLatLng();
+      this.map.flyTo(new L.LatLng(latLngs.lat, latLngs.lng), this.zoomLevel.max, this.zoomOptions);
     }
   }
 
@@ -311,7 +320,7 @@ export class MapComponent implements OnChanges {
       geoJSON(
         {
           type: this.metropole.features[0].geometry.type,
-          coordinates: this.metropole.features[0].geometry.coordinates
+          coordinates: this.metropole.features[0].geometry.coordinates,
         } as any,
         { style: () => ({ color: '#a00000', fillOpacity: 0, weight: 1 }) }
       )

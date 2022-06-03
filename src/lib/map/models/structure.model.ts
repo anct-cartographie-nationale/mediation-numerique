@@ -1,11 +1,11 @@
+import { Address } from './address.model';
+import { Day } from './day.model';
 import { Equipment } from './enum/equipment.enum';
 import { typeStructureEnum } from './enum/typeStructure.enum';
 import { Weekday } from './enum/weekday.enum';
-import { Address } from './address.model';
-import { Day } from './day.model';
 import { OpeningDay } from './openingDay.model';
-import { Week } from './week.model';
 import { PersonalOffer } from './personalOffer.model';
+import { Week } from './week.model';
 
 export class Structure {
   public _id: string = null;
@@ -64,10 +64,11 @@ export class Structure {
   public personalOffers: PersonalOffer[] = [];
 
   public alreadySelected? = false;
+  public isClaimed?: boolean = null;
 
   constructor(obj?: any) {
     Object.assign(this, obj, {
-      hours: obj && obj.hours ? new Week(obj.hours) : new Week()
+      hours: obj && obj.hours ? new Week(obj.hours) : new Week(),
     });
   }
 

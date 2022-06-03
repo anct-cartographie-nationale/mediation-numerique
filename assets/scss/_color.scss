@@ -15,6 +15,7 @@ $grey-8: #f8f8f8;
 $red: #da3635;
 $red-dark: #b85959;
 $red-1: #f35453;
+$red-error: #ff0000;
 /* GOLD */
 $gold: #bd9e6a;
 /* form colors */
@@ -33,7 +34,8 @@ $primary-color-light: #fef0f0;
 $default-link-color: $grey-2;
 $button-secondary: $red-dark;
 $app-background: $grey-8;
-$modal-background: rgba($grey-1, 0.75);
+$modal-background-transparent: rgba($grey-1, 0);
+$modal-background: rgba($grey-1, 0.25);
 $app-background: $grey-8;
 $ram-hover-principal: $primary-color;
 $scrollbar-track: rgba($grey-8, 0.65);
