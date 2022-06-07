@@ -144,24 +144,6 @@ button {
     .small-text {
       height: 22px !important;
     }
-    &.wide {
-      div:first-child {
-        min-width: 50px;
-        width: 184px;
-      }
-    }
-    &.ultrawide {
-      div:first-child {
-        min-width: 50px;
-        width: 400px;
-        @media #{$tablet} {
-          width: 200px;
-        }
-        span {
-          padding-inline: 4px;
-        }
-      }
-    }
   }
   &.tertiary {
     div:first-child {
