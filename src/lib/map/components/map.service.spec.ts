@@ -16,9 +16,9 @@ describe('MapService', () => {
   });
 
   it('should cerate marker with popup', () => {
-    const marker = service.createMarker(45.764043, 4.835659, 1, null, '<p>Hello <br/>World !</p>');
+    const marker = service.createMarker(45.764043, 4.835659, 1, undefined, '<p>Hello <br/>World !</p>');
 
-    expect(marker.getPopup().getContent()).toEqual('<p>Hello <br/>World !</p>');
+    expect(marker.getPopup()?.getContent()).toEqual('<p>Hello <br/>World !</p>');
   });
 
   it('should get marker', () => {
@@ -27,7 +27,7 @@ describe('MapService', () => {
   });
 
   it('should not get marker, with missing id', () => {
-    service.createMarker(45.764043, 4.835659, 1, null, '<p>Hello <br/>World !</p>');
+    service.createMarker(45.764043, 4.835659, 1, undefined, '<p>Hello <br/>World !</p>');
     expect(service.getMarker('2')).toEqual(null);
   });
 

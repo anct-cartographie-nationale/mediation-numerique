@@ -5,7 +5,16 @@
     "outDir": "../../out-tsc/spec",
     "paths": {
       "@gouvfr-anct/*": ["dist/@gouvfr-anct/*"]
-    }
+    },
+    "strict": false,
+    "noImplicitReturns": false,
+    "noPropertyAccessFromIndexSignature": false
   },
-  "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "include": ["**/*.spec.ts", "**/*.d.ts"],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": false
+  }
 }
