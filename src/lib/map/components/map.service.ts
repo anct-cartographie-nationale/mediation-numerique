@@ -9,7 +9,7 @@ import {
   markerIconHover,
   markerIconMdm,
   markerIconMdmActive,
-  userLocationIcon
+  userLocationIcon,
 } from './marker';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class MapService {
   public createMarker(lat: number, lon: number, markerType: MarkerType, id?: string, tooltip?: string): Marker {
     const marker = new Marker([lat, lon], {
       icon: this.getMarkerIcon(markerType),
-      attribution: this.getLayerAttributton(markerType)
+      attribution: this.getLayerAttributton(markerType),
     });
     marker.on('mouseclick', (evt) => {
       evt.target.openPopup();

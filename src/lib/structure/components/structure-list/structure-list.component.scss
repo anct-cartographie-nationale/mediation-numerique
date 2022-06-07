@@ -29,14 +29,6 @@
   border-bottom: unset !important;
 }
 
-.structureList-details {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: inherit;
-}
-
 @media print {
   .listCard {
     display: none;

@@ -9,7 +9,7 @@ export enum typeStructureEnum {
   // En attente de suppression remplacer par CAF CARSAT, Pole Emploi et CCAS
   grandOrganismePublic = 'Grand organisme public (CAF, CARSAT, Pôle emploi...)',
 
-  mdm = 'Maison de la métropole',
+  mdm = 'Maison de la Métropole',
   mairie = 'Mairie',
   CAF = 'CAF',
   CCAS = 'CCAS',
@@ -19,6 +19,7 @@ export enum typeStructureEnum {
   prefecture = 'Préfecture',
   bijPij = 'BIJ/PIJ',
   logement = 'Logement',
+  MaisonFranceService = 'Maison France Service',
 
   association = 'Association',
   centreSocio = 'Centre socio-culturel',
@@ -28,5 +29,5 @@ export enum typeStructureEnum {
   missionsLocales = 'Missions locales',
 
   formation = 'Structure de formation',
-  insertion = "Structure d'insertion"
+  insertion = "Structure d'insertion",
 }

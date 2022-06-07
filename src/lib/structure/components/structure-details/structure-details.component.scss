@@ -2,6 +2,7 @@
 @import '../../../../../assets/scss/typography';
 @import '../../../../../assets/scss/breakpoint';
 @import '../../../../../assets/scss/layout';
+@import '../../../../../assets/scss/z-index';
 
 a {
   padding: unset;
@@ -31,12 +32,14 @@ h3 {
 }
 
 .structure-details-container {
-  position: relative;
-  height: 100%;
-  width: calc(100% - 1px);
+  position: absolute;
+  z-index: $structure-details-z-index;
+  height: calc(100vh - $header-height - 1px); // -1 is to prevent limit case
+  width: 100%;
   background-color: $white;
   overflow: hidden;
   border-bottom: 1px solid $grey-5;
+  border-right: 1px solid $grey-5;
 }
 
 .structure-details-title {
@@ -174,8 +177,6 @@ h3 {
         width: 95% !important;
       }
       &.notCollapsed {
-        margin-bottom: 8px;
-        height: 40px;
         border-bottom: 2px solid $grey-8;
         .logo {
           .hide {
@@ -215,6 +216,7 @@ h3 {
         margin: 8px 0px;
         padding: 8px 0;
         background-color: $grey-8;
+        overflow: hidden;
       }
       .details {
         padding: 8px 16px;
@@ -257,7 +259,15 @@ p,
 }
 
 @media print {
-  .structure-details-container {
+  .structure-details {
+    height: unset !important;
+    overflow: hidden;
+    z-index: unset;
+    width: unset;
+    position: unset !important;
+  }
+  .structure-details-container,
+  .structure-details-content {
     background-color: unset;
     z-index: unset;
     position: unset;
@@ -273,5 +283,38 @@ p,
 
   .hide-on-print {
     display: none !important;
+  }
+}
+
+@keyframes fadeBackground {
+  0% {
+    background-color: $modal-background-transparent;
+  }
+  100% {
+    background-color: $modal-background;
+  }
+}
+.fullScreen {
+  width: calc(100% + 600px) !important;
+  background-color: $modal-background;
+  animation: fadeBackground 0.5s;
+  max-width: unset !important;
+  @media #{$tablet} {
+    width: 100% !important;
+  }
+}
+.structure-details {
+  position: fixed;
+  z-index: $structure-details-z-index;
+  height: calc(100vh - $header-height);
+  width: 100%;
+  max-width: 600px;
+
+  .structure-details-container {
+    max-width: 600px;
+    opacity: 1 !important;
+    @media #{$tablet} {
+      max-width: unset;
+    }
   }
 }
