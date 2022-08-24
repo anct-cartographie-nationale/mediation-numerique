@@ -15,6 +15,7 @@ on:
       - 'revert/*'
       - 'style/*'
       - 'test/*'
+      - 'release/*'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
