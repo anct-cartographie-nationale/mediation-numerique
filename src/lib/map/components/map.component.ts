@@ -1,14 +1,8 @@
 import { Component, EventEmitter, HostListener, Inject, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import L, { geoJSON, latLng, layerGroup, Map, MapOptions, tileLayer } from 'leaflet';
 import * as _ from 'lodash';
-import {
-  GeometryPolygonConfiguration,
-  GEOMETRY_POLYGON_TOKEN,
-} from '../../configurations/geometry-polygon.configuration';
-import {
-  InitialPositionConfiguration,
-  INITIAL_POSITION_TOKEN,
-} from '../../configurations/initial-position.configuration';
+import { GeometryPolygonConfiguration, GEOMETRY_POLYGON_TOKEN } from '../../configurations/geometry-polygon.configuration';
+import { InitialPositionConfiguration, INITIAL_POSITION_TOKEN } from '../../configurations/initial-position.configuration';
 import { MarkerTypeConfiguration, MARKER_TYPE_TOKEN } from '../../configurations/marker-type.configuration';
 import { ZoomLevelConfiguration, ZOOM_LEVEL_TOKEN } from '../../configurations/zoom-level.configuration';
 import { GeoJsonProperties } from '../models/geoJsonProperties.model';
@@ -20,7 +14,7 @@ import { MapService } from './map.service';
   selector: 'app-map',
   providers: [MapService],
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss'],
+  styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnChanges {
   @Input() public isOrientationForm = false;
@@ -277,7 +271,7 @@ export class MapComponent implements OnChanges {
     layerGroup();
     const carteLayer = tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>',
-      maxZoom: this.zoomLevel.max,
+      maxZoom: this.zoomLevel.max
     });
     // Center is set on townhall
     // Zoom is blocked on 11 to prevent people to zoom out from metropole
@@ -286,7 +280,7 @@ export class MapComponent implements OnChanges {
       maxZoom: this.zoomLevel.max,
       zoom: this.zoomLevel.regular,
       minZoom: this.zoomLevel.min,
-      layers: [carteLayer],
+      layers: [carteLayer]
     };
   }
 
@@ -320,7 +314,7 @@ export class MapComponent implements OnChanges {
       geoJSON(
         {
           type: this.metropole.features[0].geometry.type,
-          coordinates: this.metropole.features[0].geometry.coordinates,
+          coordinates: this.metropole.features[0].geometry.coordinates
         } as any,
         { style: () => ({ color: '#a00000', fillOpacity: 0, weight: 1 }) }
       )

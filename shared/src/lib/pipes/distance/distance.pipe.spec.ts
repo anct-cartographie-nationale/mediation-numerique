@@ -7,7 +7,7 @@ describe('distance pipe', (): void => {
 
     const formattedDistance: string = distancePipe.transform(distance);
 
-    expect(formattedDistance).toStrictEqual('178.9 m');
+    expect(formattedDistance).toStrictEqual('179 m');
   });
 
   it('should convert to km and append km unit when distance is greater than 1000', (): void => {

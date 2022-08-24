@@ -8,7 +8,7 @@ import { StructureRepository, STRUCTURE_TOKEN } from '../../repositories/structu
 @Component({
   selector: 'app-structure-list',
   templateUrl: './structure-list.component.html',
-  styleUrls: ['./structure-list.component.scss'],
+  styleUrls: ['./structure-list.component.scss']
 })
 export class StructureListComponent implements OnChanges {
   @Input() public structureList: Structure[];
@@ -45,8 +45,8 @@ export class StructureListComponent implements OnChanges {
       this.router.navigate([], {
         relativeTo: this.route,
         queryParams: {
-          id: this.selectedStructure._id,
-        },
+          id: this.selectedStructure._id
+        }
       });
     }
     if (changes.structureList) {

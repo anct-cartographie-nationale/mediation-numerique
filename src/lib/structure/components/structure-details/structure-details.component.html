@@ -57,56 +57,32 @@
                 target="_blank"
                 class="custom-link"
                 rel="noopener noreferrer"
-                [href]="'http://' + structure.facebook"
-              >
-                <app-svg-icon
-                  [type]="'ico'"
-                  [icon]="'facebook'"
-                  [title]="'Facebook'"
-                  [iconClass]="'icon-30'"
-                ></app-svg-icon>
+                [href]="'http://' + structure.facebook">
+                <app-svg-icon [type]="'ico'" [icon]="'facebook'" [title]="'Facebook'" [iconClass]="'icon-30'"></app-svg-icon>
               </a>
               <a
                 *ngIf="structure.twitter"
                 target="_blank"
                 class="custom-link"
                 rel="noopener noreferrer"
-                [href]="'http://' + structure.twitter"
-              >
-                <app-svg-icon
-                  [type]="'ico'"
-                  [icon]="'twitter'"
-                  [title]="'Twitter'"
-                  [iconClass]="'icon-30'"
-                ></app-svg-icon>
+                [href]="'http://' + structure.twitter">
+                <app-svg-icon [type]="'ico'" [icon]="'twitter'" [title]="'Twitter'" [iconClass]="'icon-30'"></app-svg-icon>
               </a>
               <a
                 *ngIf="structure.instagram"
                 target="_blank"
                 class="custom-link"
                 rel="noopener noreferrer"
-                [href]="'http://' + structure.instagram"
-              >
-                <app-svg-icon
-                  [type]="'ico'"
-                  [icon]="'instagram'"
-                  [title]="'Instagram'"
-                  [iconClass]="'icon-30'"
-                ></app-svg-icon>
+                [href]="'http://' + structure.instagram">
+                <app-svg-icon [type]="'ico'" [icon]="'instagram'" [title]="'Instagram'" [iconClass]="'icon-30'"></app-svg-icon>
               </a>
               <a
                 *ngIf="structure.linkedin"
                 target="_blank"
                 class="custom-link"
                 rel="noopener noreferrer"
-                [href]="'http://' + structure.linkedin"
-              >
-                <app-svg-icon
-                  [type]="'ico'"
-                  [icon]="'linkedin'"
-                  [title]="'Linkedin'"
-                  [iconClass]="'icon-30'"
-                ></app-svg-icon>
+                [href]="'http://' + structure.linkedin">
+                <app-svg-icon [type]="'ico'" [icon]="'linkedin'" [title]="'Linkedin'" [iconClass]="'icon-30'"></app-svg-icon>
               </a>
             </div>
           </div>
@@ -122,8 +98,7 @@
       <div
         *ngIf="structure.accessModality.length > 0 || structure.hours.hasData() || structure.remoteAccompaniment"
         class="structure-details-block"
-        fxLayout="column"
-      >
+        fxLayout="column">
         <div class="hours-services-block">
           <!-- Opening Hours -->
           <div *ngIf="structure.hours.hasData()" fxLayout="column">
@@ -153,26 +128,19 @@
                   fxLayout="row"
                   fxLayoutAlign="none flex-end"
                   fxLayoutGap="8px"
-                  *ngFor="let acces of structure.accessModality"
-                >
+                  *ngFor="let acces of structure.accessModality">
                   <p>{{ getAccessLabel(acces) }}</p>
                 </div>
                 <p *ngIf="structure.pmrAccess">Accessible aux personnes à mobilité réduite</p>
               </div>
-              <div
-                *ngFor="let public of structure.publics"
-                fxLayout="row"
-                fxLayoutAlign="none flex-end"
-                fxLayoutGap="8px"
-              >
+              <div *ngFor="let public of structure.publics" fxLayout="row" fxLayoutAlign="none flex-end" fxLayoutGap="8px">
                 <p>{{ getPublicLabel(public) }}</p>
               </div>
               <div
                 *ngFor="let accompaniment of structure.publicsAccompaniment"
                 fxLayout="row"
                 fxLayoutAlign="none flex-end"
-                fxLayoutGap="8px"
-              >
+                fxLayoutGap="8px">
                 <p>{{ accompaniment }}</p>
               </div>
             </div>
@@ -191,8 +159,7 @@
         fxLayout="column"
         class="structure-details-block"
         fxLayoutAlign="baseline baseline"
-        fxLayoutGap="8px"
-      >
+        fxLayoutGap="8px">
         <h2>Labellisations</h2>
         <div class="wrapper">
           <div *ngFor="let labels of structure.labelsQualifications">
@@ -208,8 +175,7 @@
         fxLayout="column"
         class="structure-details-block"
         fxLayoutAlign="baseline baseline"
-        fxLayoutGap="12px"
-      >
+        fxLayoutGap="12px">
         <h2>Aides numérique</h2>
         <div fxLayout="column">
           <div class="wrapper">
@@ -224,13 +190,10 @@
       </div>
 
       <div
-        *ngIf="
-          isBaseSkills() || isAccessRights() || isParentingHelp() || isSocialAndProfessional() || isDigitalSecurity()
-        "
+        *ngIf="isBaseSkills() || isAccessRights() || isParentingHelp() || isSocialAndProfessional() || isDigitalSecurity()"
         fxLayout="column"
         class="structure-details-block noSeparator"
-        fxLayoutAlign="baseline baseline"
-      >
+        fxLayoutAlign="baseline baseline">
         <h2>Formations</h2>
         <div *ngIf="structure.freeWorkShop">
           <span *ngIf="multipleWorkshop()" class="bold-info">L'accès à ces formations est gratuit</span>
@@ -244,8 +207,7 @@
                 fxLayout="row"
                 fxLayoutGap="20px"
                 fxLayoutAlign=" center"
-                (click)="toggleBaseSkills()"
-              >
+                (click)="toggleBaseSkills()">
                 <div class="titleCollapse">Compétences de base</div>
                 <div class="logo">
                   <svg class="show" aria-hidden="true">
@@ -270,8 +232,7 @@
                 fxLayout="row"
                 fxLayoutGap="20px"
                 fxLayoutAlign=" center"
-                (click)="toggleAccessRights()"
-              >
+                (click)="toggleAccessRights()">
                 <div class="titleCollapse">Accès aux droits</div>
                 <div class="logo">
                   <svg class="show" aria-hidden="true">
@@ -296,8 +257,7 @@
                 fxLayout="row"
                 fxLayoutGap="20px"
                 fxLayoutAlign=" center"
-                (click)="toggleParentingHelp()"
-              >
+                (click)="toggleParentingHelp()">
                 <div class="titleCollapse">Aide à la parentalité</div>
                 <div class="logo">
                   <svg class="show" aria-hidden="true">
@@ -315,19 +275,14 @@
               </div>
             </div>
           </div>
-          <div
-            *ngIf="isSocialAndProfessional()"
-            class="collapse"
-            [ngClass]="{ notCollapsed: !showSocialAndProfessional }"
-          >
+          <div *ngIf="isSocialAndProfessional()" class="collapse" [ngClass]="{ notCollapsed: !showSocialAndProfessional }">
             <div fxLayout="column">
               <div
                 class="collapseHeader"
                 fxLayout="row"
                 fxLayoutGap="20px"
                 fxLayoutAlign=" center"
-                (click)="toggleSocialAndProfessional()"
-              >
+                (click)="toggleSocialAndProfessional()">
                 <div class="titleCollapse">Insertion sociale et professionnelle</div>
                 <div class="logo">
                   <svg class="show" aria-hidden="true">
@@ -352,8 +307,7 @@
                 fxLayout="row"
                 fxLayoutGap="20px"
                 fxLayoutAlign=" center"
-                (click)="toggleDigitalSecurity()"
-              >
+                (click)="toggleDigitalSecurity()">
                 <div class="titleCollapse">Culture et sécurité numérique</div>
                 <div class="logo">
                   <svg class="show" aria-hidden="true">
@@ -378,8 +332,7 @@
         *ngIf="structure.hasEquipments()"
         fxLayout="column"
         class="structure-details-block"
-        fxLayoutAlign="baseline baseline"
-      >
+        fxLayoutAlign="baseline baseline">
         <h2>Matériel et wifi</h2>
         <div fxLayout="column">
           <div *ngIf="filterOnlyEquipments(structure.equipmentsAndServices).includes('wifiEnAccesLibre')">
@@ -421,7 +374,6 @@
         'Voulez-vous notifier res\'in d\'une erreur sur la fiche de cet acteur &nbsp;? Votre commentaire sera envoyé à l\'acteur en question ainsi qu\'aux administrateurs.'
       "
       (closed)="sendErrorEmail($event)"
-      (newContent)="sendErrorEmail($event)"
-    ></app-text-input-modal>
+      (newContent)="sendErrorEmail($event)"></app-text-input-modal>
   </div>
 </div>

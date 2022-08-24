@@ -6,5 +6,5 @@ export enum Demarches {
   impots = 'Impôts',
   logement = 'Logements',
   poleEmploi = 'Pôle Emploi',
-  autres = 'Autres',
+  autres = 'Autres'
 }
