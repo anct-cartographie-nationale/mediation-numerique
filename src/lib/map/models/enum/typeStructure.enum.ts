@@ -29,5 +29,5 @@ export enum typeStructureEnum {
   missionsLocales = 'Missions locales',
 
   formation = 'Structure de formation',
-  insertion = "Structure d'insertion",
+  insertion = "Structure d'insertion"
 }

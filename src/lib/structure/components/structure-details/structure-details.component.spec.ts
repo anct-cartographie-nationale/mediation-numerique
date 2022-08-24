@@ -28,14 +28,14 @@ describe('StructureDetailsComponent', () => {
           useValue: {
             getCategoriesAccompaniment: () => of([]),
             getCategoriesTraining: () => of([]),
-            getCategoriesOthers: () => of([]),
-          },
+            getCategoriesOthers: () => of([])
+          }
         },
         {
           provide: STRUCTURE_TOKEN,
-          useValue: {},
-        },
-      ],
+          useValue: {}
+        }
+      ]
     })
       .overrideProvider(PrintService, { useValue: {} })
       .compileComponents();
@@ -58,7 +58,7 @@ describe('StructureDetailsComponent', () => {
 
   it('should update array with right modules', () => {
     route.queryParams = {
-      id: 'sup3er1d',
+      id: 'sup3er1d'
     };
 
     let baseSkillssReferentiel = new Category();
