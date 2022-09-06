@@ -158,7 +158,7 @@ export class StructureDetailsComponent implements OnInit {
         });
       } else {
         this.isLoading = true;
-        this.router.navigate(['./'], {
+        this.router.navigate([], {
           relativeTo: this.route,
           queryParams: {
             id: null
