@@ -1,5 +1,6 @@
 import { animate, AUTO_STYLE, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { Equipment } from '../../../map/models/enum/equipment.enum';
@@ -19,23 +20,23 @@ import { PrintService } from '../../services/print.service';
   animations: [
     trigger('slideInOut', [
       transition(':enter', [style({ left: '-600px' }), animate('200ms ease-in', style({ left: '0' }))]),
-      transition(':leave', [animate('200ms ease-in', style({ left: '-600px' }))])
+      transition(':leave', [animate('200ms ease-in', style({ left: '-600px' }))]),
     ]),
     trigger('fadeInOut', [
       transition(':enter', [
         style({ backgroundColor: 'rgb(00, 00, 00, 0)' }),
-        animate('200ms ease-in', style({ backgroundColor: 'rgb(00, 00, 00, 0.6)' }))
+        animate('200ms ease-in', style({ backgroundColor: 'rgb(00, 00, 00, 0.6)' })),
       ]),
-      transition(':leave', [animate('200ms ease-in', style({ backgroundColor: 'rgb(00, 00, 00, 0)' }))])
+      transition(':leave', [animate('200ms ease-in', style({ backgroundColor: 'rgb(00, 00, 00, 0)' }))]),
     ]),
     trigger('show', [
       state('true', style({ height: AUTO_STYLE, visibility: AUTO_STYLE, margin: '8px 0' })),
       state('false', style({ height: '0px', visibility: 'hidden', margin: '0' })),
       transition('true => false', animate('300ms ease-out')),
-      transition('false => true', animate('300ms ease-out'))
-    ])
+      transition('false => true', animate('300ms ease-out')),
+    ]),
   ],
-  providers: [PrintService]
+  providers: [PrintService],
 })
 export class StructureDetailsComponent implements OnInit {
   @Input() public structure: Structure;
@@ -68,7 +69,8 @@ export class StructureDetailsComponent implements OnInit {
     @Inject(STRUCTURE_TOKEN) readonly structureService: StructureRepository,
     private readonly printService: PrintService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
     route.url.subscribe((url) => {
       if (url[0]?.path === 'structure') {
@@ -152,19 +154,13 @@ export class StructureDetailsComponent implements OnInit {
         this.router.navigate(['/acteurs'], {
           relativeTo: this.route,
           queryParams: {
-            id: null
+            id: null,
           },
-          queryParamsHandling: 'merge'
+          queryParamsHandling: 'merge',
         });
       } else {
         this.isLoading = true;
-        this.router.navigate([], {
-          relativeTo: this.route,
-          queryParams: {
-            id: null
-          },
-          queryParamsHandling: 'merge'
-        });
+        this.location.back();
       }
     });
   }
@@ -208,7 +204,9 @@ export class StructureDetailsComponent implements OnInit {
   }
 
   public setServiceCategories(): void {
-    this.baseSkills = this.structure.baseSkills.map((skill) => _.find(this.baseSkillssReferentiel.modules, { id: skill }));
+    this.baseSkills = this.structure.baseSkills.map((skill) =>
+      _.find(this.baseSkillssReferentiel.modules, { id: skill })
+    );
     this.accessRights = this.structure.accessRight.map((rights) =>
       _.find(this.accessRightsReferentiel.modules, { id: rights })
     );
