@@ -1,5 +1,6 @@
 import { animate, AUTO_STYLE, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { Equipment } from '../../../map/models/enum/equipment.enum';
@@ -68,7 +69,8 @@ export class StructureDetailsComponent implements OnInit {
     @Inject(STRUCTURE_TOKEN) readonly structureService: StructureRepository,
     private readonly printService: PrintService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {
     route.url.subscribe((url) => {
       if (url[0]?.path === 'structure') {
@@ -158,13 +160,7 @@ export class StructureDetailsComponent implements OnInit {
         });
       } else {
         this.isLoading = true;
-        this.router.navigate(['./'], {
-          relativeTo: this.route,
-          queryParams: {
-            id: null
-          },
-          queryParamsHandling: 'merge'
-        });
+        this.location.back();
       }
     });
   }
